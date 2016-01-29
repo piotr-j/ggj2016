@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.mygdx.game.G;
 import com.mygdx.game.entities.Arena;
 import com.mygdx.game.controls.PlayerAWSDController;
 import com.mygdx.game.controls.PlayerArrowsController;
@@ -52,13 +53,13 @@ public class GameWorld implements ContactListener {
      }
 
     private void createArena(float x, float y, float width, float height) {
-        float w = (1280 - width)/2;
-        float h = (720 - height)/2;
-        entityManager.addEntity(new Arena(0, 0, 1280, h, this));
-        entityManager.addEntity(new Arena(0, y + height, 1280, h, this));
+        float w = (G.TARGET_WIDTH - width)/2;
+        float h = (G.TARGET_HEIGHT - height)/2;
+        entityManager.addEntity(new Arena(0, 0, G.TARGET_WIDTH, h, this));
+        entityManager.addEntity(new Arena(0, y + height, G.TARGET_WIDTH, h, this));
 
-        entityManager.addEntity(new Arena(0, y, w, 720 - h*2, this));
-        entityManager.addEntity(new Arena(x + width, y, w, 720 - h*2, this));
+        entityManager.addEntity(new Arena(0, y, w, G.TARGET_HEIGHT - h*2, this));
+        entityManager.addEntity(new Arena(x + width, y, w, G.TARGET_HEIGHT - h*2, this));
     }
 
     public void update(float delta) {
