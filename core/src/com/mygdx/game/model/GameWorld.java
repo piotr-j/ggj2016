@@ -33,7 +33,7 @@ public class GameWorld implements ContactListener {
 
 
         // Test walker
-        entityManager.addEntity(new Walker(100, 100, 15, this));
+        entityManager.addEntity(new Walker(640, 360, 15, this));
     }
 
     public void update(float delta) {
