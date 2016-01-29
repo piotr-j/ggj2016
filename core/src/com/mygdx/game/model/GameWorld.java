@@ -72,7 +72,7 @@ public class GameWorld implements ContactListener {
         entityManager.addEntity(flame2);
 
         // Test sacrifice
-        Sacrifice sacrifice = new Sacrifice(600, 600, 15, this);
+        Sacrifice sacrifice = new Sacrifice(G.VP_WIDTH / 2, G.VP_HEIGHT / 2, 15 * G.INV_SCALE, this);
         entityManager.addEntity(sacrifice);
 
         // Some walkers
