@@ -1,12 +1,10 @@
 package com.mygdx.game.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -27,17 +25,16 @@ public class WorldRenderer {
     private ShapeRenderer shapeRenderer;
 
     // Used to scale cam for box2d things without memory allocation
-    private Matrix4 camCombinedBox2D = new Matrix4();
+//    private Matrix4 camCombinedBox2D = new Matrix4();
 
 
     public WorldRenderer(GameWorld gameWorld) {
         this.gameWorld = gameWorld;
 
         cam = new OrthographicCamera();
-        cam.setToOrtho(false, G.TARGET_WIDTH, G.TARGET_HEIGHT);
 
         // Let's show more game world when window resized
-        viewport = new ExtendViewport(G.TARGET_WIDTH, G.TARGET_HEIGHT, cam);
+        viewport = new ExtendViewport(G.VP_WIDTH, G.VP_HEIGHT, cam);
 
         // Batch used for
         batch = new SpriteBatch();
@@ -50,7 +47,7 @@ public class WorldRenderer {
         cam.update();
         batch.setProjectionMatrix(cam.combined);
 
-        camCombinedBox2D.set(cam.combined).scl(Box2DWorld.BOX_TO_WORLD);
+//        camCombinedBox2D.set(cam.combined).scl(Box2DWorld.BOX_TO_WORLD);
 
         // Clear screen
         Gdx.gl.glClearColor(0, 0, 0, 1);

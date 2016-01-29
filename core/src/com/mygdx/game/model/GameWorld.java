@@ -28,10 +28,10 @@ public class GameWorld implements ContactListener {
     // Keep game state
     public static enum GameState { WAITING_TO_START, IN_GAME, FINISH };
     private GameState gameState = GameState.WAITING_TO_START;
-    public final static int ARENA_X = 100;
-    public final static int ARENA_Y = 100;
-    public final static int ARENA_WIDTH = 1080;
-    public final static int ARENA_HEIGHT = 520;
+    public final static int ARENA_X = (int)(100 * G.INV_SCALE);
+    public final static int ARENA_Y = (int)(100 * G.INV_SCALE);
+    public final static int ARENA_WIDTH = (int)(1080 * G.INV_SCALE);
+    public final static int ARENA_HEIGHT = (int)(520 * G.INV_SCALE);
 
     public GameWorld() {
         box2DWorld = new Box2DWorld(new Vector2(0, Constants.GRAVITY));
@@ -44,8 +44,8 @@ public class GameWorld implements ContactListener {
         initializeObjects();
 
         // Create players
-        Player player = new Player(150, 150, 15, this);
-        Player player2 = new Player(150, 150, 15, this);
+        Player player = new Player(5f, 5f, .3f, this);
+        Player player2 = new Player(5f, 5f, .3f, this);
         entityManager.addEntity(player);
         entityManager.addEntity(player2);
 
@@ -58,29 +58,30 @@ public class GameWorld implements ContactListener {
 
     public void initializeObjects() {
         // Test arena bounds
-        createArena(100, 100, 1080, 520);
+        createArena(2.5f, 2.5f, G.VP_WIDTH - 5, G.VP_HEIGHT - 5);
 
         // Flames!
-        Flame flame = new Flame(100, G.TARGET_HEIGHT / 2, 100, this);
+        Flame flame = new Flame(2, G.VP_HEIGHT / 2, 2, this);
         entityManager.addEntity(flame);
 
-        Flame flame2 = new Flame(G.TARGET_WIDTH - 100, G.TARGET_HEIGHT / 2, 100, this);
+        Flame flame2 = new Flame(G.VP_WIDTH - 2, G.VP_HEIGHT / 2, 2, this);
         entityManager.addEntity(flame2);
-        createArena(ARENA_X, ARENA_Y, ARENA_WIDTH, ARENA_HEIGHT);
 
         for (int i = 0; i < 15; i++) {
-            entityManager.addEntity(new Walker(MathUtils.random(100 + 15, 100 + 1080 - 15), MathUtils.random(100 + 15, 100 + 520 - 15), 12, this));
+            float x = MathUtils.random(100 + 15, 100 + 1080 - 15) * G.INV_SCALE;
+            float y = MathUtils.random(100 + 15, 100 + 520 - 15) * G.INV_SCALE;
+            entityManager.addEntity(new Walker(x, y, .25f, this));
         }
      }
 
     private void createArena(float x, float y, float width, float height) {
-        float w = (G.TARGET_WIDTH - width)/2;
-        float h = (G.TARGET_HEIGHT - height)/2;
-        entityManager.addEntity(new Arena(0, 0, G.TARGET_WIDTH, h, this));
-        entityManager.addEntity(new Arena(0, y + height, G.TARGET_WIDTH, h, this));
+        float w = (G.VP_WIDTH - width)/2;
+        float h = (G.VP_HEIGHT - height)/2;
+        entityManager.addEntity(new Arena(0, 0, G.VP_WIDTH, h, this));
+        entityManager.addEntity(new Arena(0, y + height, G.VP_WIDTH, h, this));
 
-        entityManager.addEntity(new Arena(0, y, w, G.TARGET_HEIGHT - h*2, this));
-        entityManager.addEntity(new Arena(x + width, y, w, G.TARGET_HEIGHT - h*2, this));
+        entityManager.addEntity(new Arena(0, y, w, G.VP_HEIGHT - h*2, this));
+        entityManager.addEntity(new Arena(x + width, y, w, G.VP_HEIGHT - h*2, this));
     }
 
     public void update(float delta) {

@@ -9,7 +9,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.mygdx.game.model.Box2DWorld;
 import com.mygdx.game.model.GameWorld;
 import com.mygdx.game.model.PhysicsObject;
 import com.mygdx.game.utils.BodySteerable;
@@ -30,35 +29,35 @@ public class Walker extends Entity implements PhysicsObject {
 
         this.body = gameWorld.getBox2DWorld().getBodyBuilder()
                 .fixture(gameWorld.getBox2DWorld().getFixtureDefBuilder()
-                        .circleShape(getBounds().getWidth() / 2 * Box2DWorld.WORLD_TO_BOX)
+                        .circleShape(getBounds().getWidth() / 2)
                         .density(1f)
                         .friction(0.2f)
                         .restitution(0.5f)
                         .build())
                 .angularDamping(1f)
-                .position(x * Box2DWorld.WORLD_TO_BOX, y * Box2DWorld.WORLD_TO_BOX)
+                .position(x, y)
                 .angle(MathUtils.random(-MathUtils.PI, MathUtils.PI))
                 .type(BodyDef.BodyType.DynamicBody)
                 .userData(this)
                 .build();
 
         steerable = new BodySteerable();
-        steerable.setMaxLinearAcceleration(200f * Box2DWorld.WORLD_TO_BOX);
-        steerable.setMaxLinearSpeed(100f * Box2DWorld.WORLD_TO_BOX);
+        steerable.setMaxLinearAcceleration(2f);
+        steerable.setMaxLinearSpeed(1f);
         steerable.setMaxAngularAcceleration(0f);
         steerable.setMaxAngularSpeed(1f);
-        steerable.setBoundingRadius(bounds.width / 2 * Box2DWorld.WORLD_TO_BOX);
+        steerable.setBoundingRadius(bounds.width / 2);
         steerable.setZeroLinearSpeedThreshold(0.01f);
         steerable.setBody(body);
 
         wander = new Wander<Vector2>(steerable);
         wander.setFaceEnabled(false)
             .setAlignTolerance(1f)
-            .setDecelerationRadius(30f * Box2DWorld.WORLD_TO_BOX)
+            .setDecelerationRadius(3f)
             .setTimeToTarget(0.3f)
-            .setWanderOffset(70f * Box2DWorld.WORLD_TO_BOX)
+            .setWanderOffset(7f)
             .setWanderOrientation(MathUtils.random(360))
-            .setWanderRadius(40f * Box2DWorld.WORLD_TO_BOX)
+            .setWanderRadius(4f)
             .setWanderRate(MathUtils.PI2 * 3);
     }
 
@@ -74,14 +73,14 @@ public class Walker extends Entity implements PhysicsObject {
             float radius = wander.getWanderRadius();
             shapeRenderer.setColor(Color.CYAN);
             Vector2 pos = body.getPosition();
-            shapeRenderer.line(pos.x * Box2DWorld.BOX_TO_WORLD, pos.y * Box2DWorld.BOX_TO_WORLD, center.x * Box2DWorld.BOX_TO_WORLD, center.y * Box2DWorld.BOX_TO_WORLD);
-            shapeRenderer.circle(center.x * Box2DWorld.BOX_TO_WORLD, center.y * Box2DWorld.BOX_TO_WORLD, radius * Box2DWorld.BOX_TO_WORLD, 32);
+            shapeRenderer.line(pos.x, pos.y, center.x, center.y);
+            shapeRenderer.circle(center.x, center.y, radius, 32);
             shapeRenderer.setColor(Color.RED);
-            shapeRenderer.circle(target.x * Box2DWorld.BOX_TO_WORLD, target.y * Box2DWorld.BOX_TO_WORLD, 0.1f * Box2DWorld.BOX_TO_WORLD, 8);
+            shapeRenderer.circle(target.x, target.y, 0.1f, 8);
             wander.getInternalTargetPosition();
             float decelerationRadius = wander.getDecelerationRadius();
             shapeRenderer.setColor(Color.MAGENTA);
-            shapeRenderer.circle(center.x * Box2DWorld.BOX_TO_WORLD, center.y * Box2DWorld.BOX_TO_WORLD, decelerationRadius * Box2DWorld.BOX_TO_WORLD, 32);
+            shapeRenderer.circle(center.x, center.y, decelerationRadius, 32);
         }
     }
 
