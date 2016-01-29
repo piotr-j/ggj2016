@@ -16,9 +16,8 @@ import com.mygdx.game.model.PhysicsObject;
 public class Sacrifice extends Entity implements PhysicsObject {
 
     // Config
-    private final float SPEED = 2;
-    private final float MAX_SPEED = 2;
-    private final float RUN_RADIUS = 50;
+    private final float SPEED = 1.3f;
+    private final float RUN_RADIUS = 150;
 
     // Physics
     private Body body;
@@ -64,17 +63,50 @@ public class Sacrifice extends Entity implements PhysicsObject {
 
         // Set velocity
         velocity.set(0, 0);
-        Array<Entity> players = gameWorld.getEntityManager().getEntitiesClass(Player.class);
+        float runSpeed = 0;
 
-        for(Entity player : players) {
+        // Players
+        for(Entity player : gameWorld.getEntityManager().getEntitiesClass(Player.class)) {
             if(player.getPosition().dst(position) < RUN_RADIUS) {
-                tempVec2.set(position).sub(player.getPosition());
 
-                velocity.set(tempVec2);
+                // Direction
+                tempVec2.set(position).sub(player.getPosition()).nor();
+
+                // Speed
+                float tempSpeed = RUN_RADIUS - player.getPosition().dst(position);
+                if(tempSpeed > runSpeed) runSpeed = tempSpeed;
+
+                velocity.add(tempVec2);
             }
         }
 
-        body.setLinearVelocity(velocity);
+        // Flames
+        for(Entity flame : gameWorld.getEntityManager().getEntitiesClass(Flame.class)) {
+            if(flame.getPosition().dst(position) < RUN_RADIUS) {
+
+                // Direction
+                tempVec2.set(position).sub(flame.getPosition()).nor();
+
+                // Speed
+                float tempSpeed = RUN_RADIUS - flame.getPosition().dst(position);
+                if(tempSpeed > runSpeed) runSpeed = tempSpeed;
+
+                velocity.add(tempVec2);
+            }
+        }
+
+
+        runSpeed *= 0.1f * SPEED;
+        velocity.nor().scl(runSpeed);
+
+        if(!velocity.isZero()) {
+
+            tempVec2.set(body.getLinearVelocity()).lerp(velocity, delta);
+
+            body.setLinearVelocity(tempVec2);
+            body.setTransform(position.x * Box2DWorld.WORLD_TO_BOX, position.y * Box2DWorld.WORLD_TO_BOX,
+                    velocity.angle() * MathUtils.degRad);
+        }
 
     }
 
