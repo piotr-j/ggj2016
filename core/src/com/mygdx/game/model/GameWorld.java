@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.mygdx.game.controls.PlayerAWSDController;
 import com.mygdx.game.controls.PlayerArrowsController;
 import com.mygdx.game.entities.Player;
 import com.mygdx.game.entities.Walker;
@@ -34,11 +35,14 @@ public class GameWorld implements ContactListener {
 
         // Create players
         Player player = new Player(150, 150, 15, this);
+        Player player2 = new Player(150, 150, 15, this);
         entityManager.addEntity(player);
+        entityManager.addEntity(player2);
 
         // Set input processors
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(new PlayerArrowsController(player));
+        inputMultiplexer.addProcessor(new PlayerAWSDController(player2));
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
