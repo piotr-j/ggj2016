@@ -11,12 +11,14 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.G;
 import com.mygdx.game.entities.Arena;
 import com.mygdx.game.controls.PlayerAWSDController;
 import com.mygdx.game.controls.PlayerArrowsController;
 import com.mygdx.game.entities.Flame;
 import com.mygdx.game.entities.Player;
+import com.mygdx.game.entities.Sacrifice;
 import com.mygdx.game.entities.Walker;
 import com.mygdx.game.utils.Constants;
 
@@ -26,12 +28,14 @@ public class GameWorld implements ContactListener {
     private EntityManager entityManager;
 
     // Keep game state
+    private Array<Player> players;
     public static enum GameState { WAITING_TO_START, IN_GAME, FINISH };
+
     private GameState gameState = GameState.WAITING_TO_START;
-    public final static int ARENA_X = (int)(100 * G.INV_SCALE);
-    public final static int ARENA_Y = (int)(100 * G.INV_SCALE);
-    public final static int ARENA_WIDTH = (int)(1080 * G.INV_SCALE);
-    public final static int ARENA_HEIGHT = (int)(520 * G.INV_SCALE);
+    public final static float ARENA_X = 2.5f;
+    public final static float ARENA_Y = 2.5f;
+    public final static float ARENA_WIDTH = G.VP_WIDTH - 5;
+    public final static float ARENA_HEIGHT = G.VP_HEIGHT - 5;
 
     public GameWorld() {
         box2DWorld = new Box2DWorld(new Vector2(0, Constants.GRAVITY));
@@ -58,7 +62,7 @@ public class GameWorld implements ContactListener {
 
     public void initializeObjects() {
         // Test arena bounds
-        createArena(2.5f, 2.5f, G.VP_WIDTH - 5, G.VP_HEIGHT - 5);
+        createArena(ARENA_X, ARENA_Y, ARENA_WIDTH, ARENA_HEIGHT);
 
         // Flames!
         Flame flame = new Flame(2, G.VP_HEIGHT / 2, 2, this);
@@ -67,6 +71,11 @@ public class GameWorld implements ContactListener {
         Flame flame2 = new Flame(G.VP_WIDTH - 2, G.VP_HEIGHT / 2, 2, this);
         entityManager.addEntity(flame2);
 
+        // Test sacrifice
+        Sacrifice sacrifice = new Sacrifice(600, 600, 15, this);
+        entityManager.addEntity(sacrifice);
+
+        // Some walkers
         for (int i = 0; i < 15; i++) {
             float x = MathUtils.random(100 + 15, 100 + 1080 - 15) * G.INV_SCALE;
             float y = MathUtils.random(100 + 15, 100 + 520 - 15) * G.INV_SCALE;
