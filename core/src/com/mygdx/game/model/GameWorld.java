@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.mygdx.game.entities.Arena;
 import com.mygdx.game.entities.Walker;
 import com.mygdx.game.utils.Constants;
 
@@ -30,10 +31,20 @@ public class GameWorld implements ContactListener {
     }
 
     public void initializeObjects() {
-
-
         // Test walker
         entityManager.addEntity(new Walker(640, 360, 15, this));
+        // Test arena bounds
+        createArena(100, 100, 1080, 520);
+     }
+
+    private void createArena(float x, float y, float width, float height) {
+        float w = (1280 - width)/2;
+        float h = (720 - height)/2;
+        entityManager.addEntity(new Arena(0, 0, 1280, h, this));
+        entityManager.addEntity(new Arena(0, y + height, 1280, h, this));
+
+        entityManager.addEntity(new Arena(0, y, w, 720 - h*2, this));
+        entityManager.addEntity(new Arena(x + width, y, w, 720 - h*2, this));
     }
 
     public void update(float delta) {
