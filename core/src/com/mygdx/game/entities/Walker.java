@@ -44,21 +44,21 @@ public class Walker extends Entity implements PhysicsObject {
         steerable = new BodySteerable();
         steerable.setMaxLinearAcceleration(2f);
         steerable.setMaxLinearSpeed(1f);
-        steerable.setMaxAngularAcceleration(0f);
-        steerable.setMaxAngularSpeed(1f);
+        steerable.setMaxAngularAcceleration(.5f);
+        steerable.setMaxAngularSpeed(3f);
         steerable.setBoundingRadius(bounds.width / 2);
         steerable.setZeroLinearSpeedThreshold(0.01f);
         steerable.setBody(body);
 
         wander = new Wander<Vector2>(steerable);
-        wander.setFaceEnabled(false)
-            .setAlignTolerance(1f)
-            .setDecelerationRadius(3f)
+        wander.setFaceEnabled(true)
+            .setAlignTolerance(.01f)
+            .setDecelerationRadius(.5f)
             .setTimeToTarget(0.3f)
-            .setWanderOffset(7f)
+            .setWanderOffset(2f)
             .setWanderOrientation(MathUtils.random(360))
-            .setWanderRadius(4f)
-            .setWanderRate(MathUtils.PI2 * 3);
+            .setWanderRadius(1f)
+            .setWanderRate(MathUtils.PI2 * 2);
     }
 
     @Override
@@ -77,10 +77,10 @@ public class Walker extends Entity implements PhysicsObject {
             shapeRenderer.circle(center.x, center.y, radius, 32);
             shapeRenderer.setColor(Color.RED);
             shapeRenderer.circle(target.x, target.y, 0.1f, 8);
-            wander.getInternalTargetPosition();
-            float decelerationRadius = wander.getDecelerationRadius();
-            shapeRenderer.setColor(Color.MAGENTA);
-            shapeRenderer.circle(center.x, center.y, decelerationRadius, 32);
+//            wander.getInternalTargetPosition();
+//            float decelerationRadius = wander.getDecelerationRadius();
+//            shapeRenderer.setColor(Color.MAGENTA);
+//            shapeRenderer.circle(center.x, center.y, decelerationRadius, 32);
         }
     }
 
