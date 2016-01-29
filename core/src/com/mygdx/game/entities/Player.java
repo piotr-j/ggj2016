@@ -53,12 +53,14 @@ public class Player extends Entity implements PhysicsObject {
 
     @Override
     public void update(float delta) {
-        position.set(body.getPosition().x * Box2DWorld.BOX_TO_WORLD, body.getPosition().x * Box2DWorld.BOX_TO_WORLD);
+        position.set(body.getPosition().x * Box2DWorld.BOX_TO_WORLD, body.getPosition().y * Box2DWorld.BOX_TO_WORLD);
         rotation = body.getAngle() * MathUtils.radDeg;
 
         if(direction.x != 0 || direction.y != 0) {
             velocity.set(direction).nor().scl(SPEED);
 
+            body.setTransform(position.x * Box2DWorld.WORLD_TO_BOX, position.y * Box2DWorld.WORLD_TO_BOX,
+                    velocity.angle() * MathUtils.degRad);
             body.setLinearVelocity(velocity.x, velocity.y);
         }
     }
