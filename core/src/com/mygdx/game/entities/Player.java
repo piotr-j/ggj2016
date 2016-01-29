@@ -1,6 +1,7 @@
 package com.mygdx.game.entities;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -13,8 +14,12 @@ import com.mygdx.game.model.PhysicsObject;
  */
 public class Player extends Entity implements PhysicsObject {
 
+    // Config
+    private final float SPEED = 2;
+
     // Controls
     private Vector2 direction = new Vector2();
+    private Vector2 velocity = new Vector2();
 
     // Physics
     private Body body;
@@ -33,7 +38,8 @@ public class Player extends Entity implements PhysicsObject {
 //                        .categoryBits(Box2DWorld.CATEGORY.ENEMY)
                         .build())
 //                .fixedRotation()
-                .angularDamping(1f)
+                .angularDamping(3f)
+                .linearDamping(10f)
                 .position(x * Box2DWorld.WORLD_TO_BOX, y * Box2DWorld.WORLD_TO_BOX)
                 .type(BodyDef.BodyType.DynamicBody)
                 .userData(this)
@@ -47,7 +53,14 @@ public class Player extends Entity implements PhysicsObject {
 
     @Override
     public void update(float delta) {
-        body.setLinearVelocity(direction.x, direction.y);
+        position.set(body.getPosition().x * Box2DWorld.BOX_TO_WORLD, body.getPosition().x * Box2DWorld.BOX_TO_WORLD);
+        rotation = body.getAngle() * MathUtils.radDeg;
+
+        if(direction.x != 0 || direction.y != 0) {
+            velocity.set(direction).nor().scl(SPEED);
+
+            body.setLinearVelocity(velocity.x, velocity.y);
+        }
     }
 
     @Override
