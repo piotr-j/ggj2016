@@ -24,14 +24,10 @@ public class Box2DWorld {
     /*
      * Masks and categories used to filter collisions
      */
-    public final static short BRANCH_MASK = CATEGORY.PLANET | CATEGORY.ENEMY;
-    public final static short FACE_MASK = CATEGORY.FACE;
+    public final static short WALKER_MASK = CATEGORY.WALKER;
 
     public final static class CATEGORY {
-        public final static short PLANET = 0x0001;
-        public final static short BRANCH = 0x0002;
-        public final static short ENEMY = 0x0004;
-        public final static short FACE = 0x0008;
+        public final static short WALKER = 0x0001;
     };
 
     private World world;

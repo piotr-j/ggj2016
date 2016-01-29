@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.mygdx.game.entities.Walker;
 import com.mygdx.game.utils.Constants;
 
 public class GameWorld implements ContactListener {
@@ -30,6 +31,9 @@ public class GameWorld implements ContactListener {
 
     public void initializeObjects() {
 
+
+        // Test walker
+        entityManager.addEntity(new Walker(100, 100, 15, this));
     }
 
     public void update(float delta) {
