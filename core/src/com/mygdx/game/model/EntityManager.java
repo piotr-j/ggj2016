@@ -48,6 +48,25 @@ public class EntityManager {
         return entities;
     }
 
+    private Array<Entity> returnedEntites = new Array<Entity>();
+
+    /**
+     * Returns same array instance!
+     * @param type
+     * @return
+     */
+    public Array<Entity> getEntitiesClass(Class type) {
+        returnedEntites.clear();
+
+        for(int i = 0; i < entities.size; i++) {
+            if(entities.get(i).getClass() == type) {
+                returnedEntites.add(entities.get(i));
+            }
+        }
+
+        return returnedEntites;
+    }
+
     public void dispose() {
         for (Entity entity : entities) {
             entity.dispose();

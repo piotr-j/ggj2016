@@ -8,12 +8,14 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.G;
 import com.mygdx.game.entities.Arena;
 import com.mygdx.game.controls.PlayerAWSDController;
 import com.mygdx.game.controls.PlayerArrowsController;
 import com.mygdx.game.entities.Flame;
 import com.mygdx.game.entities.Player;
+import com.mygdx.game.entities.Sacrifice;
 import com.mygdx.game.utils.Constants;
 
 public class GameWorld implements ContactListener {
@@ -22,7 +24,9 @@ public class GameWorld implements ContactListener {
     private EntityManager entityManager;
 
     // Keep game state
+    private Array<Player> players;
     public static enum GameState { WAITING_TO_START, IN_GAME, FINISH };
+
     private GameState gameState = GameState.WAITING_TO_START;
 
     public GameWorld() {
@@ -58,6 +62,10 @@ public class GameWorld implements ContactListener {
 
         Flame flame2 = new Flame(G.TARGET_WIDTH - 100, G.TARGET_HEIGHT / 2, 100, this);
         entityManager.addEntity(flame2);
+
+        // Test sacrifice
+        Sacrifice sacrifice = new Sacrifice(600, 600, 15, this);
+        entityManager.addEntity(sacrifice);
      }
 
     private void createArena(float x, float y, float width, float height) {
