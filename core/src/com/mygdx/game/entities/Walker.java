@@ -1,7 +1,10 @@
 package com.mygdx.game.entities;
 
 import com.badlogic.gdx.ai.steer.SteeringAcceleration;
+import com.badlogic.gdx.ai.steer.behaviors.BlendedSteering;
+import com.badlogic.gdx.ai.steer.behaviors.RaycastObstacleAvoidance;
 import com.badlogic.gdx.ai.steer.behaviors.Wander;
+import com.badlogic.gdx.ai.steer.utils.rays.CentralRayWithWhiskersConfiguration;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -12,16 +15,21 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.mygdx.game.model.GameWorld;
 import com.mygdx.game.model.PhysicsObject;
 import com.mygdx.game.utils.BodySteerable;
+import com.mygdx.game.utils.Box2dRaycastCollisionDetector;
 
 /**
  * @author Lukasz Zmudziak, @lukz_dev on 2016-01-29.
  */
 public class Walker extends Entity implements PhysicsObject {
     public static boolean debugDrawWander = true;
+    public static boolean debugDrawAvoidence = true;
     // Physics
     private Body body;
     private BodySteerable steerable;
     private Wander<Vector2> wander;
+    private RaycastObstacleAvoidance<Vector2> avoidance;
+    private CentralRayWithWhiskersConfiguration<Vector2> rayCfg;
+    private BlendedSteering<Vector2> steering;
     private boolean flagForDelete = false;
 
     public Walker(float x, float y, float radius, GameWorld gameWorld) {
@@ -59,6 +67,15 @@ public class Walker extends Entity implements PhysicsObject {
             .setWanderOrientation(MathUtils.random(360))
             .setWanderRadius(1f)
             .setWanderRate(MathUtils.PI2 * 2);
+        rayCfg = new CentralRayWithWhiskersConfiguration<Vector2>(steerable, 1f, .75f, 30f);
+
+        Box2dRaycastCollisionDetector detector = new Box2dRaycastCollisionDetector(
+            gameWorld.getBox2DWorld().getWorld());
+        avoidance = new RaycastObstacleAvoidance<Vector2>(steerable, rayCfg, detector);
+        avoidance.setDistanceFromBoundary(1f);
+        steering = new BlendedSteering<Vector2>(steerable);
+        steering.add(wander, .5f);
+        steering.add(avoidance, .75f);
     }
 
     @Override
@@ -66,6 +83,7 @@ public class Walker extends Entity implements PhysicsObject {
 
     }
 
+    private static Vector2 tmp = new Vector2();
     @Override public void drawDebug (ShapeRenderer shapeRenderer) {
         if (debugDrawWander) {
             Vector2 target = wander.getInternalTargetPosition();
@@ -82,6 +100,20 @@ public class Walker extends Entity implements PhysicsObject {
 //            shapeRenderer.setColor(Color.MAGENTA);
 //            shapeRenderer.circle(center.x, center.y, decelerationRadius, 32);
         }
+        if (debugDrawAvoidence) {
+            Vector2 pos = body.getPosition();
+            float rayLength = rayCfg.getRayLength();
+            tmp.set(1, 0).rotateRad(body.getAngle() + 90 * MathUtils.degRad).scl(rayLength);
+            shapeRenderer.setColor(Color.RED);
+            shapeRenderer.line(pos.x, pos.y, pos.x + tmp.x, pos.y + tmp.y);
+            float whiskerLength = rayCfg.getWhiskerLength();
+            float whiskerAngle = rayCfg.getWhiskerAngle();
+            tmp.set(1, 0).rotateRad(body.getAngle() + (90 + whiskerAngle) * MathUtils.degRad).scl(whiskerLength);
+            shapeRenderer.setColor(Color.MAGENTA);
+            shapeRenderer.line(pos.x, pos.y, pos.x + tmp.x, pos.y + tmp.y);
+            tmp.set(1, 0).rotateRad(body.getAngle() + (90 - whiskerAngle) * MathUtils.degRad).scl(whiskerLength);
+            shapeRenderer.line(pos.x, pos.y, pos.x + tmp.x, pos.y + tmp.y);
+        }
     }
 
     public static final SteeringAcceleration<Vector2> steeringOutput = new SteeringAcceleration<Vector2>(new Vector2());
@@ -89,7 +121,7 @@ public class Walker extends Entity implements PhysicsObject {
     public void update(float delta) {
         // note this is garbage
         boolean anyAccelerations = false;
-        wander.calculateSteering(steeringOutput);
+        steering.calculateSteering(steeringOutput);
         // Update position and linear velocity.
         if (!steeringOutput.linear.isZero()) {
             // this method internally scales the force by deltaTime
