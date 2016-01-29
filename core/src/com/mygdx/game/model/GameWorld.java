@@ -12,6 +12,7 @@ import com.mygdx.game.G;
 import com.mygdx.game.entities.Arena;
 import com.mygdx.game.controls.PlayerAWSDController;
 import com.mygdx.game.controls.PlayerArrowsController;
+import com.mygdx.game.entities.Flame;
 import com.mygdx.game.entities.Player;
 import com.mygdx.game.utils.Constants;
 
@@ -50,6 +51,13 @@ public class GameWorld implements ContactListener {
     public void initializeObjects() {
         // Test arena bounds
         createArena(100, 100, 1080, 520);
+
+        // Flames!
+        Flame flame = new Flame(100, G.TARGET_HEIGHT / 2, 100, this);
+        entityManager.addEntity(flame);
+
+        Flame flame2 = new Flame(G.TARGET_WIDTH - 100, G.TARGET_HEIGHT / 2, 100, this);
+        entityManager.addEntity(flame2);
      }
 
     private void createArena(float x, float y, float width, float height) {
