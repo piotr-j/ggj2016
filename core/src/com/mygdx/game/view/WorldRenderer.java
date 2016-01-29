@@ -24,6 +24,7 @@ public class WorldRenderer {
     private OrthographicCamera cam;
     private Viewport viewport;
     private SpriteBatch batch;
+    private ShapeRenderer shapeRenderer;
 
     // Used to scale cam for box2d things without memory allocation
     private Matrix4 camCombinedBox2D = new Matrix4();
@@ -40,6 +41,8 @@ public class WorldRenderer {
 
         // Batch used for
         batch = new SpriteBatch();
+
+        shapeRenderer = new ShapeRenderer();
     }
 
     public void render(float delta) {
@@ -63,6 +66,10 @@ public class WorldRenderer {
         // Debug render
         if (G.DEBUG) {
             gameWorld.getBox2DWorld().debugRender(cam);
+            shapeRenderer.setProjectionMatrix(cam.combined);
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            gameWorld.drawDebug(shapeRenderer);
+            shapeRenderer.end();
         }
     }
 

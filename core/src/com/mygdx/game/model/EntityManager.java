@@ -1,6 +1,7 @@
 package com.mygdx.game.model;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.entities.Entity;
 
@@ -70,6 +71,12 @@ public class EntityManager {
     public void dispose() {
         for (Entity entity : entities) {
             entity.dispose();
+        }
+    }
+
+    public void drawDebug (ShapeRenderer shapeRenderer) {
+        for (Entity entity : entities) {
+            entity.drawDebug(shapeRenderer);
         }
     }
 }
