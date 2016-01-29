@@ -26,6 +26,7 @@ public class Flame extends Entity implements PhysicsObject {
                         .density(1f)
                         .friction(0.2f)
                         .restitution(0.5f)
+                        .sensor()
 //                                .maskBits(Box2DWorld.WALKER_MASK)
 //                        .categoryBits(Box2DWorld.CATEGORY.ENEMY)
                         .build())
