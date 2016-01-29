@@ -1,5 +1,7 @@
 package com.mygdx.game.model;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -7,6 +9,9 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.mygdx.game.entities.Arena;
+import com.mygdx.game.controls.PlayerAWSDController;
+import com.mygdx.game.controls.PlayerArrowsController;
+import com.mygdx.game.entities.Player;
 import com.mygdx.game.entities.Walker;
 import com.mygdx.game.utils.Constants;
 
@@ -28,9 +33,23 @@ public class GameWorld implements ContactListener {
         box2DWorld.getWorld().setContactListener(this);
 
         initializeObjects();
+
+        // Create players
+        Player player = new Player(150, 150, 15, this);
+        Player player2 = new Player(150, 150, 15, this);
+        entityManager.addEntity(player);
+        entityManager.addEntity(player2);
+
+        // Set input processors
+        InputMultiplexer inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(new PlayerArrowsController(player));
+        inputMultiplexer.addProcessor(new PlayerAWSDController(player2));
+        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     public void initializeObjects() {
+
+
         // Test walker
         entityManager.addEntity(new Walker(640, 360, 15, this));
         // Test arena bounds

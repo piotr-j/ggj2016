@@ -29,10 +29,6 @@ public class GameScreen implements Screen {
     public GameScreen() {
         this.gameWorld = new GameWorld();
         this.renderer = new WorldRenderer(gameWorld);
-
-        // Set input processors
-        InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     @Override
