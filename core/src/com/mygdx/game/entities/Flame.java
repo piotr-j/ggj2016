@@ -22,7 +22,7 @@ public class Flame extends Entity implements PhysicsObject {
 
         this.body = gameWorld.getBox2DWorld().getBodyBuilder()
                 .fixture(gameWorld.getBox2DWorld().getFixtureDefBuilder()
-                        .circleShape(getBounds().getWidth() / 2 * Box2DWorld.WORLD_TO_BOX)
+                        .circleShape(getBounds().getWidth() / 2)
                         .density(1f)
                         .friction(0.2f)
                         .restitution(0.5f)
@@ -32,7 +32,7 @@ public class Flame extends Entity implements PhysicsObject {
                         .build())
 //                .fixedRotation()
 //                .angularDamping(1f)
-                .position(x * Box2DWorld.WORLD_TO_BOX, y * Box2DWorld.WORLD_TO_BOX)
+                .position(x, y)
                 .type(BodyDef.BodyType.StaticBody)
                 .userData(this)
                 .build();
@@ -55,6 +55,7 @@ public class Flame extends Entity implements PhysicsObject {
 
     @Override
     public void handleBeginContact(PhysicsObject psycho2, GameWorld world) {
+        if (psycho2 instanceof Walker) return;
         psycho2.setFlagForDelete(true);
         world.getEntityManager().removeEntity((Entity)psycho2);
     }

@@ -3,7 +3,6 @@ package com.mygdx.game.entities;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.mygdx.game.model.Box2DWorld;
 import com.mygdx.game.model.GameWorld;
 import com.mygdx.game.model.PhysicsObject;
 import com.mygdx.game.utils.FixtureDefBuilder;
@@ -22,14 +21,12 @@ public class Arena extends Entity implements PhysicsObject {
         FixtureDefBuilder builder = gameWorld.getBox2DWorld().getFixtureDefBuilder();
         this.body = gameWorld.getBox2DWorld().getBodyBuilder()
                 .fixture(builder
-                        .boxShape(bounds.width / 2 * Box2DWorld.WORLD_TO_BOX, bounds.height / 2 * Box2DWorld.WORLD_TO_BOX)
+                        .boxShape(bounds.width / 2, bounds.height / 2)
                         .density(0)
                         .build())
                 .angularDamping(1f)
            // center of the screen
-                .position(
-                    x * Box2DWorld.WORLD_TO_BOX + bounds.width / 2 * Box2DWorld.WORLD_TO_BOX,
-                    y * Box2DWorld.WORLD_TO_BOX + bounds.height / 2 * Box2DWorld.WORLD_TO_BOX)
+                .position(x + bounds.width / 2, y + bounds.height / 2)
                 .type(BodyDef.BodyType.StaticBody)
                 .userData(this)
                 .build();

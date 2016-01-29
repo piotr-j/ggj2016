@@ -74,7 +74,7 @@ public class Box2DWorld {
 	 * Box2D debug renderer
      */
     public void debugRender(Camera cam) {
-        debugRenderer.render(world, cam.combined.cpy().scl(BOX_TO_WORLD));
+        debugRenderer.render(world, cam.combined);
     }
 
     public World getWorld() {

@@ -30,7 +30,7 @@ public class Player extends Entity implements PhysicsObject {
 
         this.body = gameWorld.getBox2DWorld().getBodyBuilder()
                 .fixture(gameWorld.getBox2DWorld().getFixtureDefBuilder()
-                        .circleShape(getBounds().getWidth() / 2 * Box2DWorld.WORLD_TO_BOX)
+                        .circleShape(getBounds().getWidth() / 2)
                         .density(1f)
                         .friction(0.2f)
                         .restitution(0.5f)
@@ -40,7 +40,7 @@ public class Player extends Entity implements PhysicsObject {
 //                .fixedRotation()
                 .angularDamping(3f)
                 .linearDamping(10f)
-                .position(x * Box2DWorld.WORLD_TO_BOX, y * Box2DWorld.WORLD_TO_BOX)
+                .position(x, y)
                 .type(BodyDef.BodyType.DynamicBody)
                 .userData(this)
                 .build();
@@ -53,14 +53,13 @@ public class Player extends Entity implements PhysicsObject {
 
     @Override
     public void update(float delta) {
-        position.set(body.getPosition().x * Box2DWorld.BOX_TO_WORLD, body.getPosition().y * Box2DWorld.BOX_TO_WORLD);
+        position.set(body.getPosition());
         rotation = body.getAngle() * MathUtils.radDeg;
 
         if(direction.x != 0 || direction.y != 0) {
             velocity.set(direction).nor().scl(SPEED);
 
-            body.setTransform(position.x * Box2DWorld.WORLD_TO_BOX, position.y * Box2DWorld.WORLD_TO_BOX,
-                    velocity.angle() * MathUtils.degRad);
+            body.setTransform(position.x, position.y, velocity.angle() * MathUtils.degRad);
             body.setLinearVelocity(velocity.x, velocity.y);
         }
     }
