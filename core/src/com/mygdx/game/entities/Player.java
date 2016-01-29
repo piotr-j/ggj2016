@@ -15,7 +15,7 @@ import com.mygdx.game.model.PhysicsObject;
 public class Player extends Entity implements PhysicsObject {
 
     // Config
-    private final float SPEED = 2;
+    private final float SPEED = 3;
 
     // Controls
     private Vector2 direction = new Vector2();

@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.G;
 import com.mygdx.game.model.Box2DWorld;
 import com.mygdx.game.model.GameWorld;
 import com.mygdx.game.model.PhysicsObject;
@@ -16,8 +17,8 @@ import com.mygdx.game.model.PhysicsObject;
 public class Sacrifice extends Entity implements PhysicsObject {
 
     // Config
-    private final float SPEED = 1.3f;
-    private final float RUN_RADIUS = 150;
+    private final float SPEED = 1f;
+    private final float RUN_RADIUS = 150 * G.INV_SCALE;
 
     // Physics
     private Body body;
@@ -33,9 +34,11 @@ public class Sacrifice extends Entity implements PhysicsObject {
         super(x, y, radius * 2, radius * 2);
         this.gameWorld = gameWorld;
 
+        System.out.println(x + " " + y);
+
         this.body = gameWorld.getBox2DWorld().getBodyBuilder()
                 .fixture(gameWorld.getBox2DWorld().getFixtureDefBuilder()
-                        .circleShape(getBounds().getWidth() / 2 * Box2DWorld.WORLD_TO_BOX)
+                        .circleShape(getBounds().getWidth() / 2)
                         .density(1f)
                         .friction(0.2f)
                         .restitution(0.5f)
@@ -45,7 +48,7 @@ public class Sacrifice extends Entity implements PhysicsObject {
 //                .fixedRotation()
                 .angularDamping(3f)
                 .linearDamping(10f)
-                .position(x * Box2DWorld.WORLD_TO_BOX, y * Box2DWorld.WORLD_TO_BOX)
+                .position(x, y)
                 .type(BodyDef.BodyType.DynamicBody)
                 .userData(this)
                 .build();
@@ -58,7 +61,9 @@ public class Sacrifice extends Entity implements PhysicsObject {
 
     @Override
     public void update(float delta) {
-        position.set(body.getPosition().x * Box2DWorld.BOX_TO_WORLD, body.getPosition().y * Box2DWorld.BOX_TO_WORLD);
+        position.set(body.getPosition().x, body.getPosition().y);
+
+        position.set(body.getPosition().x, body.getPosition().y);
         rotation = body.getAngle() * MathUtils.radDeg;
 
         // Set velocity
@@ -96,7 +101,7 @@ public class Sacrifice extends Entity implements PhysicsObject {
         }
 
 
-        runSpeed *= 0.1f * SPEED;
+        runSpeed *= SPEED * 10;
         velocity.nor().scl(runSpeed);
 
         if(!velocity.isZero()) {
@@ -104,7 +109,7 @@ public class Sacrifice extends Entity implements PhysicsObject {
             tempVec2.set(body.getLinearVelocity()).lerp(velocity, delta);
 
             body.setLinearVelocity(tempVec2);
-            body.setTransform(position.x * Box2DWorld.WORLD_TO_BOX, position.y * Box2DWorld.WORLD_TO_BOX,
+            body.setTransform(position.x, position.y,
                     velocity.angle() * MathUtils.degRad);
         }
 
@@ -117,7 +122,6 @@ public class Sacrifice extends Entity implements PhysicsObject {
 
     @Override
     public void handleBeginContact(PhysicsObject psycho2, GameWorld world) {
-
     }
 
     @Override
