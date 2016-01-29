@@ -12,7 +12,6 @@ import com.mygdx.game.entities.Arena;
 import com.mygdx.game.controls.PlayerAWSDController;
 import com.mygdx.game.controls.PlayerArrowsController;
 import com.mygdx.game.entities.Player;
-import com.mygdx.game.entities.Walker;
 import com.mygdx.game.utils.Constants;
 
 public class GameWorld implements ContactListener {
@@ -48,10 +47,6 @@ public class GameWorld implements ContactListener {
     }
 
     public void initializeObjects() {
-
-
-        // Test walker
-        entityManager.addEntity(new Walker(640, 360, 15, this));
         // Test arena bounds
         createArena(100, 100, 1080, 520);
      }
