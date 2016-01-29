@@ -55,6 +55,7 @@ public class Flame extends Entity implements PhysicsObject {
 
     @Override
     public void handleBeginContact(PhysicsObject psycho2, GameWorld world) {
+        if (psycho2 instanceof Walker) return;
         psycho2.setFlagForDelete(true);
         world.getEntityManager().removeEntity((Entity)psycho2);
     }
