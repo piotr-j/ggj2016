@@ -60,6 +60,7 @@ public class WorldRenderer {
             SHAKE_TIME -= delta;
             cam.position.x = G.VP_WIDTH / 2 + MathUtils.random(-10 * G.INV_SCALE, 10 * G.INV_SCALE);
             cam.position.y = G.VP_HEIGHT / 2 + MathUtils.random(-10 * G.INV_SCALE, 10 * G.INV_SCALE);
+            Gdx.input.vibrate((int)(SHAKE_TIME * 1000));
         } else {
             cam.position.x = G.VP_WIDTH / 2;
             cam.position.y = G.VP_HEIGHT / 2;
