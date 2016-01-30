@@ -7,7 +7,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.G;
 import com.mygdx.game.model.Box2DWorld;
@@ -21,9 +23,12 @@ public class WorldRenderer {
     private GameWorld gameWorld;
 
     private OrthographicCamera cam;
+    private OrthographicCamera guiCam;
     private Viewport viewport;
+    private Viewport guiViewport;
     private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
+    private Stage stage;
 
     // Used to scale cam for box2d things without memory allocation
 //    private Matrix4 camCombinedBox2D = new Matrix4();
@@ -32,18 +37,21 @@ public class WorldRenderer {
     public static float SHAKE_TIME = 0;
 
 
-    public WorldRenderer(GameWorld gameWorld) {
-        this.gameWorld = gameWorld;
-
+    public WorldRenderer() {
         cam = new OrthographicCamera();
 
         // Let's show more game world when window resized
         viewport = new ExtendViewport(G.VP_WIDTH, G.VP_HEIGHT, cam);
 
+        guiCam = new OrthographicCamera();
+        guiViewport = new ScreenViewport(guiCam);
+
         // Batch used for
         batch = new SpriteBatch();
 
         shapeRenderer = new ShapeRenderer();
+
+        stage = new Stage(guiViewport, batch);
     }
 
     public void render(float delta) {
@@ -83,6 +91,9 @@ public class WorldRenderer {
         if (G.DEBUG_BOX2D) {
             gameWorld.getBox2DWorld().debugRender(cam);
         }
+
+        stage.act(delta);
+        stage.draw();
     }
 
     public void resize(int width, int height) {
@@ -95,5 +106,13 @@ public class WorldRenderer {
 
     public void dispose() {
         batch.dispose();
+    }
+
+    public void setWorld (GameWorld world) {
+        this.gameWorld = world;
+    }
+
+    public Stage getStage () {
+        return stage;
     }
 }

@@ -27,8 +27,10 @@ public class GameScreen implements Screen {
 
 
     public GameScreen() {
-        this.gameWorld = new GameWorld();
-        this.renderer = new WorldRenderer(gameWorld);
+        this.renderer = new WorldRenderer();
+        this.gameWorld = new GameWorld(renderer.getStage());
+
+        renderer.setWorld(gameWorld);
     }
 
     @Override

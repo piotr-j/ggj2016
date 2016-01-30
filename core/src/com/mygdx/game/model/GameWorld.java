@@ -1,6 +1,7 @@
 package com.mygdx.game.model;
 
 import aurelienribon.tweenengine.TweenManager;
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.ai.GdxAI;
@@ -14,14 +15,13 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.G;
-import com.mygdx.game.controls.PlayerController;
-import com.mygdx.game.controls.PlayerGamepadController;
+import com.mygdx.game.controls.*;
 import com.mygdx.game.entities.Arena;
 import com.mygdx.game.entities.*;
-import com.mygdx.game.controls.PlayerAWSDController;
-import com.mygdx.game.controls.PlayerArrowsController;
 import com.mygdx.game.utils.Constants;
 
 public class GameWorld implements ContactListener {
@@ -35,6 +35,8 @@ public class GameWorld implements ContactListener {
 
     // Keep game state
     private Array<Player> players;
+    private Stage stage;
+
     public static enum GameState { WAITING_TO_START, IN_GAME, FINISH };
 
     private GameState gameState = GameState.WAITING_TO_START;
@@ -48,7 +50,8 @@ public class GameWorld implements ContactListener {
     public final static float SPAWN_SPREAD_X = 1;
     public final static float SPAWN_SPREAD_Y = 1;
 
-    public GameWorld() {
+    public GameWorld (Stage stage) {
+        this.stage = stage;
         box2DWorld = new Box2DWorld(new Vector2(0, Constants.GRAVITY));
 
         entityManager = new EntityManager();
@@ -78,19 +81,34 @@ public class GameWorld implements ContactListener {
             entityManager.addEntity(player);
         }
 
-        // Set input processors
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(new PlayerArrowsController(controller1));
-        inputMultiplexer.addProcessor(new PlayerAWSDController(controller2));
-        Gdx.input.setInputProcessor(inputMultiplexer);
+        if (Gdx.app.getType() == Application.ApplicationType.Android) {
+            Table root = new Table();
+            root.setFillParent(true);
+            stage.addActor(root);
+            Table container1 = new Table();
+            root.add(container1).fill().expand();
+            Table container2 = new Table();
+            root.add(container2).fill().expand();
+//            stage.setDebugAll(true);
+            // refs are in the stage crap
+            new PlayerStageController(controller2, container1, false);
+            new PlayerStageController(controller1, container2, true);
+            inputMultiplexer.addProcessor(stage);
+        } else {
+            // Set input processors
+            inputMultiplexer.addProcessor(new PlayerArrowsController(controller1));
+            inputMultiplexer.addProcessor(new PlayerAWSDController(controller2));
 
-        for(int i = 0; i < Controllers.getControllers().size; i++) {
-            if(i == 0) {
-                Controllers.getControllers().get(i).addListener(new PlayerGamepadController(controller1));
-            } else if(i == 1) {
-                Controllers.getControllers().get(i).addListener(new PlayerGamepadController(controller2));
+            for (int i = 0; i < Controllers.getControllers().size; i++) {
+                if (i == 0) {
+                    Controllers.getControllers().get(i).addListener(new PlayerGamepadController(controller1));
+                } else if (i == 1) {
+                    Controllers.getControllers().get(i).addListener(new PlayerGamepadController(controller2));
+                }
             }
         }
+        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     private int team1Score;
@@ -223,5 +241,13 @@ public class GameWorld implements ContactListener {
 
     public void dispose() {
         entityManager.dispose();
+    }
+
+    public void setStage (Stage stage) {
+        this.stage = stage;
+    }
+
+    public Stage getStage () {
+        return stage;
     }
 }

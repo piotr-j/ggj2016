@@ -216,7 +216,6 @@ public class Sacrifice extends Entity implements PhysicsObject {
                 wander.calculateSteering(steeringOutput);
                 // Update position and linear velocity.
                 if (!steeringOutput.linear.isZero()) {
-                    Gdx.app.log("", "gooo");
                     // this method internally scales the force by deltaTime
                     body.applyLinearImpulse(steeringOutput.linear.scl(mass), body.getWorldCenter(), true);
                 }

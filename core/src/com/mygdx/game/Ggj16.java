@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.kotcrab.vis.ui.VisUI;
 import com.mygdx.game.screens.SplashScreen;
 import com.mygdx.game.utils.Assets;
 import com.mygdx.game.utils.SpriteTween;
@@ -26,13 +27,13 @@ public class Ggj16 extends Game {
 		assets.queueLoad("pack/eruption.p", ParticleEffect.class);
 		assets.queueLoad("pack/spawn.p", ParticleEffect.class);
 		assets.queueLoad("pack/trail.p", ParticleEffect.class);
+		VisUI.load();
 		G.assets = assets;
 
 		Tween.registerAccessor(Sprite.class, new SpriteTween());
 
 		// No assets to load so go straight to the game
 		G.game.setScreen(new SplashScreen());
-
 	}
 
 	@Override
@@ -44,5 +45,6 @@ public class Ggj16 extends Game {
 	@Override public void dispose () {
 		super.dispose();
 		assets.dispose();
+		VisUI.dispose();
 	}
 }
