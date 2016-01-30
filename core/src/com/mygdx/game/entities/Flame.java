@@ -3,6 +3,8 @@ package com.mygdx.game.entities;
 import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquations;
+import box2dLight.PointLight;
+import box2dLight.RayHandler;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
@@ -41,6 +43,7 @@ public class Flame extends Entity implements PhysicsObject {
     private Sprite spriteLava;
     private ParticleEffectPool effectPool;
     private Array<ParticleEffectPool.PooledEffect> effects = new Array<ParticleEffectPool.PooledEffect>();
+    private PointLight pointLight;
 
     public Flame (float x, float y, float radius, GameWorld gameWorld, Color color, int team) {
         super(x, y, radius * 2, radius * 2);
@@ -100,6 +103,10 @@ public class Flame extends Entity implements PhysicsObject {
 
         ParticleEffect src = G.assets.get("pack/eruption.p", ParticleEffect.class);
         effectPool = new ParticleEffectPool(src, 5, 10);
+
+        RayHandler handler = gameWorld.getRayHandler();
+        pointLight = new PointLight(handler, 64, Color.ORANGE, 6, x, y);
+        pointLight.setColor(1, 0.25f, 0, 1f);
     }
 
     @Override
@@ -139,7 +146,7 @@ public class Flame extends Entity implements PhysicsObject {
             spawnRockTimer = MathUtils.random(2, 4);
             FlamingRock rock = FlamingRock.pool.obtain();
             if (!rock.addedToEngine()) {
-                rock.addToEngine(gameWorld.getEntityManager());
+                rock.addToEngine(gameWorld);
             }
             if (team == GameWorld.TEAM_2) {
                 rock.init(position.x, position.y, MathUtils.random(0, G.VP_WIDTH/2 + 3), MathUtils.random(0, G.VP_HEIGHT));
@@ -147,6 +154,7 @@ public class Flame extends Entity implements PhysicsObject {
                 rock.init(position.x, position.y, MathUtils.random(G.VP_WIDTH/2 - 3, G.VP_WIDTH), MathUtils.random(0, G.VP_HEIGHT));
             }
         }
+        pointLight.setDistance(6*spriteLava.getScaleX());
     }
 
     private void erupt () {

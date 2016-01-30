@@ -1,8 +1,11 @@
 package com.mygdx.game.screens;
 
+import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.model.GameWorld;
 import com.mygdx.game.view.WorldRenderer;
 
@@ -27,10 +30,18 @@ public class GameScreen implements Screen {
 
 
     public GameScreen() {
-        this.renderer = new WorldRenderer();
-        this.gameWorld = new GameWorld(renderer.getStage());
-
+        RayHandler.setGammaCorrection(true);
+        RayHandler.useDiffuseLight(true);
+        RayHandler rayHandler = new RayHandler(null, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        rayHandler.setAmbientLight(.7f,.6f,.5f,1);
+//        rayHandler.setAmbientLight(Color.WHITE);
+        renderer = new WorldRenderer();
+        gameWorld = new GameWorld(renderer.getStage(), rayHandler);
+//        rayHandler.diffuseBlendFunc.set(
+//
+//        );
         renderer.setWorld(gameWorld);
+        renderer.setRayHandler(rayHandler);
     }
 
     @Override

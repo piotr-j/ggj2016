@@ -1,6 +1,8 @@
 package com.mygdx.game.model;
 
 import aurelienribon.tweenengine.TweenManager;
+import box2dLight.ConeLight;
+import box2dLight.RayHandler;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -41,6 +43,11 @@ public class GameWorld implements ContactListener {
     // Keep game state
     private Array<Player> players;
     private Stage stage;
+    private RayHandler rayHandler;
+
+    public RayHandler getRayHandler () {
+        return rayHandler;
+    }
 
     public static enum GameState { WAITING_TO_START, IN_GAME, FINISH };
 
@@ -55,8 +62,9 @@ public class GameWorld implements ContactListener {
     public final static float SPAWN_SPREAD_X = 1;
     public final static float SPAWN_SPREAD_Y = 1;
 
-    public GameWorld (Stage stage) {
+    public GameWorld (Stage stage, RayHandler rayHandler) {
         this.stage = stage;
+        this.rayHandler = rayHandler;
         box2DWorld = new Box2DWorld(new Vector2(0, Constants.GRAVITY));
 
         entityManager = new EntityManager();
@@ -75,14 +83,14 @@ public class GameWorld implements ContactListener {
         // Team 1
         PlayerController controller1 = new PlayerController();
         for (int i = 0; i < playersPerTeam; i++) {
-            Player player = new Player(cx + SPAWN_X_OFFSET + MathUtils.random(-SPAWN_SPREAD_X, SPAWN_SPREAD_X), cy + MathUtils.random(-SPAWN_SPREAD_Y, SPAWN_SPREAD_Y), .3f, controller1, this, Color.BLUE, TEAM_1);
+            Player player = new Player(cx + SPAWN_X_OFFSET + MathUtils.random(-SPAWN_SPREAD_X, SPAWN_SPREAD_X), cy + MathUtils.random(-SPAWN_SPREAD_Y, SPAWN_SPREAD_Y), .3f, controller1, this, Color.RED, TEAM_1);
             entityManager.addEntity(player);
         }
 
         // Team 2
         PlayerController controller2 = new PlayerController();
         for (int i = 0; i < playersPerTeam; i++) {
-            Player player = new Player(cx - SPAWN_X_OFFSET + MathUtils.random(-SPAWN_SPREAD_X, SPAWN_SPREAD_X), cy + MathUtils.random(-SPAWN_SPREAD_Y, SPAWN_SPREAD_Y), .3f, controller2, this, Color.RED, TEAM_2);
+            Player player = new Player(cx - SPAWN_X_OFFSET + MathUtils.random(-SPAWN_SPREAD_X, SPAWN_SPREAD_X), cy + MathUtils.random(-SPAWN_SPREAD_Y, SPAWN_SPREAD_Y), .3f, controller2, this, Color.BLUE, TEAM_2);
             entityManager.addEntity(player);
         }
 
@@ -132,7 +140,18 @@ public class GameWorld implements ContactListener {
             }
         }
         Gdx.input.setInputProcessor(inputMultiplexer);
+
+        for (int i = 0; i < 5; i++) {
+            float x = G.VP_WIDTH / 10 + G.VP_WIDTH / 5 * i;
+            float hOffset = i % 2 != 0?2:0;
+            float angleOffset = ((i-2)%3) * 5;
+            float midOffset = ((i)%3)*2;
+            coneLights.add(new ConeLight(rayHandler, 16, Color.WHITE, 14 + midOffset, x, G.VP_HEIGHT + 4, -90 - angleOffset, 20));
+            coneLights.add(new ConeLight(rayHandler, 16, Color.WHITE, 14 + midOffset, x, -4, 90 + angleOffset, 20));
+        }
     }
+
+    private Array<ConeLight> coneLights = new Array<ConeLight>();
 
     private int team1Score;
     private int team2Score;
@@ -274,5 +293,9 @@ public class GameWorld implements ContactListener {
 
     public Stage getStage () {
         return stage;
+    }
+
+    public void setRayHandler (RayHandler rayHandler) {
+        this.rayHandler = rayHandler;
     }
 }
