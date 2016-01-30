@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.kotcrab.vis.ui.VisUI;
 import com.mygdx.game.screens.SplashScreen;
 import com.mygdx.game.utils.Assets;
@@ -27,6 +28,7 @@ public class Ggj16 extends Game {
 		assets.queueLoad("pack/eruption.p", ParticleEffect.class);
 		assets.queueLoad("pack/spawn.p", ParticleEffect.class);
 		assets.queueLoad("pack/trail.p", ParticleEffect.class);
+		assets.queueLoad("pack/uiskin.json", Skin.class);
 		VisUI.load();
 		G.assets = assets;
 

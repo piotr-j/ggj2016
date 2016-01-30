@@ -1,26 +1,25 @@
 package com.mygdx.game.controls;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.kotcrab.vis.ui.VisUI;
-import com.kotcrab.vis.ui.widget.VisTextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 /**
  * @author Lukasz Zmudziak, @lukz_dev on 2016-01-29.
  */
 public class PlayerStageController {
 
-    private PlayerController playerController;
     private final static float size = 200;
-    public PlayerStageController (final PlayerController controller, final Table container, boolean flip) {
-        playerController = controller;
-        final Touchpad touchpad = new Touchpad(0.1f, VisUI.getSkin());
-        touchpad.getStyle().background = null;
+    public PlayerStageController (final PlayerController controller, final Table container, Skin skin, boolean flip) {
+        final Touchpad touchpad = new Touchpad(0.1f, skin);
         touchpad.addListener(new ChangeListener() {
             @Override public void changed (ChangeEvent event, Actor actor) {
                 Vector2 direction = controller.getDirection();
@@ -28,7 +27,7 @@ public class PlayerStageController {
                 direction.y = touchpad.getKnobPercentY();
             }
         });
-        final VisTextButton shoot = new VisTextButton("");
+        final Button shoot = new Button(skin);
         shoot.addListener(new InputListener() {
             @Override public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 controller.shootPressed = true;
@@ -40,14 +39,25 @@ public class PlayerStageController {
                 super.touchUp(event, x, y, pointer, button);
             }
         });
+
+        Touchpad.TouchpadStyle style = new Touchpad.TouchpadStyle(touchpad.getStyle());
+        style.background = null;
+        Drawable knob = style.knob;
+        knob.setMinWidth(knob.getMinWidth() * 2f);
+        knob.setMinHeight(knob.getMinHeight() * 2f);
+        touchpad.setStyle(style);
         if (flip) {
-            container.add(touchpad).size(size).expand().top().right().pad(size/3);
+            container.add(touchpad).size(size * 1.5f).expand().top().right().pad(30);
             container.row();
             container.add(shoot).size(size * 2/3f).expand().bottom().right().pad(size/3);
+            shoot.setColor(Color.RED);
+            touchpad.setColor(Color.RED);
         } else {
             container.add(shoot).size(size * 2/3f).expand().top().left().pad(size/3);
             container.row();
-            container.add(touchpad).size(size).expand().bottom().left().pad(size/3);
+            container.add(touchpad).size(size * 1.5f).expand().bottom().left().pad(30);
+            shoot.setColor(Color.BLUE);
+            touchpad.setColor(Color.BLUE);
         }
     }
 }

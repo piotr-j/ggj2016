@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.G;
@@ -83,6 +84,7 @@ public class GameWorld implements ContactListener {
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         if (Gdx.app.getType() == Application.ApplicationType.Android) {
+            Skin skin = G.assets.get("pack/uiskin.json", Skin.class);
             Table root = new Table();
             root.setFillParent(true);
             stage.addActor(root);
@@ -92,8 +94,8 @@ public class GameWorld implements ContactListener {
             root.add(container2).fill().expand();
 //            stage.setDebugAll(true);
             // refs are in the stage crap
-            new PlayerStageController(controller2, container1, false);
-            new PlayerStageController(controller1, container2, true);
+            new PlayerStageController(controller2, container1, skin, false);
+            new PlayerStageController(controller1, container2, skin, true);
             inputMultiplexer.addProcessor(stage);
         } else {
             // Set input processors
