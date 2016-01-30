@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.MassData;
 import com.mygdx.game.G;
 import com.mygdx.game.model.GameWorld;
 import com.mygdx.game.model.PhysicsObject;
@@ -39,8 +38,6 @@ public class Sacrifice extends Entity implements PhysicsObject {
         super(x, y, radius * 2, radius * 2);
         this.gameWorld = gameWorld;
         this.color = color;
-
-        System.out.println(x + " " + y);
 
         this.body = gameWorld.getBox2DWorld().getBodyBuilder()
                 .fixture(gameWorld.getBox2DWorld().getFixtureDefBuilder()
