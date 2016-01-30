@@ -63,7 +63,7 @@ public class WorldRenderer {
 //        camCombinedBox2D.set(cam.combined).scl(Box2DWorld.BOX_TO_WORLD);
 
         // Clear screen
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(245 / 255f, 226 / 255f, 215 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
