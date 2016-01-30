@@ -26,6 +26,8 @@ public class G {
         public static final String TRIBUNES_BOT= "trybuny_dol";
         public static final String TRIBUNES_LEFT= "trybuny_lewo";
         public static final String TRIBUNES_RIGHT= "trybuny_prawo";
+        public static final String TEAMA= "teamA";
+        public static final String TEAMB= "teamB";
 
     }
 }
