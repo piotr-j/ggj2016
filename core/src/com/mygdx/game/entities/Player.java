@@ -2,7 +2,9 @@ package com.mygdx.game.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -34,12 +36,27 @@ public class Player extends Entity implements PhysicsObject {
     private Vector2 tempVec2 = new Vector2();
     public int team;
 
+    // Animation
+    private float animTime;
+    private Animation animation;
+    private TextureRegion animFrame;
+
     public Player(float x, float y, float radius, PlayerController controller, GameWorld gameWorld, Color color, int team) {
         super(x, y, radius * 2, radius * 2);
         this.color = color;
 
         this.controller = controller;
         this.team = team;
+
+        // Animation
+        if(team == 1) {
+            this.animation = new Animation(0.033f, G.assets.getAtlas(G.A.ATLAS).findRegions(G.A.TEAMA));
+        } else if (team == 2) {
+            this.animation = new Animation(0.033f, G.assets.getAtlas(G.A.ATLAS).findRegions(G.A.TEAMB));
+        }
+
+        this.animation.setPlayMode(Animation.PlayMode.LOOP);
+        this.animFrame = animation.getKeyFrame(animTime);
 
         this.body = gameWorld.getBox2DWorld().getBodyBuilder()
                 .fixture(gameWorld.getBox2DWorld().getFixtureDefBuilder()
@@ -61,18 +78,26 @@ public class Player extends Entity implements PhysicsObject {
 
     @Override
     public void draw(SpriteBatch batch) {
-
+        animFrame = animation.getKeyFrame(animTime);
+        batch.draw(animFrame, position.x - animFrame.getRegionWidth() * G.INV_SCALE / 2,
+                position.y - animFrame.getRegionHeight() * G.INV_SCALE / 2,
+                animFrame.getRegionWidth() / 2 * G.INV_SCALE, animFrame.getRegionHeight() / 2 * G.INV_SCALE,
+                animFrame.getRegionWidth() * G.INV_SCALE, animFrame.getRegionHeight() * G.INV_SCALE, 1, 1, rotation - 90);
     }
 
     @Override public void drawDebug (ShapeRenderer shapeRenderer) {
-        shapeRenderer.setColor(color);
-        shapeRenderer.circle(position.x, position.y, bounds.width/2, 16);
+//        shapeRenderer.setColor(color);
+//        shapeRenderer.circle(position.x, position.y, bounds.width/2, 16);
     }
 
     @Override
     public void update(float delta) {
         position.set(body.getPosition());
+        velocity.set(body.getLinearVelocity());
         rotation = body.getAngle() * MathUtils.radDeg;
+
+        float animSpeed = MathUtils.clamp(velocity.len(), 0, 1);
+        animTime += delta * animSpeed;
 
         // Transform direction into velocity
         if(controller.getDirection().x != 0 || controller.getDirection().y != 0) {
