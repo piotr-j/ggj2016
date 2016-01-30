@@ -50,7 +50,7 @@ public class Box2DWorld {
     public void update(float dt) {
         // Those are quite high values because tree is complex object you need a lot of iterations or it will freak out
         // I typically use 5 velocity iterations and 3 position iterations in my other games
-        world.step(dt, 10, 4);
+        world.step(1/60f, 10, 4);
         sweepDeadBodies();
     }
 

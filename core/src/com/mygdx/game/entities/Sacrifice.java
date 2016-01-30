@@ -73,8 +73,9 @@ public class Sacrifice extends Entity implements PhysicsObject {
     @Override
     public void update(float delta) {
         if (owner != null) {
-            tmp.set(1, 0).rotate(owner.getRotation()).scl(bounds.width/2 + owner.bounds.width/2 + 0.05f).add(owner.getPosition());
-            body.setTransform(tmp.x, tmp.y, 0);
+            float rotation = owner.getRotation();
+            tmp.set(1, 0).rotate(rotation).scl(bounds.width/2 + owner.bounds.width/2 + 0.15f).add(owner.getPosition());
+            body.setTransform(tmp.x, tmp.y, rotation * MathUtils.degRad);
             body.setLinearVelocity(0, 0);
             body.setAngularVelocity(0);
             position.set(body.getPosition());

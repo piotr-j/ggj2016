@@ -29,6 +29,7 @@ public class Walker extends Entity implements PhysicsObject {
 
     // Physics
     private Body body;
+    private float mass;
     private BodySteerable steerable;
     private Wander<Vector2> wander;
     private RaycastObstacleAvoidance<Vector2> avoidance;
@@ -47,16 +48,19 @@ public class Walker extends Entity implements PhysicsObject {
                         .friction(0.2f)
                         .restitution(0.5f)
                         .build())
-                .angularDamping(1f)
+                .angularDamping(10f)
+                .linearDamping(20f)
                 .position(x, y)
                 .angle(MathUtils.random(-MathUtils.PI, MathUtils.PI))
                 .type(BodyDef.BodyType.DynamicBody)
                 .userData(this)
                 .build();
 
+        mass = body.getMass();
+
         steerable = new BodySteerable();
-        steerable.setMaxLinearAcceleration(2f);
-        steerable.setMaxLinearSpeed(1f);
+        steerable.setMaxLinearAcceleration(1f);
+        steerable.setMaxLinearSpeed(.75f);
         steerable.setMaxAngularAcceleration(.5f);
         steerable.setMaxAngularSpeed(3f);
         steerable.setBoundingRadius(bounds.width / 2);
@@ -135,36 +139,17 @@ public class Walker extends Entity implements PhysicsObject {
     public void update(float delta) {
         position.set(body.getPosition());
         // note this is garbage
-        boolean anyAccelerations = false;
         steering.calculateSteering(steeringOutput);
         // Update position and linear velocity.
         if (!steeringOutput.linear.isZero()) {
             // this method internally scales the force by deltaTime
-            body.applyForceToCenter(steeringOutput.linear, true);
-            anyAccelerations = true;
+            body.applyLinearImpulse(steeringOutput.linear.scl(mass), body.getWorldCenter(), true);
         }
 
         // Update orientation and angular velocity
         if (steeringOutput.angular != 0) {
             // this method internally scales the torque by deltaTime
             body.applyTorque(steeringOutput.angular, true);
-            anyAccelerations = true;
-        }
-
-        if (anyAccelerations) {
-            // Cap the linear speed
-            Vector2 velocity = body.getLinearVelocity();
-            float currentSpeedSquare = velocity.len2();
-            float maxLinearSpeed = steerable.getMaxLinearSpeed();
-            if (currentSpeedSquare > maxLinearSpeed * maxLinearSpeed) {
-                body.setLinearVelocity(velocity.scl(maxLinearSpeed / (float)Math.sqrt(currentSpeedSquare)));
-            }
-
-            // Cap the angular speed
-            float maxAngVelocity = steerable.getMaxAngularSpeed();
-            if (body.getAngularVelocity() > maxAngVelocity) {
-                body.setAngularVelocity(maxAngVelocity);
-            }
         }
     }
 

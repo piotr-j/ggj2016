@@ -1,6 +1,5 @@
 package com.mygdx.game.entities;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -8,9 +7,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.mygdx.game.G;
 import com.mygdx.game.controls.PlayerController;
-import com.mygdx.game.model.Box2DWorld;
 import com.mygdx.game.model.GameWorld;
 import com.mygdx.game.model.PhysicsObject;
 
@@ -20,13 +17,14 @@ import com.mygdx.game.model.PhysicsObject;
 public class Player extends Entity implements PhysicsObject {
 
     // Config
-    private final float SPEED = 8;
+    private final float SPEED = 0.7f;
     private final Color color;
 
     private PlayerController controller;
 
     // Physics
     private Body body;
+    private float mass;
     private boolean flagForDelete = false;
     private Vector2 velocity = new Vector2();
 
@@ -51,12 +49,13 @@ public class Player extends Entity implements PhysicsObject {
 //                        .categoryBits(Box2DWorld.CATEGORY.ENEMY)
                         .build())
 //                .fixedRotation()
-                .angularDamping(3f)
+                .angularDamping(10f)
                 .linearDamping(10f)
                 .position(x, y)
                 .type(BodyDef.BodyType.DynamicBody)
                 .userData(this)
                 .build();
+        mass = body.getMass();
     }
 
     @Override
@@ -75,13 +74,27 @@ public class Player extends Entity implements PhysicsObject {
         rotation = body.getAngle() * MathUtils.radDeg;
 
         // Transform direction into velocity
-        if(controller.getDirection().x != 0 || controller.getDirection().y != 0) {
-            velocity.set(controller.getDirection()).limit(1).scl(SPEED);
+        Vector2 direction = controller.getDirection();
+        if(!direction.isZero()) {
+            tempVec2.set(direction).limit2(1).scl(mass).scl(SPEED);
+            body.applyLinearImpulse(tempVec2, body.getWorldCenter(), true);
+        }
 
-            tempVec2.set(body.getLinearVelocity()).lerp(velocity, 0.08f * 60 * delta);
-
-            body.setTransform(position.x, position.y, tempVec2.angle() * MathUtils.degRad);
-            body.setLinearVelocity(tempVec2.x, tempVec2.y);
+        Vector2 velocity = body.getLinearVelocity();
+        if (!velocity.isZero(0.001f)) {
+            float desiredAngle = velocity.angleRad();
+            float nextAngle = body.getAngle() + body.getAngularVelocity() / 60.0f;
+            float totalRotation = desiredAngle - nextAngle;
+            while (totalRotation < -180 * MathUtils.degRad)
+                totalRotation += 360 * MathUtils.degRad;
+            while (totalRotation > 180 * MathUtils.degRad)
+                totalRotation -= 360 * MathUtils.degRad;
+            float desiredAngularVelocity = totalRotation * 60;
+            float change = 90f * MathUtils.degRad; //allow 1 degree rotation per time step
+            desiredAngularVelocity = Math.min(change, Math.max(-change, desiredAngularVelocity));
+            float impulse = body.getInertia() * desiredAngularVelocity;
+//            Gdx.app.log("", "impulse " + impulse);
+            body.applyAngularImpulse(impulse, true);
         }
 
         if (sacrifice != null) {
