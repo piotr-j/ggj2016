@@ -189,7 +189,27 @@ public class GameWorld implements ContactListener {
             float y = MathUtils.random(100 + 15, 100 + 520 - 15) * G.INV_SCALE;
             entityManager.addEntity(new Walker(x, y, .25f, this, Color.YELLOW));
         }
+
+
+        generateAudience();
      }
+
+    private void generateAudience() {
+
+        // Down side
+        for(int i = 0; i < 30; i++) {
+            Spectator spect = new Spectator(MathUtils.random(0, G.VP_WIDTH), MathUtils.random(0, ARENA_Y), .3f, this);
+            entityManager.addEntity(spect);
+        }
+
+        // Up side
+        for(int i = 0; i < 30; i++) {
+            Spectator spect = new Spectator(MathUtils.random(0, G.VP_WIDTH), MathUtils.random(ARENA_X + ARENA_HEIGHT, G.VP_HEIGHT), .3f, this);
+            entityManager.addEntity(spect);
+        }
+
+
+    }
 
     private void createArena(float x, float y, float width, float height) {
         float w = (G.VP_WIDTH - width)/2;
@@ -199,12 +219,12 @@ public class GameWorld implements ContactListener {
         entityManager.addEntity(new Tribunes(0, 0, G.VP_WIDTH, h, this,
             G.assets.getAtlasRegion(G.A.TRIBUNES_BOT, G.A.ATLAS)));
         entityManager.addEntity(new Tribunes(0, y + height, G.VP_WIDTH, h, this,
-            G.assets.getAtlasRegion(G.A.TRIBUNES_TOP, G.A.ATLAS)));
+                G.assets.getAtlasRegion(G.A.TRIBUNES_TOP, G.A.ATLAS)));
 
-        entityManager.addEntity(new Tribunes(0, y, w, G.VP_HEIGHT - h*2, this,
-            G.assets.getAtlasRegion(G.A.TRIBUNES_LEFT, G.A.ATLAS)));
-        entityManager.addEntity(new Tribunes(x + width, y, w, G.VP_HEIGHT - h*2, this,
-            G.assets.getAtlasRegion(G.A.TRIBUNES_RIGHT, G.A.ATLAS)));
+        entityManager.addEntity(new Tribunes(0, y, w, G.VP_HEIGHT - h * 2, this,
+                G.assets.getAtlasRegion(G.A.TRIBUNES_LEFT, G.A.ATLAS)));
+        entityManager.addEntity(new Tribunes(x + width, y, w, G.VP_HEIGHT - h * 2, this,
+                G.assets.getAtlasRegion(G.A.TRIBUNES_RIGHT, G.A.ATLAS)));
     }
 
     public void update(float delta) {
