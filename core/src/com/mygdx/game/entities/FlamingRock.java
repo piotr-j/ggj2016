@@ -59,8 +59,8 @@ public class FlamingRock extends Entity implements Pool.Poolable {
         timer += delta;
         float a = timer/duration;
         if (a <= 1) {
-            position.x = Interpolation.sineOut.apply(start.x, target.x, a);
-            position.y = Interpolation.sineOut.apply(start.y, target.y, a);
+            position.x = Interpolation.linear.apply(start.x, target.x, a);
+            position.y = Interpolation.linear.apply(start.y, target.y, a) + ((1+MathUtils.sinDeg(a * 180))*2);
         } else {
             effect.allowCompletion();
         }
