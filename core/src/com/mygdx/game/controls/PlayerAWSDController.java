@@ -53,7 +53,7 @@ public class PlayerAWSDController extends InputAdapter {
                 if(playerController.getDirection().y == -1) playerController.getDirection().y = 0;
                 return true;
             case Input.Keys.Q:
-                playerController.shootPressed = true;
+                playerController.shootPressed = false;
                 return true;
         }
         return false;

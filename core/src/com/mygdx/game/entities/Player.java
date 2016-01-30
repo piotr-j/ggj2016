@@ -10,7 +10,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Joint;
-import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.joints.WeldJoint;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 import com.mygdx.game.G;
@@ -27,6 +26,7 @@ public class Player extends Entity implements PhysicsObject, Box2DWorld.JointCal
     // Config
     private final float SPEED = 0.7f;
     private final float SACRIFICE_SLOWDOWN = 0.8f;
+    private GameWorld gameWorld;
     private final Color color;
 
     private PlayerController controller;
@@ -48,6 +48,7 @@ public class Player extends Entity implements PhysicsObject, Box2DWorld.JointCal
 
     public Player(float x, float y, float radius, PlayerController controller, GameWorld gameWorld, Color color, int team) {
         super(x, y, radius * 2, radius * 2);
+        this.gameWorld = gameWorld;
         this.color = color;
 
         this.controller = controller;
@@ -100,7 +101,8 @@ public class Player extends Entity implements PhysicsObject, Box2DWorld.JointCal
     public void update(float delta) {
         position.set(body.getPosition());
         velocity.set(body.getLinearVelocity());
-        rotation = body.getAngle() * MathUtils.radDeg;
+        float angle = body.getAngle();
+        rotation = angle * MathUtils.radDeg;
 
         float animSpeed = MathUtils.clamp(velocity.len(), 0, 1);
         animTime += delta * animSpeed;
@@ -116,7 +118,7 @@ public class Player extends Entity implements PhysicsObject, Box2DWorld.JointCal
         Vector2 velocity = body.getLinearVelocity();
         if (!velocity.isZero(0.001f)) {
             float desiredAngle = velocity.angleRad();
-            float nextAngle = body.getAngle() + body.getAngularVelocity() / 60.0f;
+            float nextAngle = angle + body.getAngularVelocity() / 60.0f;
             float totalRotation = desiredAngle - nextAngle;
             while (totalRotation < -180 * MathUtils.degRad)
                 totalRotation += 360 * MathUtils.degRad;
@@ -126,13 +128,31 @@ public class Player extends Entity implements PhysicsObject, Box2DWorld.JointCal
             float change = 90f * MathUtils.degRad; //allow 1 degree rotation per time step
             desiredAngularVelocity = Math.min(change, Math.max(-change, desiredAngularVelocity));
             float impulse = body.getInertia() * desiredAngularVelocity;
-//            Gdx.app.log("", "impulse " + impulse);
             body.applyAngularImpulse(impulse, true);
         }
 
-        if (sacrifice != null) {
-
+        if (sacrifice != null && controller.isShootPressed()) {
+            tempVec2.set(1, 0).rotateRad(angle).nor().scl(0.25f);
+            shootSacrifice(tempVec2);
         }
+    }
+
+    private void releaseSacrifice () {
+        gameWorld.getBox2DWorld().destroyJoint(sacrificeWeld);
+        sacrificeWeld = null;
+        sacrifice.owner = null;
+        sacrifice.captureCoolDown = .55f;
+        sacrifice = null;
+    }
+
+    private void shootSacrifice (Vector2 impulse) {
+        gameWorld.getBox2DWorld().getWorld().destroyJoint(sacrificeWeld);
+        sacrifice.getBody().applyLinearImpulse(impulse, sacrifice.getBody().getWorldCenter(), true);
+        sacrifice.owner = null;
+        sacrifice.captureCoolDown = .55f;
+        sacrifice.shootTimer = 1.5f;
+        sacrifice = null;
+        sacrificeWeld = null;
     }
 
     @Override
@@ -151,14 +171,13 @@ public class Player extends Entity implements PhysicsObject, Box2DWorld.JointCal
             if ((sacrifice.owner == null
                 || (sacrifice.captureCoolDown <= 0 && sacrifice.owner.team != team)) && this.sacrifice == null) {
                 if (sacrifice.owner != null) {
-                    world.getBox2DWorld().destroyJoint(sacrifice.owner.sacrificeWeld);
-                    sacrifice.owner.sacrificeWeld = null;
-                    sacrifice.owner.sacrifice = null;
+                    sacrifice.owner.releaseSacrifice();
                 }
                 sacrifice.owner = this;
                 sacrifice.captureCoolDown = .55f;
                 this.sacrifice = sacrifice;
                 Body sacrificeBody = sacrifice.getBody();
+                // so its easier to controll
                 sacrificeBody.setLinearDamping(0);
                 sacrificeBody.setAngularDamping(0);
                 WeldJointDef wjd = new WeldJointDef();

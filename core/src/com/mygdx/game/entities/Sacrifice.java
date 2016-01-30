@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.MassData;
 import com.mygdx.game.G;
 import com.mygdx.game.model.GameWorld;
 import com.mygdx.game.model.PhysicsObject;
@@ -58,9 +59,6 @@ public class Sacrifice extends Entity implements PhysicsObject {
     }
 
     public void resetBox2d() {
-        MassData massData = body.getMassData();
-        massData.mass = mass;
-        body.setMassData(massData);
         body.setAngularDamping(10f);
         body.setLinearDamping(30f);
     }
@@ -77,19 +75,15 @@ public class Sacrifice extends Entity implements PhysicsObject {
 
     private Vector2 tmp = new Vector2();
     public float captureCoolDown;
+    public float shootTimer;
     @Override
     public void update(float delta) {
+        captureCoolDown -= delta;
+        shootTimer -= delta;
         if (owner != null) {
-//            float rotation = owner.getRotation();
-//            tmp.set(1, 0).rotate(rotation).scl(bounds.width/2 + owner.bounds.width/2 + 0.15f).add(owner.getPosition());
-
-//            body.setTransform(tmp.x, tmp.y, rotation * MathUtils.degRad);
-//            body.setLinearVelocity(0, 0);
-//            body.setAngularVelocity(0);
-            position.set(body.getPosition());
-//            body.setLinearVelocity(owner.getBody().getLinearVelocity());
-            captureCoolDown -= delta;
-        } else {
+            // position set via weld joint with owner
+        } else if (shootTimer <= 0){
+            resetBox2d();
             position.set(body.getPosition());
             rotation = body.getAngle() * MathUtils.radDeg;
 
@@ -136,6 +130,7 @@ public class Sacrifice extends Entity implements PhysicsObject {
                 body.applyLinearImpulse(velocity, body.getWorldCenter(), true);
             }
         }
+        position.set(body.getPosition());
 
         Vector2 velocity = body.getLinearVelocity();
         if (!velocity.isZero(0.001f)) {
