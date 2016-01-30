@@ -75,7 +75,7 @@ public class GameWorld implements ContactListener {
         // Set input processors
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(new PlayerArrowsController(controller1));
-        inputMultiplexer.addProcessor(new PlayerAWSDCowntroller(controller2));
+        inputMultiplexer.addProcessor(new PlayerAWSDController(controller2));
         Gdx.input.setInputProcessor(inputMultiplexer);
 
         for(int i = 0; i < Controllers.getControllers().size; i++) {
