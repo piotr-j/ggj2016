@@ -101,8 +101,10 @@ public class Player extends Entity implements PhysicsObject {
         if (psycho2 instanceof Sacrifice) {
             Sacrifice sacrifice = (Sacrifice)psycho2;
             // do we allow for swapping and other stuff?
-            if (sacrifice.owner == null && this.sacrifice == null) {
+            if ((sacrifice.owner == null
+                || (sacrifice.captureCoolDown <= 0 && sacrifice.owner.team != team)) && this.sacrifice == null) {
                 sacrifice.owner = this;
+                sacrifice.captureCoolDown = .75f;
                 this.sacrifice = sacrifice;
             }
         }

@@ -8,9 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.G;
-import com.mygdx.game.model.Box2DWorld;
 import com.mygdx.game.model.GameWorld;
 import com.mygdx.game.model.PhysicsObject;
 
@@ -71,6 +69,7 @@ public class Sacrifice extends Entity implements PhysicsObject {
     }
 
     private Vector2 tmp = new Vector2();
+    public float captureCoolDown;
     @Override
     public void update(float delta) {
         if (owner != null) {
@@ -80,6 +79,7 @@ public class Sacrifice extends Entity implements PhysicsObject {
             body.setAngularVelocity(0);
             position.set(body.getPosition());
             body.setLinearVelocity(owner.getBody().getLinearVelocity());
+            captureCoolDown -= delta;
         } else {
             position.set(body.getPosition());
             rotation = body.getAngle() * MathUtils.radDeg;
