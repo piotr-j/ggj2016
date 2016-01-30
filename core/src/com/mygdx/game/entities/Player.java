@@ -18,6 +18,7 @@ import com.mygdx.game.controls.PlayerController;
 import com.mygdx.game.model.Box2DWorld;
 import com.mygdx.game.model.GameWorld;
 import com.mygdx.game.model.PhysicsObject;
+import com.mygdx.game.view.WorldRenderer;
 
 /**
  * @author Lukasz Zmudziak, @lukz_dev on 2016-01-29.
@@ -224,6 +225,11 @@ public class Player extends Entity implements PhysicsObject, Box2DWorld.JointCal
     public WeldJoint sacrificeWeld;
     @Override
     public void handleBeginContact(PhysicsObject psycho2, GameWorld world) {
+        if(psycho2 instanceof Flame) {
+            WorldRenderer.SHAKE_TIME += 0.1f;
+        }
+
+
         if (!isActive()) return;
         if (psycho2 instanceof Sacrifice) {
             Sacrifice sacrifice = (Sacrifice)psycho2;

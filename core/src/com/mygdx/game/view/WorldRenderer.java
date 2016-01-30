@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -27,6 +28,9 @@ public class WorldRenderer {
     // Used to scale cam for box2d things without memory allocation
 //    private Matrix4 camCombinedBox2D = new Matrix4();
 
+    // Ugly screenshake
+    public static float SHAKE_TIME = 0;
+
 
     public WorldRenderer(GameWorld gameWorld) {
         this.gameWorld = gameWorld;
@@ -43,6 +47,15 @@ public class WorldRenderer {
     }
 
     public void render(float delta) {
+        if(SHAKE_TIME > 0) {
+            SHAKE_TIME -= delta;
+            cam.position.x = G.VP_WIDTH / 2 + MathUtils.random(-10 * G.INV_SCALE, 10 * G.INV_SCALE);
+            cam.position.y = G.VP_HEIGHT / 2 + MathUtils.random(-10 * G.INV_SCALE, 10 * G.INV_SCALE);
+        } else {
+            cam.position.x = G.VP_WIDTH / 2;
+            cam.position.y = G.VP_HEIGHT / 2;
+        }
+
         // Update camera
         cam.update();
         batch.setProjectionMatrix(cam.combined);

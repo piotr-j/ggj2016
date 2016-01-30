@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.MassData;
 import com.mygdx.game.G;
 import com.mygdx.game.model.GameWorld;
 import com.mygdx.game.model.PhysicsObject;
+import com.mygdx.game.view.WorldRenderer;
 
 /**
  * Should run from player
@@ -188,6 +189,9 @@ public class Sacrifice extends Entity implements PhysicsObject {
                 world.teamScored(flame.team);
             }
             owner = null;
+
+
+            WorldRenderer.SHAKE_TIME += 0.3f;
         }
     }
 
