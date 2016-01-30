@@ -91,7 +91,7 @@ public class GameWorld implements ContactListener {
         root.setFillParent(true);
         stage.addActor(root);
         Table scores = new Table();
-        scores.debug();
+//        scores.debug();
         scores.setFillParent(true);
         root.addActor(scores);
         team1ScoreLabel = new Label("Team 1 : 0", skin);
