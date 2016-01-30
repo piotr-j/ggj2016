@@ -221,6 +221,13 @@ ofiara
   orig: 43, 32
   offset: 0, 0
   index: 14
+particle
+  rotate: false
+  xy: 92, 437
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 ray
   rotate: false
   xy: 1108, 206

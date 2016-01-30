@@ -111,10 +111,10 @@ public class GameWorld implements ContactListener {
         createArena(ARENA_X, ARENA_Y, ARENA_WIDTH, ARENA_HEIGHT);
 
         // Flames!
-        Flame flame = new Flame(3, G.VP_HEIGHT / 2, 1, this, Color.ORANGE, TEAM_2);
+        Flame flame = new Flame(2.5F, G.VP_HEIGHT / 2, 1, this, Color.ORANGE, TEAM_2);
         entityManager.addEntity(flame);
 
-        Flame flame2 = new Flame(G.VP_WIDTH - 3, G.VP_HEIGHT / 2, 1, this, Color.ORANGE, TEAM_1);
+        Flame flame2 = new Flame(G.VP_WIDTH - 2.5f, G.VP_HEIGHT / 2, 1, this, Color.ORANGE, TEAM_1);
         entityManager.addEntity(flame2);
 
         // Test sacrifice
