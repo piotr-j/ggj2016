@@ -17,4 +17,14 @@ public class G {
     // Game instance used to move between screens
     public static Game game;
     public static Assets assets;
+
+    public static final class A {
+        public static final String ATLAS = "pack/entities.atlas";
+        public static final String ARENA = "arena";
+        public static final String TRIBUNES_TOP = "trybuny_gora";
+        public static final String TRIBUNES_BOT= "trybuny_dol";
+        public static final String TRIBUNES_LEFT= "trybuny_lewo";
+        public static final String TRIBUNES_RIGHT= "trybuny_prawo";
+
+    }
 }

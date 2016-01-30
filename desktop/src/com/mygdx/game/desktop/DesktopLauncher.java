@@ -10,6 +10,9 @@ public class DesktopLauncher {
         TexturePacker.Settings settings = new TexturePacker.Settings();
         settings.maxWidth = 2048;
         settings.maxHeight = 2048;
+        // strip so we dont have to deal with this in a jam
+        settings.stripWhitespaceX = false;
+        settings.stripWhitespaceY = false;
         TexturePacker.processIfModified(settings, "raw", "pack", "entities");
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();

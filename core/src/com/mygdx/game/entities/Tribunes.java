@@ -1,6 +1,7 @@
 package com.mygdx.game.entities;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.mygdx.game.model.GameWorld;
@@ -15,8 +16,9 @@ public class Tribunes extends Entity implements PhysicsObject {
     // Physics
     private Body body;
     private boolean flagForDelete = false;
+    private TextureAtlas.AtlasRegion region;
 
-    public Tribunes (float x, float y, float width, float height, GameWorld gameWorld) {
+    public Tribunes (float x, float y, float width, float height, GameWorld gameWorld, TextureAtlas.AtlasRegion region) {
         super(x, y, width, height);
         FixtureDefBuilder builder = gameWorld.getBox2DWorld().getFixtureDefBuilder();
         this.body = gameWorld.getBox2DWorld().getBodyBuilder()
@@ -30,11 +32,12 @@ public class Tribunes extends Entity implements PhysicsObject {
                 .type(BodyDef.BodyType.StaticBody)
                 .userData(this)
                 .build();
+        this.region = region;
     }
 
     @Override
     public void draw(SpriteBatch batch) {
-
+        batch.draw(region, bounds.x, bounds.y, bounds.width, bounds.height);
     }
 
     @Override

@@ -4,35 +4,35 @@ size: 2048,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-ARENA
+arena
   rotate: false
   xy: 2, 160
   size: 1104, 543
   orig: 1104, 543
   offset: 0, 0
   index: -1
-TRYBUNY_DOL
+trybuny_dol
   rotate: false
   xy: 2, 81
   size: 1105, 77
   orig: 1105, 77
   offset: 0, 0
   index: -1
-TRYBUNY_GORA
+trybuny_gora
   rotate: false
   xy: 2, 2
   size: 1105, 77
   orig: 1105, 77
   offset: 0, 0
   index: -1
-TRYBUNY_LEWO
+trybuny_lewo
   rotate: false
   xy: 1108, 160
   size: 77, 543
   orig: 77, 543
   offset: 0, 0
   index: -1
-TRYBUNY_PRAWO
+trybuny_prawo
   rotate: false
   xy: 1187, 159
   size: 77, 544

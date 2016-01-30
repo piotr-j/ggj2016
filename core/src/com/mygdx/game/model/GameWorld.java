@@ -13,13 +13,9 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.G;
-import com.mygdx.game.entities.Tribunes;
+import com.mygdx.game.entities.*;
 import com.mygdx.game.controls.PlayerAWSDController;
 import com.mygdx.game.controls.PlayerArrowsController;
-import com.mygdx.game.entities.Flame;
-import com.mygdx.game.entities.Player;
-import com.mygdx.game.entities.Sacrifice;
-import com.mygdx.game.entities.Walker;
 import com.mygdx.game.utils.Constants;
 
 public class GameWorld implements ContactListener {
@@ -86,11 +82,17 @@ public class GameWorld implements ContactListener {
     private void createArena(float x, float y, float width, float height) {
         float w = (G.VP_WIDTH - width)/2;
         float h = (G.VP_HEIGHT - height)/2;
-        entityManager.addEntity(new Tribunes(0, 0, G.VP_WIDTH, h, this));
-        entityManager.addEntity(new Tribunes(0, y + height, G.VP_WIDTH, h, this));
+        entityManager.addEntity(new Arena(x, y, width, height, this));
 
-        entityManager.addEntity(new Tribunes(0, y, w, G.VP_HEIGHT - h*2, this));
-        entityManager.addEntity(new Tribunes(x + width, y, w, G.VP_HEIGHT - h*2, this));
+        entityManager.addEntity(new Tribunes(0, 0, G.VP_WIDTH, h, this,
+            G.assets.getAtlasRegion(G.A.TRIBUNES_BOT, G.A.ATLAS)));
+        entityManager.addEntity(new Tribunes(0, y + height, G.VP_WIDTH, h, this,
+            G.assets.getAtlasRegion(G.A.TRIBUNES_TOP, G.A.ATLAS)));
+
+        entityManager.addEntity(new Tribunes(0, y, w, G.VP_HEIGHT - h*2, this,
+            G.assets.getAtlasRegion(G.A.TRIBUNES_LEFT, G.A.ATLAS)));
+        entityManager.addEntity(new Tribunes(x + width, y, w, G.VP_HEIGHT - h*2, this,
+            G.assets.getAtlasRegion(G.A.TRIBUNES_RIGHT, G.A.ATLAS)));
     }
 
     public void update(float delta) {
