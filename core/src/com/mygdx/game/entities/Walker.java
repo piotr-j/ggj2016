@@ -25,6 +25,7 @@ public class Walker extends Entity implements PhysicsObject {
     // Debug
     public static boolean debugDrawWander = false;
     public static boolean debugDrawAvoidence = false;
+    private final Color color;
 
     // Physics
     private Body body;
@@ -35,8 +36,9 @@ public class Walker extends Entity implements PhysicsObject {
     private BlendedSteering<Vector2> steering;
     private boolean flagForDelete = false;
 
-    public Walker(float x, float y, float radius, GameWorld gameWorld) {
+    public Walker (float x, float y, float radius, GameWorld gameWorld, Color color) {
         super(x, y, radius * 2, radius * 2);
+        this.color = color;
 
         this.body = gameWorld.getBox2DWorld().getBodyBuilder()
                 .fixture(gameWorld.getBox2DWorld().getFixtureDefBuilder()
@@ -88,40 +90,50 @@ public class Walker extends Entity implements PhysicsObject {
 
     private static Vector2 tmp = new Vector2();
     @Override public void drawDebug (ShapeRenderer shapeRenderer) {
-        if (debugDrawWander) {
-            Vector2 target = wander.getInternalTargetPosition();
-            Vector2 center = wander.getWanderCenter();
-            float radius = wander.getWanderRadius();
-            shapeRenderer.setColor(Color.CYAN);
-            Vector2 pos = body.getPosition();
-            shapeRenderer.line(pos.x, pos.y, center.x, center.y);
-            shapeRenderer.circle(center.x, center.y, radius, 32);
-            shapeRenderer.setColor(Color.RED);
-            shapeRenderer.circle(target.x, target.y, 0.1f, 8);
+        shapeRenderer.setColor(color);
+        shapeRenderer.circle(position.x, position.y, bounds.width/2, 16);
+
+        if (debugDrawAvoidence || debugDrawWander) {
+            shapeRenderer.end();
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            if (debugDrawWander) {
+                Vector2 target = wander.getInternalTargetPosition();
+                Vector2 center = wander.getWanderCenter();
+                float radius = wander.getWanderRadius();
+                shapeRenderer.setColor(Color.CYAN);
+                Vector2 pos = body.getPosition();
+                shapeRenderer.line(pos.x, pos.y, center.x, center.y);
+                shapeRenderer.circle(center.x, center.y, radius, 32);
+                shapeRenderer.setColor(Color.RED);
+                shapeRenderer.circle(target.x, target.y, 0.1f, 8);
 //            wander.getInternalTargetPosition();
 //            float decelerationRadius = wander.getDecelerationRadius();
 //            shapeRenderer.setColor(Color.MAGENTA);
 //            shapeRenderer.circle(center.x, center.y, decelerationRadius, 32);
-        }
-        if (debugDrawAvoidence) {
-            Vector2 pos = body.getPosition();
-            float rayLength = rayCfg.getRayLength();
-            tmp.set(1, 0).rotateRad(body.getAngle() + 90 * MathUtils.degRad).scl(rayLength);
-            shapeRenderer.setColor(Color.RED);
-            shapeRenderer.line(pos.x, pos.y, pos.x + tmp.x, pos.y + tmp.y);
-            float whiskerLength = rayCfg.getWhiskerLength();
-            float whiskerAngle = rayCfg.getWhiskerAngle();
-            tmp.set(1, 0).rotateRad(body.getAngle() + (90 + whiskerAngle) * MathUtils.degRad).scl(whiskerLength);
-            shapeRenderer.setColor(Color.MAGENTA);
-            shapeRenderer.line(pos.x, pos.y, pos.x + tmp.x, pos.y + tmp.y);
-            tmp.set(1, 0).rotateRad(body.getAngle() + (90 - whiskerAngle) * MathUtils.degRad).scl(whiskerLength);
-            shapeRenderer.line(pos.x, pos.y, pos.x + tmp.x, pos.y + tmp.y);
+            }
+            if (debugDrawAvoidence) {
+                Vector2 pos = body.getPosition();
+                float rayLength = rayCfg.getRayLength();
+                tmp.set(1, 0).rotateRad(body.getAngle() + 90 * MathUtils.degRad).scl(rayLength);
+                shapeRenderer.setColor(Color.RED);
+                shapeRenderer.line(pos.x, pos.y, pos.x + tmp.x, pos.y + tmp.y);
+                float whiskerLength = rayCfg.getWhiskerLength();
+                float whiskerAngle = rayCfg.getWhiskerAngle();
+                tmp.set(1, 0).rotateRad(body.getAngle() + (90 + whiskerAngle) * MathUtils.degRad).scl(whiskerLength);
+                shapeRenderer.setColor(Color.MAGENTA);
+                shapeRenderer.line(pos.x, pos.y, pos.x + tmp.x, pos.y + tmp.y);
+                tmp.set(1, 0).rotateRad(body.getAngle() + (90 - whiskerAngle) * MathUtils.degRad).scl(whiskerLength);
+                shapeRenderer.line(pos.x, pos.y, pos.x + tmp.x, pos.y + tmp.y);
+            }
+            shapeRenderer.end();
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         }
     }
 
     public static final SteeringAcceleration<Vector2> steeringOutput = new SteeringAcceleration<Vector2>(new Vector2());
     @Override
     public void update(float delta) {
+        position.set(body.getPosition());
         // note this is garbage
         boolean anyAccelerations = false;
         steering.calculateSteering(steeringOutput);

@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.ai.GdxAI;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
@@ -51,30 +52,30 @@ public class GameWorld implements ContactListener {
 
         // Team 1
         PlayerController controller1 = new PlayerController();
-        Player player1_1 = new Player(5f, 5f, .3f, controller1, this);
+        Player player1_1 = new Player(5f, 5f, .3f, controller1, this, Color.BLUE);
         entityManager.addEntity(player1_1);
-        Player player1_2 = new Player(5f, 5f, .3f, controller1, this);
+        Player player1_2 = new Player(5f, 5f, .3f, controller1, this, Color.BLUE);
         entityManager.addEntity(player1_2);
-        Player player1_3 = new Player(5f, 5f, .3f, controller1, this);
+        Player player1_3 = new Player(5f, 5f, .3f, controller1, this, Color.BLUE);
         entityManager.addEntity(player1_3);
-        Player player1_4 = new Player(5f, 5f, .3f, controller1, this);
+        Player player1_4 = new Player(5f, 5f, .3f, controller1, this, Color.BLUE);
         entityManager.addEntity(player1_4);
 
         // Team 2
         PlayerController controller2 = new PlayerController();
-        Player player2_1 = new Player(5f, 5f, .3f, controller2, this);
+        Player player2_1 = new Player(5f, 5f, .3f, controller2, this, Color.RED);
         entityManager.addEntity(player2_1);
-        Player player2_2 = new Player(5f, 5f, .3f, controller2, this);
+        Player player2_2 = new Player(5f, 5f, .3f, controller2, this, Color.RED);
         entityManager.addEntity(player2_2);
-        Player player2_3 = new Player(5f, 5f, .3f, controller2, this);
+        Player player2_3 = new Player(5f, 5f, .3f, controller2, this, Color.RED);
         entityManager.addEntity(player2_3);
-        Player player2_4 = new Player(5f, 5f, .3f, controller2, this);
+        Player player2_4 = new Player(5f, 5f, .3f, controller2, this, Color.RED);
         entityManager.addEntity(player2_4);
 
         // Set input processors
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(new PlayerArrowsController(controller1));
-        inputMultiplexer.addProcessor(new PlayerAWSDController(controller2));
+        inputMultiplexer.addProcessor(new PlayerAWSDCowntroller(controller2));
         Gdx.input.setInputProcessor(inputMultiplexer);
 
         for(int i = 0; i < Controllers.getControllers().size; i++) {
@@ -93,21 +94,21 @@ public class GameWorld implements ContactListener {
         createArena(ARENA_X, ARENA_Y, ARENA_WIDTH, ARENA_HEIGHT);
 
         // Flames!
-        Flame flame = new Flame(2, G.VP_HEIGHT / 2, 2, this);
+        Flame flame = new Flame(2, G.VP_HEIGHT / 2, 2, this, Color.ORANGE);
         entityManager.addEntity(flame);
 
-        Flame flame2 = new Flame(G.VP_WIDTH - 2, G.VP_HEIGHT / 2, 2, this);
+        Flame flame2 = new Flame(G.VP_WIDTH - 2, G.VP_HEIGHT / 2, 2, this, Color.ORANGE);
         entityManager.addEntity(flame2);
 
         // Test sacrifice
-        Sacrifice sacrifice = new Sacrifice(G.VP_WIDTH / 2, G.VP_HEIGHT / 2, 15 * G.INV_SCALE, this);
+        Sacrifice sacrifice = new Sacrifice(G.VP_WIDTH / 2, G.VP_HEIGHT / 2, 15 * G.INV_SCALE, this, Color.GREEN);
         entityManager.addEntity(sacrifice);
 
         // Some walkers
         for (int i = 0; i < 15; i++) {
             float x = MathUtils.random(100 + 15, 100 + 1080 - 15) * G.INV_SCALE;
             float y = MathUtils.random(100 + 15, 100 + 520 - 15) * G.INV_SCALE;
-            entityManager.addEntity(new Walker(x, y, .25f, this));
+            entityManager.addEntity(new Walker(x, y, .25f, this, Color.YELLOW));
         }
      }
 

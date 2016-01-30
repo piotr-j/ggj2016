@@ -1,6 +1,8 @@
 package com.mygdx.game.entities;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -17,6 +19,7 @@ public class Player extends Entity implements PhysicsObject {
 
     // Config
     private final float SPEED = 8;
+    private final Color color;
 
     private PlayerController controller;
 
@@ -28,8 +31,9 @@ public class Player extends Entity implements PhysicsObject {
     // Temp
     private Vector2 tempVec2 = new Vector2();
 
-    public Player(float x, float y, float radius, PlayerController controller, GameWorld gameWorld) {
+    public Player(float x, float y, float radius, PlayerController controller, GameWorld gameWorld, Color color) {
         super(x, y, radius * 2, radius * 2);
+        this.color = color;
 
         this.controller = controller;
 
@@ -54,6 +58,11 @@ public class Player extends Entity implements PhysicsObject {
     @Override
     public void draw(SpriteBatch batch) {
 
+    }
+
+    @Override public void drawDebug (ShapeRenderer shapeRenderer) {
+        shapeRenderer.setColor(color);
+        shapeRenderer.circle(position.x, position.y, bounds.width/2, 16);
     }
 
     @Override
