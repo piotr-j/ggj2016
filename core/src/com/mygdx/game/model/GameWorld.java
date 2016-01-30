@@ -44,6 +44,9 @@ public class GameWorld implements ContactListener {
     public final static float ARENA_HEIGHT = G.VP_HEIGHT - 5;
     public final static int TEAM_1 = 1;
     public final static int TEAM_2 = 2;
+    public final static float SPAWN_X_OFFSET = 7;
+    public final static float SPAWN_SPREAD_X = 1;
+    public final static float SPAWN_SPREAD_Y = 1;
 
     public GameWorld() {
         box2DWorld = new Box2DWorld(new Vector2(0, Constants.GRAVITY));
@@ -60,21 +63,18 @@ public class GameWorld implements ContactListener {
 
         float cx = G.VP_WIDTH / 2;
         float cy = G.VP_HEIGHT / 2;
-        float offset = 7;
-        float spreadX = 1;
-        float spreadY = 1;
         int playersPerTeam = 4;
         // Team 1
         PlayerController controller1 = new PlayerController();
         for (int i = 0; i < playersPerTeam; i++) {
-            Player player = new Player(cx + offset + MathUtils.random(-spreadX, spreadX), cy + MathUtils.random(-spreadY, spreadY), .3f, controller1, this, Color.BLUE, TEAM_1);
+            Player player = new Player(cx + SPAWN_X_OFFSET + MathUtils.random(-SPAWN_SPREAD_X, SPAWN_SPREAD_X), cy + MathUtils.random(-SPAWN_SPREAD_Y, SPAWN_SPREAD_Y), .3f, controller1, this, Color.BLUE, TEAM_1);
             entityManager.addEntity(player);
         }
 
         // Team 2
         PlayerController controller2 = new PlayerController();
         for (int i = 0; i < playersPerTeam; i++) {
-            Player player = new Player(cx - offset + MathUtils.random(-spreadX, spreadX), cy + MathUtils.random(-spreadY, spreadY), .3f, controller2, this, Color.RED, TEAM_2);
+            Player player = new Player(cx - SPAWN_X_OFFSET + MathUtils.random(-SPAWN_SPREAD_X, SPAWN_SPREAD_X), cy + MathUtils.random(-SPAWN_SPREAD_Y, SPAWN_SPREAD_Y), .3f, controller2, this, Color.RED, TEAM_2);
             entityManager.addEntity(player);
         }
 

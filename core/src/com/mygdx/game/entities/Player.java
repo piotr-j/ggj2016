@@ -2,6 +2,7 @@ package com.mygdx.game.entities;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -25,6 +26,7 @@ public class Player extends Entity implements PhysicsObject, Box2DWorld.JointCal
 
     // Config
     private final float SPEED = 0.7f;
+    private final float TIMEOUT_DURATION = 2.0f;
     private final float SACRIFICE_SLOWDOWN = 0.8f;
     private GameWorld gameWorld;
     private final Color color;
@@ -45,6 +47,7 @@ public class Player extends Entity implements PhysicsObject, Box2DWorld.JointCal
     private float animTime;
     private Animation animation;
     private TextureRegion animFrame;
+    private ParticleEffect spawnEffect;
 
     public Player(float x, float y, float radius, PlayerController controller, GameWorld gameWorld, Color color, int team) {
         super(x, y, radius * 2, radius * 2);
@@ -81,15 +84,39 @@ public class Player extends Entity implements PhysicsObject, Box2DWorld.JointCal
                 .userData(this)
                 .build();
         mass = body.getMass();
+        timeout = TIMEOUT_DURATION;
+        spawnEffect = new ParticleEffect(G.assets.get("pack/spawn.p", ParticleEffect.class));
+        spawnEffect.setPosition(x, y);
+        spawnEffect.reset();
+        float[] colors = spawnEffect.getEmitters().first().getTint().getColors();
+        if (team == GameWorld.TEAM_1) {
+            // R/G/B
+            colors[0] = 237/255f;
+            colors[1] = 106/255f;
+            colors[2] = 88/255f;
+        } else if (team == GameWorld.TEAM_2) {
+            // R/G/B
+            colors[0] = 80/255f;
+            colors[1] = 138/255f;
+            colors[2] = 167/255f;
+        }
     }
 
     @Override
     public void draw(SpriteBatch batch) {
+        if (!isActive()) {
+            batch.setColor(1, 1, 1, .5f + MathUtils.sin(timeout * 10)/4);
+        }
         animFrame = animation.getKeyFrame(animTime);
         batch.draw(animFrame, position.x - animFrame.getRegionWidth() * G.INV_SCALE / 2,
                 position.y - animFrame.getRegionHeight() * G.INV_SCALE / 2,
                 animFrame.getRegionWidth() / 2 * G.INV_SCALE, animFrame.getRegionHeight() / 2 * G.INV_SCALE,
                 animFrame.getRegionWidth() * G.INV_SCALE, animFrame.getRegionHeight() * G.INV_SCALE, 1, 1, rotation - 90);
+
+        if (!isActive()) {
+            batch.setColor(1, 1, 1, 1);
+            spawnEffect.draw(batch);
+        }
     }
 
     @Override public void drawDebug (ShapeRenderer shapeRenderer) {
@@ -99,6 +126,18 @@ public class Player extends Entity implements PhysicsObject, Box2DWorld.JointCal
 
     @Override
     public void update(float delta) {
+        if (timeout > 0) {
+            body.setTransform(-10, -10, 0);
+            body.setLinearVelocity(0, 0);
+            body.setAngularVelocity(0);
+            timeout -= delta;
+            spawnEffect.update(delta);
+            if (timeout <= 0) {
+                body.setTransform(position.x, position.y, rotation);
+            } else {
+                return;
+            }
+        }
         position.set(body.getPosition());
         velocity.set(body.getLinearVelocity());
         float angle = body.getAngle();
@@ -137,6 +176,26 @@ public class Player extends Entity implements PhysicsObject, Box2DWorld.JointCal
         }
     }
 
+    private float timeout;
+    public void timeout () {
+        timeout = TIMEOUT_DURATION;
+        float cx = G.VP_WIDTH / 2;
+        float cy = G.VP_HEIGHT / 2;
+        if (team == GameWorld.TEAM_2) {
+            position.set(cx - GameWorld.SPAWN_X_OFFSET + MathUtils.random(-GameWorld.SPAWN_SPREAD_X, GameWorld.SPAWN_SPREAD_X), cy + MathUtils.random(-GameWorld.SPAWN_SPREAD_Y, GameWorld.SPAWN_SPREAD_Y));
+            rotation = 0;
+        } else if (team == GameWorld.TEAM_1) {
+            position.set(cx + GameWorld.SPAWN_X_OFFSET + MathUtils.random(-GameWorld.SPAWN_SPREAD_X, GameWorld.SPAWN_SPREAD_X), cy + MathUtils.random(-GameWorld.SPAWN_SPREAD_Y, GameWorld.SPAWN_SPREAD_Y));
+            rotation = 0;
+        }
+        spawnEffect.setPosition(position.x, position.y);
+        spawnEffect.reset();
+    }
+
+    public boolean isActive() {
+        return timeout <= 0;
+    }
+
     private void releaseSacrifice () {
         gameWorld.getBox2DWorld().destroyJoint(sacrificeWeld);
         sacrificeWeld = null;
@@ -165,6 +224,7 @@ public class Player extends Entity implements PhysicsObject, Box2DWorld.JointCal
     public WeldJoint sacrificeWeld;
     @Override
     public void handleBeginContact(PhysicsObject psycho2, GameWorld world) {
+        if (!isActive()) return;
         if (psycho2 instanceof Sacrifice) {
             Sacrifice sacrifice = (Sacrifice)psycho2;
             // do we allow for swapping and other stuff?

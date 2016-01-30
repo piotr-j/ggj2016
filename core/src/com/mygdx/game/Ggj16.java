@@ -4,6 +4,7 @@ import aurelienribon.tweenengine.Tween;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.mygdx.game.screens.SplashScreen;
 import com.mygdx.game.utils.Assets;
@@ -21,6 +22,9 @@ public class Ggj16 extends Game {
 		log = new FPSLogger();
 		assets = new Assets();
 		assets.queueLoad("pack/entities.atlas", TextureAtlas.class);
+        // TODO make it work with atlas
+		assets.queueLoad("pack/eruption.p", ParticleEffect.class);
+		assets.queueLoad("pack/spawn.p", ParticleEffect.class);
 		G.assets = assets;
 
 		Tween.registerAccessor(Sprite.class, new SpriteTween());
