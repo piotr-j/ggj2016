@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.MassData;
 import com.mygdx.game.G;
 import com.mygdx.game.model.GameWorld;
 import com.mygdx.game.model.PhysicsObject;
@@ -18,11 +19,12 @@ import com.mygdx.game.model.PhysicsObject;
 public class Sacrifice extends Entity implements PhysicsObject {
 
     // Config
-    private final float SPEED = 1f;
+    private final float SPEED = .025f;
     private final float RUN_RADIUS = 150 * G.INV_SCALE;
 
     // Physics
     private Body body;
+    private float mass;
     private boolean flagForDelete = false;
     private Vector2 velocity = new Vector2();
 
@@ -43,19 +45,27 @@ public class Sacrifice extends Entity implements PhysicsObject {
         this.body = gameWorld.getBox2DWorld().getBodyBuilder()
                 .fixture(gameWorld.getBox2DWorld().getFixtureDefBuilder()
                         .circleShape(getBounds().getWidth() / 2)
-                        .density(1f)
+                        .density(.1f)
                         .friction(0.2f)
                         .restitution(0.5f)
 //                        .maskBits(Box2DWorld.WALKER_MASK)
 //                        .categoryBits(Box2DWorld.CATEGORY.ENEMY)
                         .build())
 //                .fixedRotation()
-                .angularDamping(3f)
-                .linearDamping(10f)
                 .position(x, y)
                 .type(BodyDef.BodyType.DynamicBody)
                 .userData(this)
                 .build();
+        mass = body.getMass();
+        resetBox2d();
+    }
+
+    public void resetBox2d() {
+        MassData massData = body.getMassData();
+        massData.mass = mass;
+        body.setMassData(massData);
+        body.setAngularDamping(10f);
+        body.setLinearDamping(30f);
     }
 
     @Override
@@ -73,13 +83,14 @@ public class Sacrifice extends Entity implements PhysicsObject {
     @Override
     public void update(float delta) {
         if (owner != null) {
-            float rotation = owner.getRotation();
-            tmp.set(1, 0).rotate(rotation).scl(bounds.width/2 + owner.bounds.width/2 + 0.15f).add(owner.getPosition());
-            body.setTransform(tmp.x, tmp.y, rotation * MathUtils.degRad);
-            body.setLinearVelocity(0, 0);
-            body.setAngularVelocity(0);
+//            float rotation = owner.getRotation();
+//            tmp.set(1, 0).rotate(rotation).scl(bounds.width/2 + owner.bounds.width/2 + 0.15f).add(owner.getPosition());
+
+//            body.setTransform(tmp.x, tmp.y, rotation * MathUtils.degRad);
+//            body.setLinearVelocity(0, 0);
+//            body.setAngularVelocity(0);
             position.set(body.getPosition());
-            body.setLinearVelocity(owner.getBody().getLinearVelocity());
+//            body.setLinearVelocity(owner.getBody().getLinearVelocity());
             captureCoolDown -= delta;
         } else {
             position.set(body.getPosition());
@@ -121,16 +132,29 @@ public class Sacrifice extends Entity implements PhysicsObject {
                 }
             }
 
-            runSpeed *= SPEED * 10;
+            runSpeed *= SPEED;
             velocity.nor().scl(runSpeed);
 
             if (!velocity.isZero()) {
-
-                tempVec2.set(body.getLinearVelocity()).lerp(velocity, delta);
-
-                body.setLinearVelocity(tempVec2);
-                body.setTransform(position.x, position.y, velocity.angle() * MathUtils.degRad);
+                body.applyLinearImpulse(velocity, body.getWorldCenter(), true);
             }
+        }
+
+        Vector2 velocity = body.getLinearVelocity();
+        if (!velocity.isZero(0.001f)) {
+            float desiredAngle = velocity.angleRad();
+            float nextAngle = body.getAngle() + body.getAngularVelocity() / 60.0f;
+            float totalRotation = desiredAngle - nextAngle;
+            while (totalRotation < -180 * MathUtils.degRad)
+                totalRotation += 360 * MathUtils.degRad;
+            while (totalRotation > 180 * MathUtils.degRad)
+                totalRotation -= 360 * MathUtils.degRad;
+            float desiredAngularVelocity = totalRotation * 60;
+            float change = 90f * MathUtils.degRad; //allow 1 degree rotation per time step
+            desiredAngularVelocity = Math.min(change, Math.max(-change, desiredAngularVelocity));
+            float impulse = body.getInertia() * desiredAngularVelocity;
+//            Gdx.app.log("", "impulse " + impulse);
+            body.applyAngularImpulse(impulse, true);
         }
     }
 

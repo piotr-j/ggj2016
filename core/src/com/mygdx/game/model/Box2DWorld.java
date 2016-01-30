@@ -2,9 +2,7 @@ package com.mygdx.game.model;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.utils.BodyBuilder;
 import com.mygdx.game.utils.FixtureDefBuilder;
@@ -52,6 +50,31 @@ public class Box2DWorld {
         // I typically use 5 velocity iterations and 3 position iterations in my other games
         world.step(1/60f, 10, 4);
         sweepDeadBodies();
+        for (Joint joint : jointsToRemove) {
+            world.destroyJoint(joint);
+        }
+        jointsToRemove.clear();
+        for (int i = 0; i < jointDefs.size; i++) {
+            JointDef def = jointDefs.get(i);
+            JointCallback callback = jointCallbacks.get(i);
+            Joint joint = world.createJoint(def);
+            callback.jointCreated(joint);
+        }
+        jointDefs.clear();
+        jointCallbacks.clear();
+    }
+
+
+    private Array<JointDef> jointDefs = new Array<JointDef>();
+    private Array<JointCallback> jointCallbacks = new Array<JointCallback>();
+    public <T> void createJoint (JointDef joint, JointCallback callback) {
+        jointDefs.add(joint);
+        jointCallbacks.add(callback);
+    }
+
+    private Array<Joint> jointsToRemove = new Array<Joint>();
+    public void destroyJoint (Joint joint) {
+        jointsToRemove.add(joint);
     }
 
     /*
@@ -87,5 +110,9 @@ public class Box2DWorld {
 
     public FixtureDefBuilder getFixtureDefBuilder() {
         return fixtureDefBuilder;
+    }
+
+    public interface JointCallback {
+        void jointCreated (Joint joint);
     }
 }

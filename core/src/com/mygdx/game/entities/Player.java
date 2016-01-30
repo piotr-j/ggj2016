@@ -9,15 +9,20 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Joint;
+import com.badlogic.gdx.physics.box2d.MassData;
+import com.badlogic.gdx.physics.box2d.joints.WeldJoint;
+import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 import com.mygdx.game.G;
 import com.mygdx.game.controls.PlayerController;
+import com.mygdx.game.model.Box2DWorld;
 import com.mygdx.game.model.GameWorld;
 import com.mygdx.game.model.PhysicsObject;
 
 /**
  * @author Lukasz Zmudziak, @lukz_dev on 2016-01-29.
  */
-public class Player extends Entity implements PhysicsObject {
+public class Player extends Entity implements PhysicsObject, Box2DWorld.JointCallback {
 
     // Config
     private final float SPEED = 0.7f;
@@ -137,6 +142,7 @@ public class Player extends Entity implements PhysicsObject {
 
 
     public Sacrifice sacrifice;
+    public WeldJoint sacrificeWeld;
     @Override
     public void handleBeginContact(PhysicsObject psycho2, GameWorld world) {
         if (psycho2 instanceof Sacrifice) {
@@ -145,13 +151,27 @@ public class Player extends Entity implements PhysicsObject {
             if ((sacrifice.owner == null
                 || (sacrifice.captureCoolDown <= 0 && sacrifice.owner.team != team)) && this.sacrifice == null) {
                 if (sacrifice.owner != null) {
+                    world.getBox2DWorld().destroyJoint(sacrifice.owner.sacrificeWeld);
+                    sacrifice.owner.sacrificeWeld = null;
                     sacrifice.owner.sacrifice = null;
                 }
                 sacrifice.owner = this;
-                sacrifice.captureCoolDown = .75f;
+                sacrifice.captureCoolDown = .55f;
                 this.sacrifice = sacrifice;
+                Body sacrificeBody = sacrifice.getBody();
+                sacrificeBody.setLinearDamping(0);
+                sacrificeBody.setAngularDamping(0);
+                WeldJointDef wjd = new WeldJointDef();
+                wjd.bodyA = this.body;
+                wjd.bodyB = sacrificeBody;
+                wjd.localAnchorB.set(-.75f, 0);
+                world.getBox2DWorld().createJoint(wjd, this);
             }
         }
+    }
+
+    @Override public void jointCreated (Joint joint) {
+        sacrificeWeld = (WeldJoint)joint;
     }
 
     @Override
