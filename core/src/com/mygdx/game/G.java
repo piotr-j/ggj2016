@@ -35,6 +35,10 @@ public class G {
         public static final String RAY = "ray";
         public static final String RAY_CIRCLE= "ray-circle";
 
+        public static final String SPECT_DANCE= "CHAR_C2";
+        public static final String SPECT_CLAP= "CHAR_C3";
+        public static final String SPECT_JUMP= "CHAR_C4";
+
         public static final String SOUND_CHEER1= "sfx/childCheer1.ogg";
         public static final String SOUND_CHEER2= "sfx/childCheer2.ogg";
         public static final String SOUND_CHEER3= "sfx/childCheer3.ogg";
