@@ -174,10 +174,11 @@ public class Player extends Entity implements PhysicsObject, Box2DWorld.JointCal
                     sacrifice.owner.releaseSacrifice();
                 }
                 sacrifice.owner = this;
+                sacrifice.team = team;
                 sacrifice.captureCoolDown = .55f;
                 this.sacrifice = sacrifice;
                 Body sacrificeBody = sacrifice.getBody();
-                // so its easier to controll
+                // so its easier to control
                 sacrificeBody.setLinearDamping(0);
                 sacrificeBody.setAngularDamping(0);
                 WeldJointDef wjd = new WeldJointDef();

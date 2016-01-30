@@ -89,6 +89,19 @@ public class GameWorld implements ContactListener {
         }
     }
 
+    private int team1Score;
+    private int team2Score;
+    public void teamScored (int team) {
+        if (team == TEAM_1) {
+            team1Score++;
+        } else if (team == TEAM_2) {
+            team2Score++;
+        }
+        Gdx.app.log("", "Team "+team+" scored!");
+        Gdx.app.log("", "Team 1 score: " + team1Score);
+        Gdx.app.log("", "Team 2 score: " + team2Score);
+    }
+
     public void initializeObjects() {
         // Test arena bounds
         createArena(ARENA_X, ARENA_Y, ARENA_WIDTH, ARENA_HEIGHT);

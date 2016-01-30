@@ -30,6 +30,7 @@ public class Sacrifice extends Entity implements PhysicsObject {
 
     private GameWorld gameWorld;
     private final Color color;
+    public int team;
 
     // Temp
     private Vector2 tempVec2 = new Vector2();
@@ -158,17 +159,15 @@ public class Sacrifice extends Entity implements PhysicsObject {
     @Override
     public void handleBeginContact(PhysicsObject psycho2, GameWorld world) {
         if (psycho2 instanceof Flame) {
-            if (owner != null) {
-                // TODO score based on which flame it is
+            if (owner != null)
                 owner.sacrifice = null;
-                Flame flame = (Flame)psycho2;
-                if (flame.team != owner.team) {
-                    Gdx.app.log("", "Team " + owner.team + " scored !");
-                } else {
-                    Gdx.app.log("", "Team " + owner.team + " scored for another team " + flame.team + "!");
-                }
-                owner = null;
+            Flame flame = (Flame)psycho2;
+            if (flame.team != team) {
+                world.teamScored(team);
+            } else {
+                world.teamScored(flame.team);
             }
+            owner = null;
         }
     }
 
