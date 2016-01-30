@@ -4,8 +4,8 @@ import com.badlogic.gdx.Game;
 import com.mygdx.game.utils.Assets;
 
 public class G {
-    public static boolean DEBUG = true;
-    public static boolean DEBUG_BOX2D = true;
+    public static boolean DEBUG = false;
+    public static boolean DEBUG_BOX2D = false;
 
     // Virtual resolution - potato units
     public static float SCALE = 48;
@@ -30,6 +30,7 @@ public class G {
         public static final String TEAMB = "teamB";
         public static final String TEAMN = "TeamNeutral";
         public static final String VOLCANO = "volcano-empty";
+        public static final String VOLCANO_FIRE = "volcano-fire";
         public static final String SACRIFICE = "ofiara";
         public static final String RAY = "ray";
         public static final String RAY_CIRCLE= "ray-circle";

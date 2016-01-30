@@ -1,5 +1,8 @@
 package com.mygdx.game.entities;
 
+import aurelienribon.tweenengine.Timeline;
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenEquations;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
@@ -13,6 +16,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.G;
 import com.mygdx.game.model.GameWorld;
 import com.mygdx.game.model.PhysicsObject;
+import com.mygdx.game.utils.SpriteTween;
 
 import java.util.Iterator;
 
@@ -34,6 +38,7 @@ public class Flame extends Entity implements PhysicsObject {
     private float spawnRockTimer = MathUtils.random(2f, 4f);
 
     private Sprite sprite;
+    private Sprite spriteLava;
     private ParticleEffectPool effectPool;
     private Array<ParticleEffectPool.PooledEffect> effects = new Array<ParticleEffectPool.PooledEffect>();
 
@@ -46,12 +51,34 @@ public class Flame extends Entity implements PhysicsObject {
         this.sprite = new Sprite(G.assets.getAtlas(G.A.ATLAS).createSprite(G.A.VOLCANO));
         sprite.setOrigin(sprite.getRegionWidth() / 2 * G.INV_SCALE, sprite.getRegionHeight() / 2 * G.INV_SCALE);
 
+        this.spriteLava = new Sprite(G.assets.getAtlas(G.A.ATLAS).createSprite(G.A.VOLCANO_FIRE));
+        spriteLava.setOrigin(spriteLava.getRegionWidth() / 2 * G.INV_SCALE, spriteLava.getRegionHeight() / 2 * G.INV_SCALE);
+
+        float rand = MathUtils.random(-0.2f, 0.2f);
+
+        Timeline.createSequence()
+                .beginParallel()
+                    .push(Tween.to(spriteLava, SpriteTween.SCALEX, 2f + rand).target(0.9f).ease(TweenEquations.easeInOutSine))
+                    .push(Tween.to(spriteLava, SpriteTween.SCALEY, 2f + rand).target(0.9f).ease(TweenEquations.easeInOutSine))
+                .end()
+                .beginParallel()
+                    .push(Tween.to(spriteLava, SpriteTween.SCALEX, 2f + rand).target(1f).ease(TweenEquations.easeInOutSine))
+                    .push(Tween.to(spriteLava, SpriteTween.SCALEY, 2f + rand).target(1f).ease(TweenEquations.easeInOutSine))
+                .end()
+                .repeat(-1, 0)
+                .delay(MathUtils.random(0.2f, 0.5f))
+                .start(gameWorld.getTweenManager());
+
+
         sprite.rotate(90);
+        spriteLava.rotate(90);
 
         if(team == 1) {
             sprite.setFlip(false, false);
+            spriteLava.setFlip(false, false);
         } else {
             sprite.setFlip(false, true);
+            spriteLava.setFlip(false, true);
         }
 
         this.body = gameWorld.getBox2DWorld().getBodyBuilder()
@@ -78,8 +105,14 @@ public class Flame extends Entity implements PhysicsObject {
     @Override
     public void draw(SpriteBatch batch) {
         sprite.setSize(sprite.getRegionWidth() * G.INV_SCALE, sprite.getRegionHeight() * G.INV_SCALE);
+        spriteLava.setSize(sprite.getRegionWidth() * G.INV_SCALE, sprite.getRegionHeight() * G.INV_SCALE);
+
         sprite.setPosition(position.x - sprite.getWidth() / 2, position.y - sprite.getHeight() / 2);
+        spriteLava.setPosition(position.x - sprite.getWidth() / 2, position.y - sprite.getHeight() / 2);
+
         sprite.draw(batch);
+        spriteLava.draw(batch);
+
         for (ParticleEffect effect : effects) {
             effect.draw(batch);
         }
