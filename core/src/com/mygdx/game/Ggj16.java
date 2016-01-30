@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import aurelienribon.tweenengine.Tween;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
@@ -26,6 +27,12 @@ public class Ggj16 extends Game {
 		assets.queueLoad("pack/eruption.p", ParticleEffect.class);
 		assets.queueLoad("pack/spawn.p", ParticleEffect.class);
 		assets.queueLoad("pack/trail.p", ParticleEffect.class);
+
+		// Sfx
+		assets.queueLoad("sfx/childCheer1.ogg", Sound.class);
+		assets.queueLoad("sfx/childCheer2.ogg", Sound.class);
+		assets.queueLoad("sfx/childCheer3.ogg", Sound.class);
+
 		G.assets = assets;
 
 		Tween.registerAccessor(Sprite.class, new SpriteTween());

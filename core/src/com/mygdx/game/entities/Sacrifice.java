@@ -1,6 +1,7 @@
 package com.mygdx.game.entities;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -192,6 +193,21 @@ public class Sacrifice extends Entity implements PhysicsObject {
 
 
             WorldRenderer.SHAKE_TIME += 0.3f;
+
+            switch (MathUtils.random(2)) {
+                case 0:
+                    System.out.println(1);
+                    G.assets.get(G.A.SOUND_CHEER1, Sound.class).play(0.8f, 1 + MathUtils.random(-0.05f, 0.05f), 0);
+                    break;
+                case 1:
+                    System.out.println(2);
+                    G.assets.get(G.A.SOUND_CHEER2, Sound.class).play(0.8f, 1 + MathUtils.random(-0.05f, 0.05f), 0);
+                    break;
+                case 2:
+                    System.out.println(3);
+                    G.assets.get(G.A.SOUND_CHEER3, Sound.class).play(0.8f, 1 + MathUtils.random(-0.05f, 0.05f), 0);
+                    break;
+            }
         }
     }
 
