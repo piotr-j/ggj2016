@@ -32,6 +32,16 @@ public class PlayerGamepadController extends ControllerAdapter {
         return false;
     }
 
+    @Override public boolean buttonDown (Controller controller, int buttonIndex) {
+        playerController.shootPressed = true;
+        return super.buttonDown(controller, buttonIndex);
+    }
+
+    @Override public boolean buttonUp (Controller controller, int buttonIndex) {
+        playerController.shootPressed = false;
+        return super.buttonUp(controller, buttonIndex);
+    }
+
     @Override
     public void connected(Controller controller) {
         super.connected(controller);

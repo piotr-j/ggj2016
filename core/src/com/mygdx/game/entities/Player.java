@@ -21,6 +21,7 @@ public class Player extends Entity implements PhysicsObject {
 
     // Config
     private final float SPEED = 0.7f;
+    private final float SACRIFICE_SLOWDOWN = 0.8f;
     private final Color color;
 
     private PlayerController controller;
@@ -103,6 +104,7 @@ public class Player extends Entity implements PhysicsObject {
         Vector2 direction = controller.getDirection();
         if(!direction.isZero()) {
             tempVec2.set(direction).limit2(1).scl(mass).scl(SPEED);
+            if (sacrifice != null) tempVec2.scl(SACRIFICE_SLOWDOWN);
             body.applyLinearImpulse(tempVec2, body.getWorldCenter(), true);
         }
 

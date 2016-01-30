@@ -30,6 +30,9 @@ public class PlayerArrowsController extends InputAdapter {
             case Input.Keys.DOWN:
                 playerController.getDirection().y = -1;
                 return true;
+            case Input.Keys.SHIFT_RIGHT:
+                playerController.shootPressed = true;
+                return true;
         }
         return false;
     }
@@ -48,6 +51,9 @@ public class PlayerArrowsController extends InputAdapter {
                 return true;
             case Input.Keys.DOWN:
                 if(playerController.getDirection().y == -1) playerController.getDirection().y = 0;
+                return true;
+            case Input.Keys.SHIFT_RIGHT:
+                playerController.shootPressed = false;
                 return true;
         }
         return false;
