@@ -143,8 +143,13 @@ public class Sacrifice extends Entity implements PhysicsObject {
         if (psycho2 instanceof Flame) {
             if (owner != null) {
                 // TODO score based on which flame it is
-                Gdx.app.log("", "Team " + owner.team + " scored ?");
                 owner.sacrifice = null;
+                Flame flame = (Flame)psycho2;
+                if (flame.team != owner.team) {
+                    Gdx.app.log("", "Team " + owner.team + " scored !");
+                } else {
+                    Gdx.app.log("", "Team " + owner.team + " scored for another team " + flame.team + "!");
+                }
                 owner = null;
             }
         }

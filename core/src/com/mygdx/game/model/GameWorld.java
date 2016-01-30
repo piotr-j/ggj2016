@@ -37,6 +37,8 @@ public class GameWorld implements ContactListener {
     public final static float ARENA_Y = 2.5f;
     public final static float ARENA_WIDTH = G.VP_WIDTH - 5;
     public final static float ARENA_HEIGHT = G.VP_HEIGHT - 5;
+    public final static int TEAM_1 = 1;
+    public final static int TEAM_2 = 2 ;
 
     public GameWorld() {
         box2DWorld = new Box2DWorld(new Vector2(0, Constants.GRAVITY));
@@ -57,14 +59,14 @@ public class GameWorld implements ContactListener {
         // Team 1
         PlayerController controller1 = new PlayerController();
         for (int i = 0; i < playersPerTeam; i++) {
-            Player player = new Player(cx + offset + MathUtils.random(-spreadX, spreadX), cy + MathUtils.random(-spreadY, spreadY), .3f, controller1, this, Color.BLUE, 1);
+            Player player = new Player(cx + offset + MathUtils.random(-spreadX, spreadX), cy + MathUtils.random(-spreadY, spreadY), .3f, controller1, this, Color.BLUE, TEAM_1);
             entityManager.addEntity(player);
         }
 
         // Team 2
         PlayerController controller2 = new PlayerController();
         for (int i = 0; i < playersPerTeam; i++) {
-            Player player = new Player(cx - offset + MathUtils.random(-spreadX, spreadX), cy + MathUtils.random(-spreadY, spreadY), .3f, controller2, this, Color.RED, 2);
+            Player player = new Player(cx - offset + MathUtils.random(-spreadX, spreadX), cy + MathUtils.random(-spreadY, spreadY), .3f, controller2, this, Color.RED, TEAM_2);
             entityManager.addEntity(player);
         }
 
@@ -81,8 +83,6 @@ public class GameWorld implements ContactListener {
                 Controllers.getControllers().get(i).addListener(new PlayerGamepadController(controller2));
             }
         }
-
-
     }
 
     public void initializeObjects() {
@@ -90,10 +90,10 @@ public class GameWorld implements ContactListener {
         createArena(ARENA_X, ARENA_Y, ARENA_WIDTH, ARENA_HEIGHT);
 
         // Flames!
-        Flame flame = new Flame(2, G.VP_HEIGHT / 2, 2, this, Color.ORANGE);
+        Flame flame = new Flame(2, G.VP_HEIGHT / 2, 2, this, Color.ORANGE, TEAM_2);
         entityManager.addEntity(flame);
 
-        Flame flame2 = new Flame(G.VP_WIDTH - 2, G.VP_HEIGHT / 2, 2, this, Color.ORANGE);
+        Flame flame2 = new Flame(G.VP_WIDTH - 2, G.VP_HEIGHT / 2, 2, this, Color.ORANGE, TEAM_1);
         entityManager.addEntity(flame2);
 
         // Test sacrifice

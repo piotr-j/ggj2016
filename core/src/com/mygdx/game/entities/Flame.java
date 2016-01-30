@@ -18,10 +18,12 @@ public class Flame extends Entity implements PhysicsObject {
     // Physics
     private Body body;
     private boolean flagForDelete = false;
+    public final int team;
 
-    public Flame (float x, float y, float radius, GameWorld gameWorld, Color color) {
+    public Flame (float x, float y, float radius, GameWorld gameWorld, Color color, int team) {
         super(x, y, radius * 2, radius * 2);
         this.color = color;
+        this.team = team;
 
         this.body = gameWorld.getBox2DWorld().getBodyBuilder()
                 .fixture(gameWorld.getBox2DWorld().getFixtureDefBuilder()

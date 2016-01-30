@@ -39,6 +39,7 @@ public class Player extends Entity implements PhysicsObject {
         this.color = color;
 
         this.controller = controller;
+        this.team = team;
 
         this.body = gameWorld.getBox2DWorld().getBodyBuilder()
                 .fixture(gameWorld.getBox2DWorld().getFixtureDefBuilder()
