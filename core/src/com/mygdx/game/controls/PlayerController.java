@@ -17,4 +17,10 @@ public class PlayerController {
     public Vector2 getDirection() {
         return direction;
     }
+
+    protected boolean shootPressed;
+
+    public boolean isShootPressed () {
+        return shootPressed;
+    }
 }

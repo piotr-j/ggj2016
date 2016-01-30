@@ -30,6 +30,9 @@ public class PlayerAWSDController extends InputAdapter {
             case Input.Keys.S:
                 playerController.getDirection().y = -1;
                 return true;
+            case Input.Keys.Q:
+                playerController.shootPressed = true;
+                return true;
         }
         return false;
     }
@@ -48,6 +51,9 @@ public class PlayerAWSDController extends InputAdapter {
                 return true;
             case Input.Keys.S:
                 if(playerController.getDirection().y == -1) playerController.getDirection().y = 0;
+                return true;
+            case Input.Keys.Q:
+                playerController.shootPressed = true;
                 return true;
         }
         return false;
