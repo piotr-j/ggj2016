@@ -47,15 +47,15 @@ public class PlayerStageController {
         knob.setMinHeight(knob.getMinHeight() * 2f);
         touchpad.setStyle(style);
         if (flip) {
-            container.add(touchpad).size(size * 1.5f).expand().top().right().pad(30);
+            container.add(touchpad).size(size * 1.5f).expand().top().right();
             container.row();
-            container.add(shoot).size(size * 2/3f).expand().bottom().right().pad(size/3);
+            container.add(shoot).size(size * 2/3f).expand().bottom().right().pad(30);
             shoot.setColor(Color.RED);
             touchpad.setColor(Color.RED);
         } else {
-            container.add(shoot).size(size * 2/3f).expand().top().left().pad(size/3);
+            container.add(shoot).size(size * 2/3f).expand().top().left().pad(30);
             container.row();
-            container.add(touchpad).size(size * 1.5f).expand().bottom().left().pad(30);
+            container.add(touchpad).size(size * 1.5f).expand().bottom().left();
             shoot.setColor(Color.BLUE);
             touchpad.setColor(Color.BLUE);
         }

@@ -32,13 +32,32 @@ public class PlayerGamepadController extends ControllerAdapter {
         return false;
     }
 
+    private int down;
     @Override public boolean buttonDown (Controller controller, int buttonIndex) {
-        playerController.shootPressed = true;
+        switch (buttonIndex) {
+        case Xbox360.BUTTON_A:
+        case Xbox360.BUTTON_B:
+        case Xbox360.BUTTON_X:
+        case Xbox360.BUTTON_Y:
+            down++;
+        }
+        if (down > 0) {
+            playerController.shootPressed = true;
+        }
         return super.buttonDown(controller, buttonIndex);
     }
 
     @Override public boolean buttonUp (Controller controller, int buttonIndex) {
-        playerController.shootPressed = false;
+        switch (buttonIndex) {
+        case Xbox360.BUTTON_A:
+        case Xbox360.BUTTON_B:
+        case Xbox360.BUTTON_X:
+        case Xbox360.BUTTON_Y:
+            down--;
+        }
+        if (down == 0) {
+            playerController.shootPressed = false;
+        }
         return super.buttonUp(controller, buttonIndex);
     }
 
