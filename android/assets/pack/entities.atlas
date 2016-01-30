@@ -6,371 +6,469 @@ filter: Nearest,Nearest
 repeat: none
 TeamNeutral
   rotate: false
-  xy: 2, 172
+  xy: 2, 206
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 0
+TeamNeutral
+  rotate: false
+  xy: 1108, 559
+  size: 43, 32
+  orig: 43, 32
+  offset: 0, 0
+  index: 1
+TeamNeutral
+  rotate: false
+  xy: 1978, 909
+  size: 43, 32
+  orig: 43, 32
+  offset: 0, 0
+  index: 2
+TeamNeutral
+  rotate: false
+  xy: 2, 172
+  size: 43, 32
+  orig: 43, 32
+  offset: 0, 0
+  index: 3
+TeamNeutral
+  rotate: false
+  xy: 47, 206
+  size: 43, 32
+  orig: 43, 32
+  offset: 0, 0
+  index: 4
 TeamNeutral
   rotate: false
   xy: 1108, 525
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 1
+  index: 5
+TeamNeutral
+  rotate: false
+  xy: 1153, 559
+  size: 43, 32
+  orig: 43, 32
+  offset: 0, 0
+  index: 6
 TeamNeutral
   rotate: false
   xy: 1978, 875
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 2
+  index: 7
 TeamNeutral
   rotate: false
   xy: 2, 138
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 3
+  index: 8
 TeamNeutral
   rotate: false
   xy: 47, 172
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 4
+  index: 9
+TeamNeutral
+  rotate: false
+  xy: 92, 206
+  size: 43, 32
+  orig: 43, 32
+  offset: 0, 0
+  index: 10
 TeamNeutral
   rotate: false
   xy: 1108, 491
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 5
+  index: 11
 TeamNeutral
   rotate: false
   xy: 1153, 525
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 6
+  index: 12
+TeamNeutral
+  rotate: false
+  xy: 1198, 559
+  size: 43, 32
+  orig: 43, 32
+  offset: 0, 0
+  index: 13
 TeamNeutral
   rotate: false
   xy: 1978, 841
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 7
-TeamNeutral
+  index: 14
+arena
+  rotate: false
+  xy: 2, 398
+  size: 1104, 543
+  orig: 1104, 543
+  offset: 0, 0
+  index: -1
+ofiara
   rotate: false
   xy: 2, 104
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 8
-TeamNeutral
+  index: 0
+ofiara
   rotate: false
   xy: 47, 138
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 9
-TeamNeutral
+  index: 1
+ofiara
   rotate: false
   xy: 92, 172
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 10
-TeamNeutral
+  index: 2
+ofiara
+  rotate: false
+  xy: 137, 206
+  size: 43, 32
+  orig: 43, 32
+  offset: 0, 0
+  index: 3
+ofiara
   rotate: false
   xy: 1108, 457
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 11
-TeamNeutral
+  index: 4
+ofiara
   rotate: false
   xy: 1153, 491
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 12
-TeamNeutral
+  index: 5
+ofiara
   rotate: false
   xy: 1198, 525
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 13
-TeamNeutral
+  index: 6
+ofiara
+  rotate: false
+  xy: 1243, 559
+  size: 43, 32
+  orig: 43, 32
+  offset: 0, 0
+  index: 7
+ofiara
   rotate: false
   xy: 1978, 807
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 14
-arena
-  rotate: false
-  xy: 2, 364
-  size: 1104, 543
-  orig: 1104, 543
-  offset: 0, 0
-  index: -1
-particle
-  rotate: false
-  xy: 1333, 525
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-teamA
+  index: 8
+ofiara
   rotate: false
   xy: 2, 70
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 0
-teamA
+  index: 9
+ofiara
   rotate: false
   xy: 47, 104
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 1
-teamA
+  index: 10
+ofiara
   rotate: false
   xy: 92, 138
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 2
-teamA
+  index: 11
+ofiara
   rotate: false
   xy: 137, 172
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 3
-teamA
+  index: 12
+ofiara
+  rotate: false
+  xy: 182, 206
+  size: 43, 32
+  orig: 43, 32
+  offset: 0, 0
+  index: 13
+ofiara
   rotate: false
   xy: 1108, 423
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 4
+  index: 14
 teamA
   rotate: false
   xy: 1153, 457
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 5
+  index: 0
 teamA
   rotate: false
   xy: 1198, 491
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 6
+  index: 1
 teamA
   rotate: false
   xy: 1243, 525
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 7
+  index: 2
+teamA
+  rotate: false
+  xy: 1288, 559
+  size: 43, 32
+  orig: 43, 32
+  offset: 0, 0
+  index: 3
 teamA
   rotate: false
   xy: 1978, 773
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 8
+  index: 4
 teamA
   rotate: false
   xy: 2, 36
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 9
+  index: 5
 teamA
   rotate: false
   xy: 47, 70
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 10
+  index: 6
 teamA
   rotate: false
   xy: 92, 104
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 11
+  index: 7
 teamA
   rotate: false
   xy: 137, 138
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 12
+  index: 8
 teamA
   rotate: false
   xy: 182, 172
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
+  index: 9
+teamA
+  rotate: false
+  xy: 227, 206
+  size: 43, 32
+  orig: 43, 32
+  offset: 0, 0
+  index: 10
+teamA
+  rotate: false
+  xy: 1153, 423
+  size: 43, 32
+  orig: 43, 32
+  offset: 0, 0
+  index: 11
+teamA
+  rotate: false
+  xy: 1198, 457
+  size: 43, 32
+  orig: 43, 32
+  offset: 0, 0
+  index: 12
+teamA
+  rotate: false
+  xy: 1243, 491
+  size: 43, 32
+  orig: 43, 32
+  offset: 0, 0
   index: 13
 teamA
   rotate: false
-  xy: 1108, 389
+  xy: 1288, 525
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 14
 teamB
   rotate: false
-  xy: 1153, 423
+  xy: 1333, 559
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 0
 teamB
   rotate: false
-  xy: 1198, 457
+  xy: 1978, 739
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 1
 teamB
   rotate: false
-  xy: 1243, 491
+  xy: 2, 2
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 2
 teamB
   rotate: false
-  xy: 1288, 525
+  xy: 47, 36
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 3
 teamB
   rotate: false
-  xy: 1978, 739
+  xy: 92, 70
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 4
 teamB
   rotate: false
-  xy: 2, 2
+  xy: 137, 104
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 5
 teamB
   rotate: false
-  xy: 47, 36
+  xy: 182, 138
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 6
 teamB
   rotate: false
-  xy: 92, 70
+  xy: 227, 172
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 7
 teamB
   rotate: false
-  xy: 137, 104
+  xy: 272, 206
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 8
 teamB
   rotate: false
-  xy: 182, 138
+  xy: 1198, 423
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 9
 teamB
   rotate: false
-  xy: 227, 172
+  xy: 1243, 457
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 10
 teamB
   rotate: false
-  xy: 1153, 389
+  xy: 1288, 491
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 11
 teamB
   rotate: false
-  xy: 1198, 423
+  xy: 1333, 525
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 12
 teamB
   rotate: false
-  xy: 1243, 457
+  xy: 1378, 559
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 13
 teamB
   rotate: false
-  xy: 1288, 491
+  xy: 1978, 705
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 14
 trybuny_dol
   rotate: false
-  xy: 2, 285
+  xy: 2, 319
   size: 1105, 77
   orig: 1105, 77
   offset: 0, 0
   index: -1
 trybuny_gora
   rotate: false
-  xy: 2, 206
+  xy: 2, 240
   size: 1105, 77
   orig: 1105, 77
   offset: 0, 0
   index: -1
 trybuny_lewo
   rotate: false
-  xy: 1820, 364
+  xy: 1820, 398
   size: 77, 543
   orig: 77, 543
   offset: 0, 0
   index: -1
 trybuny_prawo
   rotate: false
-  xy: 1899, 363
+  xy: 1899, 397
   size: 77, 544
   orig: 77, 544
   offset: 0, 0
   index: -1
 volcano-empty
   rotate: false
-  xy: 1108, 559
+  xy: 1108, 593
   size: 354, 348
   orig: 354, 348
   offset: 0, 0
   index: -1
 volcano-fire
   rotate: false
-  xy: 1464, 559
+  xy: 1464, 593
   size: 354, 348
   orig: 354, 348
   offset: 0, 0

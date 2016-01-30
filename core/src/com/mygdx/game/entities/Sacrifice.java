@@ -2,7 +2,9 @@ package com.mygdx.game.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -36,10 +38,20 @@ public class Sacrifice extends Entity implements PhysicsObject {
     private Vector2 tempVec2 = new Vector2();
     public Player owner;
 
+    // Animation
+    private float animTime;
+    private Animation animation;
+    private TextureRegion animFrame;
+
     public Sacrifice (float x, float y, float radius, GameWorld gameWorld, Color color) {
         super(x, y, radius * 2, radius * 2);
         this.gameWorld = gameWorld;
         this.color = color;
+
+        // Animation
+        this.animation = new Animation(0.033f, G.assets.getAtlas(G.A.ATLAS).findRegions(G.A.SACRIFICE));
+        this.animation.setPlayMode(Animation.PlayMode.LOOP);
+        this.animFrame = animation.getKeyFrame(animTime);
 
         this.body = gameWorld.getBox2DWorld().getBodyBuilder()
                 .fixture(gameWorld.getBox2DWorld().getFixtureDefBuilder()
@@ -66,12 +78,16 @@ public class Sacrifice extends Entity implements PhysicsObject {
 
     @Override
     public void draw(SpriteBatch batch) {
-
+        animFrame = animation.getKeyFrame(animTime);
+        batch.draw(animFrame, position.x - animFrame.getRegionWidth() * G.INV_SCALE / 2,
+                position.y - animFrame.getRegionHeight() * G.INV_SCALE / 2,
+                animFrame.getRegionWidth() / 2 * G.INV_SCALE, animFrame.getRegionHeight() / 2 * G.INV_SCALE,
+                animFrame.getRegionWidth() * G.INV_SCALE, animFrame.getRegionHeight() * G.INV_SCALE, 1, 1, rotation - 90);
     }
 
     @Override public void drawDebug (ShapeRenderer shapeRenderer) {
-        shapeRenderer.setColor(color);
-        shapeRenderer.circle(position.x, position.y, bounds.width/2, 16);
+//        shapeRenderer.setColor(color);
+//        shapeRenderer.circle(position.x, position.y, bounds.width/2, 16);
     }
 
     private Vector2 tmp = new Vector2();
@@ -79,14 +95,19 @@ public class Sacrifice extends Entity implements PhysicsObject {
     public float shootTimer;
     @Override
     public void update(float delta) {
+        position.set(body.getPosition());
+        velocity.set(body.getLinearVelocity());
+        rotation = body.getAngle() * MathUtils.radDeg;
+
+        float animSpeed = MathUtils.clamp(velocity.len(), 0, 1);
+        animTime += delta * animSpeed;
+
         captureCoolDown -= delta;
         shootTimer -= delta;
         if (owner != null) {
             // position set via weld joint with owner
         } else if (shootTimer <= 0){
             resetBox2d();
-            position.set(body.getPosition());
-            rotation = body.getAngle() * MathUtils.radDeg;
 
             // Set velocity
             velocity.set(0, 0);
@@ -131,7 +152,6 @@ public class Sacrifice extends Entity implements PhysicsObject {
                 body.applyLinearImpulse(velocity, body.getWorldCenter(), true);
             }
         }
-        position.set(body.getPosition());
 
         Vector2 velocity = body.getLinearVelocity();
         if (!velocity.isZero(0.001f)) {
