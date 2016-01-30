@@ -44,6 +44,9 @@ public class GodsWillManager {
         if(needSacrifice) {
             Array<Entity> walkers = gameWorld.getEntityManager().getEntitiesClass(Walker.class);
 
+            // No walkers left!
+            if(walkers.size <= 0) return;
+
             // Choose random one
             Entity walker = walkers.random();
 
