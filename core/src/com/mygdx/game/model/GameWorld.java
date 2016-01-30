@@ -3,6 +3,8 @@ package com.mygdx.game.model;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.ai.GdxAI;
+import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
@@ -13,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.G;
+import com.mygdx.game.controls.PlayerGamepadController;
 import com.mygdx.game.entities.Arena;
 import com.mygdx.game.controls.PlayerAWSDController;
 import com.mygdx.game.controls.PlayerArrowsController;
@@ -53,11 +56,20 @@ public class GameWorld implements ContactListener {
         entityManager.addEntity(player);
         entityManager.addEntity(player2);
 
+        for (Controller controller : Controllers.getControllers()) {
+            System.out.println("oho!0");
+            controller.addListener(new PlayerGamepadController(player));
+        }
+
         // Set input processors
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(new PlayerArrowsController(player));
         inputMultiplexer.addProcessor(new PlayerAWSDController(player2));
         Gdx.input.setInputProcessor(inputMultiplexer);
+
+
+
+
     }
 
     public void initializeObjects() {

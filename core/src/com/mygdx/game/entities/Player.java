@@ -59,14 +59,29 @@ public class Player extends Entity implements PhysicsObject {
         position.set(body.getPosition());
         rotation = body.getAngle() * MathUtils.radDeg;
 
+        // Transform direction into velocity
         if(direction.x != 0 || direction.y != 0) {
-            velocity.set(direction).nor().scl(SPEED);
+            velocity.set(direction).limit(1).scl(SPEED);
 
             tempVec2.set(body.getLinearVelocity()).lerp(velocity, 0.08f * 60 * delta);
 
             body.setTransform(position.x, position.y, tempVec2.angle() * MathUtils.degRad);
             body.setLinearVelocity(tempVec2.x, tempVec2.y);
         }
+
+        // Direction not provided but velocity is
+//        if(direction.isZero() && !velocity.isZero()) {
+//            velocity.clamp(-1, 1).scl(SPEED);
+//
+//            tempVec2.set(body.getLinearVelocity()).lerp(velocity, 0.08f * 60 * delta);
+//
+//            body.setTransform(position.x, position.y, tempVec2.angle() * MathUtils.degRad);
+//            body.setLinearVelocity(tempVec2.x, tempVec2.y);
+//        }
+
+//        if(!velocity.isZero()) {
+//
+//        }
     }
 
     @Override
