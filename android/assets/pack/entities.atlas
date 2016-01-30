@@ -116,6 +116,13 @@ arena
   orig: 1104, 543
   offset: 0, 0
   index: -1
+particle
+  rotate: false
+  xy: 1333, 525
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 teamA
   rotate: false
   xy: 2, 70

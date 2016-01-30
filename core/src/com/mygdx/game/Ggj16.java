@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.FPSLogger;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.mygdx.game.screens.SplashScreen;
 import com.mygdx.game.utils.Assets;
@@ -18,6 +19,8 @@ public class Ggj16 extends Game {
 		log = new FPSLogger();
 		assets = new Assets();
 		assets.queueLoad("pack/entities.atlas", TextureAtlas.class);
+        // TODO make it work with atlas
+		assets.queueLoad("pack/eruption.p", ParticleEffect.class);
 		G.assets = assets;
 
 		// No assets to load so go straight to the game
