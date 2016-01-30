@@ -1,10 +1,12 @@
 package com.mygdx.game.entities;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.mygdx.game.G;
 import com.mygdx.game.model.GameWorld;
 import com.mygdx.game.model.PhysicsObject;
 
@@ -15,15 +17,29 @@ import com.mygdx.game.model.PhysicsObject;
 public class Flame extends Entity implements PhysicsObject {
 
     private final Color color;
+
     // Physics
     private Body body;
     private boolean flagForDelete = false;
     public final int team;
 
+    private Sprite sprite;
+
     public Flame (float x, float y, float radius, GameWorld gameWorld, Color color, int team) {
         super(x, y, radius * 2, radius * 2);
         this.color = color;
         this.team = team;
+
+        this.sprite = new Sprite(G.assets.getAtlas(G.A.ATLAS).createSprite(G.A.VOLCANO));
+        sprite.setOrigin(sprite.getRegionWidth() / 2 * G.INV_SCALE, sprite.getRegionHeight() / 2 * G.INV_SCALE);
+
+        sprite.rotate(90);
+
+        if(team == 1) {
+            sprite.setFlip(false, false);
+        } else {
+            sprite.setFlip(false, true);
+        }
 
         this.body = gameWorld.getBox2DWorld().getBodyBuilder()
                 .fixture(gameWorld.getBox2DWorld().getFixtureDefBuilder()
@@ -45,12 +61,14 @@ public class Flame extends Entity implements PhysicsObject {
 
     @Override
     public void draw(SpriteBatch batch) {
-
+        sprite.setSize(sprite.getRegionWidth() * G.INV_SCALE, sprite.getRegionHeight() * G.INV_SCALE);
+        sprite.setPosition(position.x - sprite.getWidth() / 2, position.y - sprite.getHeight() / 2);
+        sprite.draw(batch);
     }
 
     @Override public void drawDebug (ShapeRenderer shapeRenderer) {
-        shapeRenderer.setColor(color);
-        shapeRenderer.circle(position.x, position.y, bounds.width/2, 32);
+//        shapeRenderer.setColor(color);
+//        shapeRenderer.circle(position.x, position.y, bounds.width/2, 32);
     }
 
     @Override
