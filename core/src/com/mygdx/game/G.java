@@ -31,5 +31,7 @@ public class G {
         public static final String TEAMN = "TeamNeutral";
         public static final String VOLCANO = "volcano-empty";
         public static final String SACRIFICE = "ofiara";
+        public static final String RAY = "ray";
+        public static final String RAY_CIRCLE= "ray-circle";
     }
 }

@@ -1,11 +1,14 @@
 package com.mygdx.game;
 
+import aurelienribon.tweenengine.Tween;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.FPSLogger;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.mygdx.game.screens.SplashScreen;
 import com.mygdx.game.utils.Assets;
+import com.mygdx.game.utils.SpriteTween;
 
 public class Ggj16 extends Game {
 
@@ -24,6 +27,8 @@ public class Ggj16 extends Game {
 		assets.queueLoad("pack/spawn.p", ParticleEffect.class);
 		assets.queueLoad("pack/trail.p", ParticleEffect.class);
 		G.assets = assets;
+
+		Tween.registerAccessor(Sprite.class, new SpriteTween());
 
 		// No assets to load so go straight to the game
 		G.game.setScreen(new SplashScreen());
