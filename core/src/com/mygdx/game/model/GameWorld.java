@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.ai.GdxAI;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
@@ -48,8 +49,8 @@ public class GameWorld implements ContactListener {
         initializeObjects();
 
         // Create players
-        Player player = new Player(5f, 5f, .3f, this);
-        Player player2 = new Player(5f, 5f, .3f, this);
+        Player player = new Player(5f, 5f, .3f, this, Color.BLUE);
+        Player player2 = new Player(5f, 5f, .3f, this, Color.RED);
         entityManager.addEntity(player);
         entityManager.addEntity(player2);
 
@@ -74,21 +75,21 @@ public class GameWorld implements ContactListener {
         createArena(ARENA_X, ARENA_Y, ARENA_WIDTH, ARENA_HEIGHT);
 
         // Flames!
-        Flame flame = new Flame(2, G.VP_HEIGHT / 2, 2, this);
+        Flame flame = new Flame(2, G.VP_HEIGHT / 2, 2, this, Color.ORANGE);
         entityManager.addEntity(flame);
 
-        Flame flame2 = new Flame(G.VP_WIDTH - 2, G.VP_HEIGHT / 2, 2, this);
+        Flame flame2 = new Flame(G.VP_WIDTH - 2, G.VP_HEIGHT / 2, 2, this, Color.ORANGE);
         entityManager.addEntity(flame2);
 
         // Test sacrifice
-        Sacrifice sacrifice = new Sacrifice(G.VP_WIDTH / 2, G.VP_HEIGHT / 2, 15 * G.INV_SCALE, this);
+        Sacrifice sacrifice = new Sacrifice(G.VP_WIDTH / 2, G.VP_HEIGHT / 2, 15 * G.INV_SCALE, this, Color.GREEN);
         entityManager.addEntity(sacrifice);
 
         // Some walkers
         for (int i = 0; i < 15; i++) {
             float x = MathUtils.random(100 + 15, 100 + 1080 - 15) * G.INV_SCALE;
             float y = MathUtils.random(100 + 15, 100 + 520 - 15) * G.INV_SCALE;
-            entityManager.addEntity(new Walker(x, y, .25f, this));
+            entityManager.addEntity(new Walker(x, y, .25f, this, Color.YELLOW));
         }
      }
 

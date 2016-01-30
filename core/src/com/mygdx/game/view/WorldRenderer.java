@@ -62,11 +62,13 @@ public class WorldRenderer {
 
         // Debug render
         if (G.DEBUG) {
-            gameWorld.getBox2DWorld().debugRender(cam);
             shapeRenderer.setProjectionMatrix(cam.combined);
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             gameWorld.drawDebug(shapeRenderer);
             shapeRenderer.end();
+        }
+        if (G.DEBUG_BOX2D) {
+            gameWorld.getBox2DWorld().debugRender(cam);
         }
     }
 
