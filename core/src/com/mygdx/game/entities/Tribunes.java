@@ -10,13 +10,13 @@ import com.mygdx.game.utils.FixtureDefBuilder;
 /**
  * @author Lukasz Zmudziak, @lukz_dev on 2016-01-29.
  */
-public class Arena extends Entity implements PhysicsObject {
+public class Tribunes extends Entity implements PhysicsObject {
 
     // Physics
     private Body body;
     private boolean flagForDelete = false;
 
-    public Arena (float x, float y, float width, float height, GameWorld gameWorld) {
+    public Tribunes (float x, float y, float width, float height, GameWorld gameWorld) {
         super(x, y, width, height);
         FixtureDefBuilder builder = gameWorld.getBox2DWorld().getFixtureDefBuilder();
         this.body = gameWorld.getBox2DWorld().getBodyBuilder()
