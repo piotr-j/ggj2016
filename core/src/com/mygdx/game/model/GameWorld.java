@@ -26,7 +26,10 @@ import com.mygdx.game.utils.Constants;
 public class GameWorld implements ContactListener {
 
     private Box2DWorld box2DWorld;
+
+    // Managers
     private EntityManager entityManager;
+    private GodsWillManager godManager;
 
     // Keep game state
     private Array<Player> players;
@@ -38,12 +41,13 @@ public class GameWorld implements ContactListener {
     public final static float ARENA_WIDTH = G.VP_WIDTH - 5;
     public final static float ARENA_HEIGHT = G.VP_HEIGHT - 5;
     public final static int TEAM_1 = 1;
-    public final static int TEAM_2 = 2 ;
+    public final static int TEAM_2 = 2;
 
     public GameWorld() {
         box2DWorld = new Box2DWorld(new Vector2(0, Constants.GRAVITY));
 
         entityManager = new EntityManager();
+        godManager = new GodsWillManager(this);
 
         // Pass all collisions through this class
         box2DWorld.getWorld().setContactListener(this);
@@ -97,8 +101,8 @@ public class GameWorld implements ContactListener {
         entityManager.addEntity(flame2);
 
         // Test sacrifice
-        Sacrifice sacrifice = new Sacrifice(G.VP_WIDTH / 2, G.VP_HEIGHT / 2, 15 * G.INV_SCALE, this, Color.GREEN);
-        entityManager.addEntity(sacrifice);
+//        Sacrifice sacrifice = new Sacrifice(G.VP_WIDTH / 2, G.VP_HEIGHT / 2, 15 * G.INV_SCALE, this, Color.GREEN);
+//        entityManager.addEntity(sacrifice);
 
         // Some walkers
         for (int i = 0; i < 40; i++) {
@@ -132,6 +136,8 @@ public class GameWorld implements ContactListener {
 
         // Update entities logic
         entityManager.update(delta);
+
+        godManager.update(delta);
     }
 
     public void draw(SpriteBatch batch) {

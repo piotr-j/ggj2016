@@ -18,7 +18,7 @@ import com.mygdx.game.model.PhysicsObject;
 public class Sacrifice extends Entity implements PhysicsObject {
 
     // Config
-    private final float SPEED = 1f;
+    private final float SPEED = 1.6f;
     private final float RUN_RADIUS = 150 * G.INV_SCALE;
 
     // Physics
@@ -37,8 +37,6 @@ public class Sacrifice extends Entity implements PhysicsObject {
         super(x, y, radius * 2, radius * 2);
         this.gameWorld = gameWorld;
         this.color = color;
-
-        System.out.println(x + " " + y);
 
         this.body = gameWorld.getBox2DWorld().getBodyBuilder()
                 .fixture(gameWorld.getBox2DWorld().getFixtureDefBuilder()
