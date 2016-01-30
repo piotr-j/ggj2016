@@ -16,7 +16,9 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.G;
@@ -33,6 +35,8 @@ public class GameWorld implements ContactListener {
     private EntityManager entityManager;
     private GodsWillManager godManager;
     private TweenManager tweenManager;
+    private Label team1ScoreLabel;
+    private Label team2ScoreLabel;
 
     // Keep game state
     private Array<Player> players;
@@ -82,16 +86,33 @@ public class GameWorld implements ContactListener {
             entityManager.addEntity(player);
         }
 
+        Skin skin = G.assets.get("pack/uiskin.json", Skin.class);
+        Stack root = new Stack();
+        root.setFillParent(true);
+        stage.addActor(root);
+        Table scores = new Table();
+        scores.debug();
+        scores.setFillParent(true);
+        root.addActor(scores);
+        team1ScoreLabel = new Label("Team 1 : 0", skin);
+        team1ScoreLabel.setColor(Color.BLUE);
+        team2ScoreLabel = new Label("Team 2 : 0", skin);
+        team2ScoreLabel.setColor(Color.RED);
+        scores.add(team1ScoreLabel).pad(20);
+        scores.row();
+        scores.add().expand().fill();
+        scores.row();
+        scores.add(team2ScoreLabel).pad(20);
+
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
-            Skin skin = G.assets.get("pack/uiskin.json", Skin.class);
-            Table root = new Table();
-            root.setFillParent(true);
-            stage.addActor(root);
+        if (Gdx.app.getType() == Application.ApplicationType.Android) {
             Table container1 = new Table();
-            root.add(container1).fill().expand();
+            Table rootContainer = new Table();
+            root.addActor(rootContainer);
+            rootContainer.setFillParent(true);
+            rootContainer.add(container1).fill().expand();
             Table container2 = new Table();
-            root.add(container2).fill().expand();
+            rootContainer.add(container2).fill().expand();
 //            stage.setDebugAll(true);
             // refs are in the stage crap
             new PlayerStageController(controller2, container1, skin, false);
@@ -118,8 +139,10 @@ public class GameWorld implements ContactListener {
     public void teamScored (int team) {
         if (team == TEAM_1) {
             team1Score++;
+            team1ScoreLabel.setText("Team 1 : " + team1Score);
         } else if (team == TEAM_2) {
             team2Score++;
+            team1ScoreLabel.setText("Team 2 : " + team2Score);
         }
         Gdx.app.log("", "Team "+team+" scored!");
         Gdx.app.log("", "Team 1 score: " + team1Score);
