@@ -15,7 +15,7 @@ import com.mygdx.game.model.PhysicsObject;
 public class Player extends Entity implements PhysicsObject {
 
     // Config
-    private final float SPEED = 3;
+    private final float SPEED = 8;
 
     // Controls
     private Vector2 direction = new Vector2();
@@ -24,6 +24,9 @@ public class Player extends Entity implements PhysicsObject {
     private Body body;
     private boolean flagForDelete = false;
     private Vector2 velocity = new Vector2();
+
+    // Temp
+    private Vector2 tempVec2 = new Vector2();
 
     public Player(float x, float y, float radius, GameWorld gameWorld) {
         super(x, y, radius * 2, radius * 2);
@@ -59,8 +62,10 @@ public class Player extends Entity implements PhysicsObject {
         if(direction.x != 0 || direction.y != 0) {
             velocity.set(direction).nor().scl(SPEED);
 
-            body.setTransform(position.x, position.y, velocity.angle() * MathUtils.degRad);
-            body.setLinearVelocity(velocity.x, velocity.y);
+            tempVec2.set(body.getLinearVelocity()).lerp(velocity, 0.08f * 60 * delta);
+
+            body.setTransform(position.x, position.y, tempVec2.angle() * MathUtils.degRad);
+            body.setLinearVelocity(tempVec2.x, tempVec2.y);
         }
     }
 

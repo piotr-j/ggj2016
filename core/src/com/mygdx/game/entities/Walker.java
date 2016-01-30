@@ -21,8 +21,11 @@ import com.mygdx.game.utils.Box2dRaycastCollisionDetector;
  * @author Lukasz Zmudziak, @lukz_dev on 2016-01-29.
  */
 public class Walker extends Entity implements PhysicsObject {
-    public static boolean debugDrawWander = true;
-    public static boolean debugDrawAvoidence = true;
+
+    // Debug
+    public static boolean debugDrawWander = false;
+    public static boolean debugDrawAvoidence = false;
+
     // Physics
     private Body body;
     private BodySteerable steerable;
