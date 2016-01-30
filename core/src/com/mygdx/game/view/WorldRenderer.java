@@ -101,6 +101,7 @@ public class WorldRenderer {
 
     public void resize(int width, int height) {
         viewport.update(width, height, true);
+        guiViewport.update(width, height, true);
     }
 
     public OrthographicCamera getCam() {

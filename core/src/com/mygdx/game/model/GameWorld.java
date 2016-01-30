@@ -83,7 +83,7 @@ public class GameWorld implements ContactListener {
         }
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        if (Gdx.app.getType() == Application.ApplicationType.Android) {
+        if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
             Skin skin = G.assets.get("pack/uiskin.json", Skin.class);
             Table root = new Table();
             root.setFillParent(true);
