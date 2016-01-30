@@ -1,7 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
-
+import com.mygdx.game.utils.Assets;
 
 public class G {
     public static boolean DEBUG = true;
@@ -16,4 +16,5 @@ public class G {
 
     // Game instance used to move between screens
     public static Game game;
+    public static Assets assets;
 }

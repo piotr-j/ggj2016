@@ -1,31 +1,38 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.FPSLogger;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.screens.GameScreen;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.mygdx.game.screens.SplashScreen;
+import com.mygdx.game.utils.Assets;
 
 public class Ggj16 extends Game {
 
 	private FPSLogger log;
+	private Assets assets;
 
 	@Override
 	public void create () {
 		G.game = this;
 
 		log = new FPSLogger();
+		assets = new Assets();
+		assets.queueLoad("pack/entities.atlas", TextureAtlas.class);
+		G.assets = assets;
 
 		// No assets to load so go straight to the game
-		G.game.setScreen(new GameScreen());
+		G.game.setScreen(new SplashScreen());
+
 	}
 
 	@Override
 	public void render() {
 		super.render();
 		log.log();
+	}
+
+	@Override public void dispose () {
+		super.dispose();
+		assets.dispose();
 	}
 }
