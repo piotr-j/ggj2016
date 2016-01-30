@@ -16,7 +16,7 @@ import com.kotcrab.vis.ui.widget.VisTextButton;
 public class PlayerStageController {
 
     private PlayerController playerController;
-
+    private final static float size = 150;
     public PlayerStageController (final PlayerController controller, final Table container, boolean flip) {
         playerController = controller;
         final Touchpad touchpad = new Touchpad(0.1f, VisUI.getSkin());
@@ -41,13 +41,13 @@ public class PlayerStageController {
             }
         });
         if (flip) {
-            container.add(touchpad).size(100).expand().top().right().pad(50);
+            container.add(touchpad).size(size).expand().top().right().pad(size/2);
             container.row();
-            container.add(shoot).size(100).expand().bottom().right().pad(50);
+            container.add(shoot).size(size).expand().bottom().right().pad(size/2);
         } else {
-            container.add(shoot).size(100).expand().top().left().pad(50);;
+            container.add(shoot).size(size).expand().top().left().pad(size/2);
             container.row();
-            container.add(touchpad).size(100).expand().bottom().left().pad(50);;
+            container.add(touchpad).size(size).expand().bottom().left().pad(size/2);
         }
     }
 }
