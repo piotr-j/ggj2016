@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.mygdx.game.controls.PlayerController;
 import com.mygdx.game.model.Box2DWorld;
 import com.mygdx.game.model.GameWorld;
 import com.mygdx.game.model.PhysicsObject;
@@ -17,8 +18,7 @@ public class Player extends Entity implements PhysicsObject {
     // Config
     private final float SPEED = 8;
 
-    // Controls
-    private Vector2 direction = new Vector2();
+    private PlayerController controller;
 
     // Physics
     private Body body;
@@ -28,8 +28,10 @@ public class Player extends Entity implements PhysicsObject {
     // Temp
     private Vector2 tempVec2 = new Vector2();
 
-    public Player(float x, float y, float radius, GameWorld gameWorld) {
+    public Player(float x, float y, float radius, PlayerController controller, GameWorld gameWorld) {
         super(x, y, radius * 2, radius * 2);
+
+        this.controller = controller;
 
         this.body = gameWorld.getBox2DWorld().getBodyBuilder()
                 .fixture(gameWorld.getBox2DWorld().getFixtureDefBuilder()
@@ -60,8 +62,8 @@ public class Player extends Entity implements PhysicsObject {
         rotation = body.getAngle() * MathUtils.radDeg;
 
         // Transform direction into velocity
-        if(direction.x != 0 || direction.y != 0) {
-            velocity.set(direction).limit(1).scl(SPEED);
+        if(controller.getDirection().x != 0 || controller.getDirection().y != 0) {
+            velocity.set(controller.getDirection()).limit(1).scl(SPEED);
 
             tempVec2.set(body.getLinearVelocity()).lerp(velocity, 0.08f * 60 * delta);
 
@@ -69,19 +71,6 @@ public class Player extends Entity implements PhysicsObject {
             body.setLinearVelocity(tempVec2.x, tempVec2.y);
         }
 
-        // Direction not provided but velocity is
-//        if(direction.isZero() && !velocity.isZero()) {
-//            velocity.clamp(-1, 1).scl(SPEED);
-//
-//            tempVec2.set(body.getLinearVelocity()).lerp(velocity, 0.08f * 60 * delta);
-//
-//            body.setTransform(position.x, position.y, tempVec2.angle() * MathUtils.degRad);
-//            body.setLinearVelocity(tempVec2.x, tempVec2.y);
-//        }
-
-//        if(!velocity.isZero()) {
-//
-//        }
     }
 
     @Override
@@ -107,9 +96,5 @@ public class Player extends Entity implements PhysicsObject {
     @Override
     public void setFlagForDelete(boolean flag) {
         flagForDelete = flag;
-    }
-
-    public Vector2 getDirection() {
-        return direction;
     }
 }

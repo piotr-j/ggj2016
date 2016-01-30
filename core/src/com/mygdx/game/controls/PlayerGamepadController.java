@@ -2,9 +2,6 @@ package com.mygdx.game.controls;
 
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerAdapter;
-import com.badlogic.gdx.controllers.PovDirection;
-import com.badlogic.gdx.controllers.mappings.Xbox;
-import com.mygdx.game.entities.Player;
 import com.mygdx.game.utils.Xbox360;
 
 /**
@@ -12,10 +9,10 @@ import com.mygdx.game.utils.Xbox360;
  */
 public class PlayerGamepadController extends ControllerAdapter {
 
-    private Player player;
+    private PlayerController playerController;
 
-    public PlayerGamepadController(Player player) {
-        this.player = player;
+    public PlayerGamepadController(PlayerController playerController) {
+        this.playerController = playerController;
     }
 
     @Override
@@ -23,11 +20,11 @@ public class PlayerGamepadController extends ControllerAdapter {
         if(value > -0.1f && value < 0.1f) value = 0;
 
         if(axisIndex == Xbox360.AXIS_LEFT_X) {
-            player.getDirection().x = value;
+            playerController.getDirection().x = value;
             return true;
 
         } else if(axisIndex == Xbox360.AXIS_LEFT_Y) {
-            player.getDirection().y = -value;
+            playerController.getDirection().y = -value;
             return true;
 
         }

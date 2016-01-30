@@ -13,8 +13,10 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.G;
+import com.mygdx.game.controls.PlayerController;
 import com.mygdx.game.controls.PlayerGamepadController;
 import com.mygdx.game.entities.Arena;
 import com.mygdx.game.entities.*;
@@ -47,24 +49,41 @@ public class GameWorld implements ContactListener {
 
         initializeObjects();
 
-        // Create players
-        Player player = new Player(5f, 5f, .3f, this);
-        Player player2 = new Player(5f, 5f, .3f, this);
-        entityManager.addEntity(player);
-        entityManager.addEntity(player2);
+        // Team 1
+        PlayerController controller1 = new PlayerController();
+        Player player1_1 = new Player(5f, 5f, .3f, controller1, this);
+        entityManager.addEntity(player1_1);
+        Player player1_2 = new Player(5f, 5f, .3f, controller1, this);
+        entityManager.addEntity(player1_2);
+        Player player1_3 = new Player(5f, 5f, .3f, controller1, this);
+        entityManager.addEntity(player1_3);
+        Player player1_4 = new Player(5f, 5f, .3f, controller1, this);
+        entityManager.addEntity(player1_4);
 
-        for (Controller controller : Controllers.getControllers()) {
-            System.out.println("oho!0");
-            controller.addListener(new PlayerGamepadController(player));
-        }
+        // Team 2
+        PlayerController controller2 = new PlayerController();
+        Player player2_1 = new Player(5f, 5f, .3f, controller2, this);
+        entityManager.addEntity(player2_1);
+        Player player2_2 = new Player(5f, 5f, .3f, controller2, this);
+        entityManager.addEntity(player2_2);
+        Player player2_3 = new Player(5f, 5f, .3f, controller2, this);
+        entityManager.addEntity(player2_3);
+        Player player2_4 = new Player(5f, 5f, .3f, controller2, this);
+        entityManager.addEntity(player2_4);
 
         // Set input processors
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(new PlayerArrowsController(player));
-        inputMultiplexer.addProcessor(new PlayerAWSDController(player2));
+        inputMultiplexer.addProcessor(new PlayerArrowsController(controller1));
+        inputMultiplexer.addProcessor(new PlayerAWSDController(controller2));
         Gdx.input.setInputProcessor(inputMultiplexer);
 
-
+        for(int i = 0; i < Controllers.getControllers().size; i++) {
+            if(i == 0) {
+                Controllers.getControllers().get(i).addListener(new PlayerGamepadController(controller1));
+            } else if(i == 1) {
+                Controllers.getControllers().get(i).addListener(new PlayerGamepadController(controller2));
+            }
+        }
 
 
     }
