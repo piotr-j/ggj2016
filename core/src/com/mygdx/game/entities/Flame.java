@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.utils.Array;
@@ -23,12 +24,14 @@ import static com.badlogic.gdx.graphics.g2d.ParticleEffectPool.*;
  */
 public class Flame extends Entity implements PhysicsObject {
 
+    private GameWorld gameWorld;
     private final Color color;
 
     // Physics
     private Body body;
     private boolean flagForDelete = false;
     public final int team;
+    private float spawnRockTimer = MathUtils.random(2f, 4f);
 
     private Sprite sprite;
     private ParticleEffectPool effectPool;
@@ -36,6 +39,7 @@ public class Flame extends Entity implements PhysicsObject {
 
     public Flame (float x, float y, float radius, GameWorld gameWorld, Color color, int team) {
         super(x, y, radius * 2, radius * 2);
+        this.gameWorld = gameWorld;
         this.color = color;
         this.team = team;
 
@@ -95,6 +99,19 @@ public class Flame extends Entity implements PhysicsObject {
             if (effect.isComplete()) {
                 it.remove();
                 effectPool.free(effect);
+            }
+        }
+        spawnRockTimer -= delta;
+        if (spawnRockTimer <= 0) {
+            spawnRockTimer = MathUtils.random(2, 4);
+            FlamingRock rock = FlamingRock.pool.obtain();
+            if (!rock.addedToEngine()) {
+                rock.addToEngine(gameWorld.getEntityManager());
+            }
+            if (team == GameWorld.TEAM_2) {
+                rock.init(position.x, position.y, MathUtils.random(0, G.VP_WIDTH/2 + 3), MathUtils.random(0, G.VP_HEIGHT));
+            } else if (team == GameWorld.TEAM_1){
+                rock.init(position.x, position.y, MathUtils.random(G.VP_WIDTH/2 - 3, G.VP_WIDTH), MathUtils.random(0, G.VP_HEIGHT));
             }
         }
     }

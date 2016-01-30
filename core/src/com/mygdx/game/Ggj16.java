@@ -22,6 +22,7 @@ public class Ggj16 extends Game {
         // TODO make it work with atlas
 		assets.queueLoad("pack/eruption.p", ParticleEffect.class);
 		assets.queueLoad("pack/spawn.p", ParticleEffect.class);
+		assets.queueLoad("pack/trail.p", ParticleEffect.class);
 		G.assets = assets;
 
 		// No assets to load so go straight to the game
