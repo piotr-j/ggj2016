@@ -91,14 +91,14 @@ public class Player extends Entity implements PhysicsObject, Box2DWorld.JointCal
         float[] colors = spawnEffect.getEmitters().first().getTint().getColors();
         if (team == GameWorld.TEAM_1) {
             // R/G/B
-            colors[0] = 1;
-            colors[1] = 0;
-            colors[2] = 0;
+            colors[0] = 237/255f;
+            colors[1] = 106/255f;
+            colors[2] = 88/255f;
         } else if (team == GameWorld.TEAM_2) {
             // R/G/B
-            colors[0] = 0;
-            colors[1] = 0;
-            colors[2] = 1;
+            colors[0] = 80/255f;
+            colors[1] = 138/255f;
+            colors[2] = 167/255f;
         }
     }
 
