@@ -49,8 +49,8 @@ public class GameWorld implements ContactListener {
         initializeObjects();
 
         // Create players
-        Player player = new Player(5f, 5f, .3f, this, Color.BLUE);
-        Player player2 = new Player(5f, 5f, .3f, this, Color.RED);
+        Player player = new Player(G.VP_WIDTH / 2 - 8f, G.VP_HEIGHT / 2, .3f, this, Color.BLUE);
+        Player player2 = new Player(G.VP_WIDTH / 2 + 8f, G.VP_HEIGHT / 2, .3f, this, Color.RED);
         entityManager.addEntity(player);
         entityManager.addEntity(player2);
 
