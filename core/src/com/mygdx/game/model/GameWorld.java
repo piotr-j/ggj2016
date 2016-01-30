@@ -101,7 +101,7 @@ public class GameWorld implements ContactListener {
         entityManager.addEntity(sacrifice);
 
         // Some walkers
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 40; i++) {
             float x = MathUtils.random(100 + 15, 100 + 1080 - 15) * G.INV_SCALE;
             float y = MathUtils.random(100 + 15, 100 + 520 - 15) * G.INV_SCALE;
             entityManager.addEntity(new Walker(x, y, .25f, this, Color.YELLOW));

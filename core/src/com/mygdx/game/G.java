@@ -28,6 +28,7 @@ public class G {
         public static final String TRIBUNES_RIGHT= "trybuny_prawo";
         public static final String TEAMA= "teamA";
         public static final String TEAMB= "teamB";
+        public static final String TEAMN= "TeamNeutral";
 
     }
 }

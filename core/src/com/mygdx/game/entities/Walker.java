@@ -6,12 +6,15 @@ import com.badlogic.gdx.ai.steer.behaviors.RaycastObstacleAvoidance;
 import com.badlogic.gdx.ai.steer.behaviors.Wander;
 import com.badlogic.gdx.ai.steer.utils.rays.CentralRayWithWhiskersConfiguration;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.mygdx.game.G;
 import com.mygdx.game.model.GameWorld;
 import com.mygdx.game.model.PhysicsObject;
 import com.mygdx.game.utils.BodySteerable;
@@ -29,6 +32,7 @@ public class Walker extends Entity implements PhysicsObject {
 
     // Physics
     private Body body;
+    private Vector2 velocity = new Vector2();
     private float mass;
     private BodySteerable steerable;
     private Wander<Vector2> wander;
@@ -37,9 +41,19 @@ public class Walker extends Entity implements PhysicsObject {
     private BlendedSteering<Vector2> steering;
     private boolean flagForDelete = false;
 
+    // Animation
+    private float animTime;
+    private Animation animation;
+    private TextureRegion animFrame;
+
     public Walker (float x, float y, float radius, GameWorld gameWorld, Color color) {
         super(x, y, radius * 2, radius * 2);
         this.color = color;
+
+        // Animation
+        this.animation = new Animation(0.033f, G.assets.getAtlas(G.A.ATLAS).findRegions(G.A.TEAMN));
+        this.animation.setPlayMode(Animation.PlayMode.LOOP);
+        this.animFrame = animation.getKeyFrame(animTime);
 
         this.body = gameWorld.getBox2DWorld().getBodyBuilder()
                 .fixture(gameWorld.getBox2DWorld().getFixtureDefBuilder()
@@ -89,13 +103,17 @@ public class Walker extends Entity implements PhysicsObject {
 
     @Override
     public void draw(SpriteBatch batch) {
-
+        animFrame = animation.getKeyFrame(animTime);
+        batch.draw(animFrame, position.x - animFrame.getRegionWidth() * G.INV_SCALE / 2,
+                position.y - animFrame.getRegionHeight() * G.INV_SCALE / 2,
+                animFrame.getRegionWidth() / 2 * G.INV_SCALE, animFrame.getRegionHeight() / 2 * G.INV_SCALE,
+                animFrame.getRegionWidth() * G.INV_SCALE, animFrame.getRegionHeight() * G.INV_SCALE, 1, 1, rotation);
     }
 
     private static Vector2 tmp = new Vector2();
     @Override public void drawDebug (ShapeRenderer shapeRenderer) {
-        shapeRenderer.setColor(color);
-        shapeRenderer.circle(position.x, position.y, bounds.width/2, 16);
+//        shapeRenderer.setColor(color);
+//        shapeRenderer.circle(position.x, position.y, bounds.width/2, 16);
 
         if (debugDrawAvoidence || debugDrawWander) {
             shapeRenderer.end();
@@ -138,6 +156,9 @@ public class Walker extends Entity implements PhysicsObject {
     @Override
     public void update(float delta) {
         position.set(body.getPosition());
+        velocity.set(body.getLinearVelocity());
+        rotation = body.getAngle() * MathUtils.radDeg;
+
         // note this is garbage
         steering.calculateSteering(steeringOutput);
         // Update position and linear velocity.
@@ -151,6 +172,10 @@ public class Walker extends Entity implements PhysicsObject {
             // this method internally scales the torque by deltaTime
             body.applyTorque(steeringOutput.angular, true);
         }
+
+
+        float animSpeed = MathUtils.clamp(velocity.len(), 0, 1);
+        animTime += delta * animSpeed;
     }
 
     @Override
