@@ -30,5 +30,6 @@ public class G {
         public static final String TEAMB = "teamB";
         public static final String TEAMN = "TeamNeutral";
         public static final String VOLCANO = "volcano-empty";
+        public static final String SACRIFICE = "ofiara";
     }
 }
