@@ -154,7 +154,7 @@ public class Flame extends Entity implements PhysicsObject {
                 rock.init(position.x, position.y, MathUtils.random(G.VP_WIDTH/2 - 3, G.VP_WIDTH), MathUtils.random(0, G.VP_HEIGHT));
             }
         }
-        pointLight.setDistance(6*spriteLava.getScaleX());
+        pointLight.setDistance(6 * spriteLava.getScaleX() * 1.25f);
     }
 
     private void erupt () {
