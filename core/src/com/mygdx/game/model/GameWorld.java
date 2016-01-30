@@ -3,7 +3,6 @@ package com.mygdx.game.model;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.ai.GdxAI;
-import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,7 +13,6 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.G;
 import com.mygdx.game.controls.PlayerController;
@@ -59,14 +57,14 @@ public class GameWorld implements ContactListener {
         // Team 1
         PlayerController controller1 = new PlayerController();
         for (int i = 0; i < playersPerTeam; i++) {
-            Player player = new Player(cx + offset + MathUtils.random(-spreadX, spreadX), cy + MathUtils.random(-spreadY, spreadY), .3f, controller1, this, Color.BLUE);
+            Player player = new Player(cx + offset + MathUtils.random(-spreadX, spreadX), cy + MathUtils.random(-spreadY, spreadY), .3f, controller1, this, Color.BLUE, 1);
             entityManager.addEntity(player);
         }
 
         // Team 2
         PlayerController controller2 = new PlayerController();
         for (int i = 0; i < playersPerTeam; i++) {
-            Player player = new Player(cx - offset + MathUtils.random(-spreadX, spreadX), cy + MathUtils.random(-spreadY, spreadY), .3f, controller2, this, Color.RED);
+            Player player = new Player(cx - offset + MathUtils.random(-spreadX, spreadX), cy + MathUtils.random(-spreadY, spreadY), .3f, controller2, this, Color.RED, 2);
             entityManager.addEntity(player);
         }
 

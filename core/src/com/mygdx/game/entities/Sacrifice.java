@@ -1,5 +1,6 @@
 package com.mygdx.game.entities;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -32,6 +33,7 @@ public class Sacrifice extends Entity implements PhysicsObject {
 
     // Temp
     private Vector2 tempVec2 = new Vector2();
+    public Player owner;
 
     public Sacrifice (float x, float y, float radius, GameWorld gameWorld, Color color) {
         super(x, y, radius * 2, radius * 2);
@@ -68,60 +70,67 @@ public class Sacrifice extends Entity implements PhysicsObject {
         shapeRenderer.circle(position.x, position.y, bounds.width/2, 16);
     }
 
+    private Vector2 tmp = new Vector2();
     @Override
     public void update(float delta) {
-        position.set(body.getPosition().x, body.getPosition().y);
+        if (owner != null) {
+            tmp.set(1, 0).rotate(owner.getRotation()).scl(bounds.width/2 + owner.bounds.width/2 + 0.05f).add(owner.getPosition());
+            body.setTransform(tmp.x, tmp.y, 0);
+            body.setLinearVelocity(0, 0);
+            body.setAngularVelocity(0);
+            position.set(body.getPosition());
+            body.setLinearVelocity(owner.getBody().getLinearVelocity());
+        } else {
+            position.set(body.getPosition());
+            rotation = body.getAngle() * MathUtils.radDeg;
 
-        position.set(body.getPosition().x, body.getPosition().y);
-        rotation = body.getAngle() * MathUtils.radDeg;
+            // Set velocity
+            velocity.set(0, 0);
+            float runSpeed = 0;
 
-        // Set velocity
-        velocity.set(0, 0);
-        float runSpeed = 0;
+            // Players
+            for (Entity player : gameWorld.getEntityManager().getEntitiesClass(Player.class)) {
+                if (player.getPosition().dst(position) < RUN_RADIUS) {
 
-        // Players
-        for(Entity player : gameWorld.getEntityManager().getEntitiesClass(Player.class)) {
-            if(player.getPosition().dst(position) < RUN_RADIUS) {
+                    // Direction
+                    tempVec2.set(position).sub(player.getPosition()).nor();
 
-                // Direction
-                tempVec2.set(position).sub(player.getPosition()).nor();
+                    // Speed
+                    float tempSpeed = RUN_RADIUS - player.getPosition().dst(position);
+                    if (tempSpeed > runSpeed)
+                        runSpeed = tempSpeed;
 
-                // Speed
-                float tempSpeed = RUN_RADIUS - player.getPosition().dst(position);
-                if(tempSpeed > runSpeed) runSpeed = tempSpeed;
+                    velocity.add(tempVec2);
+                }
+            }
 
-                velocity.add(tempVec2);
+            // Flames
+            for (Entity flame : gameWorld.getEntityManager().getEntitiesClass(Flame.class)) {
+                if (flame.getPosition().dst(position) < RUN_RADIUS) {
+
+                    // Direction
+                    tempVec2.set(position).sub(flame.getPosition()).nor();
+
+                    // Speed
+                    float tempSpeed = RUN_RADIUS - flame.getPosition().dst(position);
+                    if (tempSpeed > runSpeed)
+                        runSpeed = tempSpeed;
+
+                    velocity.add(tempVec2);
+                }
+            }
+
+            runSpeed *= SPEED * 10;
+            velocity.nor().scl(runSpeed);
+
+            if (!velocity.isZero()) {
+
+                tempVec2.set(body.getLinearVelocity()).lerp(velocity, delta);
+
+                body.setLinearVelocity(tempVec2);
+                body.setTransform(position.x, position.y, velocity.angle() * MathUtils.degRad);
             }
         }
-
-        // Flames
-        for(Entity flame : gameWorld.getEntityManager().getEntitiesClass(Flame.class)) {
-            if(flame.getPosition().dst(position) < RUN_RADIUS) {
-
-                // Direction
-                tempVec2.set(position).sub(flame.getPosition()).nor();
-
-                // Speed
-                float tempSpeed = RUN_RADIUS - flame.getPosition().dst(position);
-                if(tempSpeed > runSpeed) runSpeed = tempSpeed;
-
-                velocity.add(tempVec2);
-            }
-        }
-
-
-        runSpeed *= SPEED * 10;
-        velocity.nor().scl(runSpeed);
-
-        if(!velocity.isZero()) {
-
-            tempVec2.set(body.getLinearVelocity()).lerp(velocity, delta);
-
-            body.setLinearVelocity(tempVec2);
-            body.setTransform(position.x, position.y,
-                    velocity.angle() * MathUtils.degRad);
-        }
-
     }
 
     @Override
@@ -131,6 +140,14 @@ public class Sacrifice extends Entity implements PhysicsObject {
 
     @Override
     public void handleBeginContact(PhysicsObject psycho2, GameWorld world) {
+        if (psycho2 instanceof Flame) {
+            if (owner != null) {
+                // TODO score based on which flame it is
+                Gdx.app.log("", "Team " + owner.team + " scored ?");
+                owner.sacrifice = null;
+                owner = null;
+            }
+        }
     }
 
     @Override

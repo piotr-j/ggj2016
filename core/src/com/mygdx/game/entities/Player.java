@@ -1,5 +1,6 @@
 package com.mygdx.game.entities;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -7,6 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.mygdx.game.G;
 import com.mygdx.game.controls.PlayerController;
 import com.mygdx.game.model.Box2DWorld;
 import com.mygdx.game.model.GameWorld;
@@ -30,8 +32,9 @@ public class Player extends Entity implements PhysicsObject {
 
     // Temp
     private Vector2 tempVec2 = new Vector2();
+    public int team;
 
-    public Player(float x, float y, float radius, PlayerController controller, GameWorld gameWorld, Color color) {
+    public Player(float x, float y, float radius, PlayerController controller, GameWorld gameWorld, Color color, int team) {
         super(x, y, radius * 2, radius * 2);
         this.color = color;
 
@@ -80,6 +83,9 @@ public class Player extends Entity implements PhysicsObject {
             body.setLinearVelocity(tempVec2.x, tempVec2.y);
         }
 
+        if (sacrifice != null) {
+
+        }
     }
 
     @Override
@@ -87,9 +93,18 @@ public class Player extends Entity implements PhysicsObject {
 
     }
 
+
+    public Sacrifice sacrifice;
     @Override
     public void handleBeginContact(PhysicsObject psycho2, GameWorld world) {
-
+        if (psycho2 instanceof Sacrifice) {
+            Sacrifice sacrifice = (Sacrifice)psycho2;
+            // do we allow for swapping and other stuff?
+            if (sacrifice.owner == null && this.sacrifice == null) {
+                sacrifice.owner = this;
+                this.sacrifice = sacrifice;
+            }
+        }
     }
 
     @Override
