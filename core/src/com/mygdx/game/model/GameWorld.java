@@ -1,5 +1,6 @@
 package com.mygdx.game.model;
 
+import aurelienribon.tweenengine.TweenManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.ai.GdxAI;
@@ -30,6 +31,7 @@ public class GameWorld implements ContactListener {
     // Managers
     private EntityManager entityManager;
     private GodsWillManager godManager;
+    private TweenManager tweenManager;
 
     // Keep game state
     private Array<Player> players;
@@ -48,6 +50,8 @@ public class GameWorld implements ContactListener {
 
         entityManager = new EntityManager();
         godManager = new GodsWillManager(this);
+
+        tweenManager = new TweenManager();
 
         // Pass all collisions through this class
         box2DWorld.getWorld().setContactListener(this);
@@ -151,10 +155,14 @@ public class GameWorld implements ContactListener {
         entityManager.update(delta);
 
         godManager.update(delta);
+
+        tweenManager.update(delta);
     }
 
     public void draw(SpriteBatch batch) {
         entityManager.draw(batch);
+
+        godManager.draw(batch);
     }
 
     public void drawDebug (ShapeRenderer shapeRenderer) {
@@ -191,6 +199,10 @@ public class GameWorld implements ContactListener {
 
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
+    }
+
+    public TweenManager getTweenManager() {
+        return tweenManager;
     }
 
     public EntityManager getEntityManager() {
