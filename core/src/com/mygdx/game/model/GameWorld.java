@@ -50,27 +50,25 @@ public class GameWorld implements ContactListener {
 
         initializeObjects();
 
+        float cx = G.VP_WIDTH / 2;
+        float cy = G.VP_HEIGHT / 2;
+        float offset = 7;
+        float spreadX = 1;
+        float spreadY = 1;
+        int playersPerTeam = 4;
         // Team 1
         PlayerController controller1 = new PlayerController();
-        Player player1_1 = new Player(5f, 5f, .3f, controller1, this, Color.BLUE);
-        entityManager.addEntity(player1_1);
-        Player player1_2 = new Player(5f, 5f, .3f, controller1, this, Color.BLUE);
-        entityManager.addEntity(player1_2);
-        Player player1_3 = new Player(5f, 5f, .3f, controller1, this, Color.BLUE);
-        entityManager.addEntity(player1_3);
-        Player player1_4 = new Player(5f, 5f, .3f, controller1, this, Color.BLUE);
-        entityManager.addEntity(player1_4);
+        for (int i = 0; i < playersPerTeam; i++) {
+            Player player = new Player(cx + offset + MathUtils.random(-spreadX, spreadX), cy + MathUtils.random(-spreadY, spreadY), .3f, controller1, this, Color.BLUE);
+            entityManager.addEntity(player);
+        }
 
         // Team 2
         PlayerController controller2 = new PlayerController();
-        Player player2_1 = new Player(5f, 5f, .3f, controller2, this, Color.RED);
-        entityManager.addEntity(player2_1);
-        Player player2_2 = new Player(5f, 5f, .3f, controller2, this, Color.RED);
-        entityManager.addEntity(player2_2);
-        Player player2_3 = new Player(5f, 5f, .3f, controller2, this, Color.RED);
-        entityManager.addEntity(player2_3);
-        Player player2_4 = new Player(5f, 5f, .3f, controller2, this, Color.RED);
-        entityManager.addEntity(player2_4);
+        for (int i = 0; i < playersPerTeam; i++) {
+            Player player = new Player(cx - offset + MathUtils.random(-spreadX, spreadX), cy + MathUtils.random(-spreadY, spreadY), .3f, controller2, this, Color.RED);
+            entityManager.addEntity(player);
+        }
 
         // Set input processors
         InputMultiplexer inputMultiplexer = new InputMultiplexer();

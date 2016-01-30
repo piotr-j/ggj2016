@@ -5,7 +5,7 @@ import com.mygdx.game.utils.Assets;
 
 public class G {
     public static boolean DEBUG = true;
-    public static boolean DEBUG_BOX2D = false;
+    public static boolean DEBUG_BOX2D = true;
 
     // Virtual resolution - potato units
     public static float SCALE = 48;
