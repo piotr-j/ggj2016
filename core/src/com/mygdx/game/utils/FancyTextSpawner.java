@@ -25,7 +25,7 @@ public class FancyTextSpawner {
     private static Vector2 enterPosition = new Vector2();
     private static Vector2 exitPosition = new Vector2();
 
-    public static void spawnText(CharSequence text,float posX, float posY, final GameWorld gameWorld, Color color) {
+    public static void spawnText(CharSequence text,float posX, float posY, final GameWorld gameWorld, Color color, float delayAfter) {
         upVector2.setZero();
         downVector2.setZero();
         currVector2.setZero();
@@ -82,6 +82,7 @@ public class FancyTextSpawner {
 //                    .push(Tween.to(charEnt, EntityTween.POSITION_XY, 0.4f).target(position.x - currVector2.x, position.y - currVector2.y).ease(TweenEquations.easeInOutQuint))
 //                    .push(Tween.to(charEnt, EntityTween.POSITION_XY, 1.0f).target(exitPosition.x, exitPosition.y).ease(TweenEquations.easeInQuart))
                     .push(Tween.to(charEnt, EntityTween.POSITION_XY, 1.0f).target(position.x, position.y).ease(TweenEquations.easeOutQuart))
+                    .pushPause(delayAfter)
                     .push(Tween.to(charEnt, EntityTween.POSITION_XY, 1.0f).target(exitPosition.x, exitPosition.y).ease(TweenEquations.easeInQuart))
                     .delay(0.1f * i)
                     .pushPause(0.1f * text.length())
@@ -89,13 +90,13 @@ public class FancyTextSpawner {
                         @Override
                         public void onEvent(int i, BaseTween<?> baseTween) {
                             for(Entity charEntity : charEntites) {
-                                gameWorld.getEntityManager().removeEntity(charEntity);
+                                gameWorld.getMessageEntManager().removeEntity(charEntity);
                             }
                         }
                     })
                     .start(gameWorld.getTweenManager());
 
-            gameWorld.getEntityManager().addEntity(charEnt);
+            gameWorld.getMessageEntManager().addEntity(charEnt);
             charEntites.add(charEnt);
         }
 

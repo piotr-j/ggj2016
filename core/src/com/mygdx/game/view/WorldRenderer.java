@@ -95,6 +95,14 @@ public class WorldRenderer {
 
         batch.end();
 
+        stage.act(delta);
+        stage.draw();
+
+        batch.setProjectionMatrix(cam.combined);
+        batch.begin();
+        gameWorld.drawAfterStage(batch);
+        batch.end();
+
         // Debug render
         if (G.DEBUG) {
             shapeRenderer.setProjectionMatrix(cam.combined);
@@ -106,8 +114,6 @@ public class WorldRenderer {
             gameWorld.getBox2DWorld().debugRender(cam);
         }
 
-        stage.act(delta);
-        stage.draw();
         batch.setColor(Color.WHITE);
     }
 
