@@ -2,6 +2,8 @@ package com.mygdx.game.model;
 
 import aurelienribon.tweenengine.TweenManager;
 import box2dLight.ConeLight;
+import box2dLight.Light;
+import box2dLight.PointLight;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
@@ -51,10 +53,6 @@ public class GameWorld implements ContactListener {
     private Array<Player> players;
     private Stage stage;
     private RayHandler rayHandler;
-
-    public RayHandler getRayHandler () {
-        return rayHandler;
-    }
 
     public static enum GameState { WAITING_TO_START, IN_GAME, FINISH };
 
@@ -320,6 +318,11 @@ public class GameWorld implements ContactListener {
                 gameState = GameState.IN_GAME;
             }
         }
+
+        for (Light light : lightsToDispose) {
+            light.remove();
+        }
+        lightsToDispose.clear();
     }
 
     private void restartGame () {
@@ -433,5 +436,16 @@ public class GameWorld implements ContactListener {
 
     public int getTeam1Score() {
         return team1Score;
+    }
+
+
+    public RayHandler getRayHandler () {
+        return rayHandler;
+    }
+    private Array<Light> lightsToDispose = new Array<Light>();
+    public void queueLightDispose (Light light) {
+        if (!lightsToDispose.contains(light, true)) {
+            lightsToDispose.add(light);
+        }
     }
 }

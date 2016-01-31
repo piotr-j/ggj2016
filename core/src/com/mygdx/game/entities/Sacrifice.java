@@ -250,7 +250,7 @@ public class Sacrifice extends Entity implements PhysicsObject {
 
     @Override
     public void dispose() {
-        light.dispose();
+
     }
 
     @Override
@@ -264,6 +264,7 @@ public class Sacrifice extends Entity implements PhysicsObject {
             // Score point
             Flame flame = (Flame)psycho2;
             world.teamScored(flame.team);
+            world.queueLightDispose(light);
 
             // Screenshake
             WorldRenderer.SHAKE_TIME += 0.3f;
