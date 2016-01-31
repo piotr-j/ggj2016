@@ -337,11 +337,21 @@ public class GameWorld implements ContactListener {
     }
 
     public void draw(SpriteBatch batch) {
-        entityManager.draw(batch);
+//        entityManager.draw(batch);
+        for (Entity entity : entityManager.getEntities()) {
+            if (entity instanceof Player || entity instanceof Sacrifice) continue;
+            entity.draw(batch);
+        }
+
         waveManager.draw(batch);
     }
 
     public void drawAfterLights(SpriteBatch batch) {
+        for (Entity entity : entityManager.getEntities()) {
+            if (entity instanceof Player || entity instanceof Sacrifice) {
+                entity.draw(batch);
+            }
+        }
         godManager.draw(batch);
     }
 
