@@ -2,6 +2,8 @@ package com.mygdx.game.model;
 
 import aurelienribon.tweenengine.TweenManager;
 import box2dLight.ConeLight;
+import box2dLight.Light;
+import box2dLight.PointLight;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
@@ -75,6 +77,7 @@ public class GameWorld implements ContactListener {
     private Table scores;
     private Stack fade;
     private Image tint;
+    private Label whoWon;
     private Label toRestart;
 
     public GameWorld (Stage stage, RayHandler rayHandler) {
@@ -221,6 +224,7 @@ public class GameWorld implements ContactListener {
         waveManager.makeWave();
         if (team1Score >= SCORE_TO_WIN) {
             gameState = GameState.FINISH;
+            whoWon.setText("Team 1 WON!");
             togglePlayerControl(false);
             fade.getColor().a = 0;
             stage.addActor(fade);
@@ -340,6 +344,11 @@ public class GameWorld implements ContactListener {
                 gameState = GameState.IN_GAME;
             }
         }
+
+        for (Light light : lightsToDispose) {
+            light.remove();
+        }
+        lightsToDispose.clear();
     }
 
     private void restartGame () {
@@ -457,6 +466,13 @@ public class GameWorld implements ContactListener {
 
     public int getTeam1Score() {
         return team1Score;
+    }
+
+    private Array<Light> lightsToDispose = new Array<Light>();
+    public void queueLightDispose (Light light) {
+        if (!lightsToDispose.contains(light, true)) {
+            lightsToDispose.add(light);
+        }
     }
 
     public EntityManager getMessageEntManager() {
