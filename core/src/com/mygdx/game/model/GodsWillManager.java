@@ -80,11 +80,11 @@ public class GodsWillManager {
                     // Ray
                     .push(Tween.to(ray, SpriteTween.SCALEX, 1.0f).target(1).ease(TweenEquations.easeOutBack))
                     .push(Tween.to(ray, SpriteTween.SCALEY, 0.5f).target(1).ease(TweenEquations.easeOutBack))
-                    .push(Tween.to(ray, SpriteTween.ALPHA, 0.5f).target(0.4f).ease(TweenEquations.easeInOutCubic))
+                    .push(Tween.to(ray, SpriteTween.ALPHA, 0.5f).target(0.7f).ease(TweenEquations.easeInOutCubic))
                     // Circle
                     .push(Tween.to(rayCircle, SpriteTween.SCALEX, 1f).target(1).ease(TweenEquations.easeOutBack))
                     .push(Tween.to(rayCircle, SpriteTween.SCALEY, 1f).target(1).ease(TweenEquations.easeOutBack))
-                    .push(Tween.to(rayCircle, SpriteTween.ALPHA, 0.5f).target(0.4f).ease(TweenEquations.easeInOutCubic))
+                    .push(Tween.to(rayCircle, SpriteTween.ALPHA, 0.5f).target(0.7f).ease(TweenEquations.easeInOutCubic))
                 .end()
                 .beginParallel()
                         // Ray

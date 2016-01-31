@@ -250,7 +250,9 @@ public class GameWorld implements ContactListener {
     public void draw(SpriteBatch batch) {
         entityManager.draw(batch);
         waveManager.draw(batch);
+    }
 
+    public void drawAfterLights(SpriteBatch batch) {
         godManager.draw(batch);
     }
 
