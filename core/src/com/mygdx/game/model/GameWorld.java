@@ -9,8 +9,10 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.ai.GdxAI;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -19,12 +21,11 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Stack;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Scaling;
 import com.mygdx.game.G;
 import com.mygdx.game.controls.*;
 import com.mygdx.game.entities.Arena;
@@ -33,6 +34,7 @@ import com.mygdx.game.utils.Constants;
 import com.mygdx.game.view.ScoreDisplay;
 
 public class GameWorld implements ContactListener {
+    public final static int SCORE_TO_WIN = 1;
 
     private Box2DWorld box2DWorld;
 
@@ -65,10 +67,35 @@ public class GameWorld implements ContactListener {
     public final static float SPAWN_X_OFFSET = 7;
     public final static float SPAWN_SPREAD_X = 1;
     public final static float SPAWN_SPREAD_Y = 1;
+    private Stack root = new Stack();
+    private Table scores;
+    private Stack fade;
+    private Image tint;
+    private Label whoWon;
+    private Label toRestart;
 
     public GameWorld (Stage stage, RayHandler rayHandler) {
         this.stage = stage;
         this.rayHandler = rayHandler;
+        Skin skin = G.assets.get("pack/uiskin.json", Skin.class);
+        fade = new Stack();
+        fade.setFillParent(true);
+        tint = new Image(G.assets.getAtlasRegion("pixel", "pack/entities.atlas"));
+        tint.setColor(Color.GRAY);
+        Image logo = new Image(G.assets.getAtlasRegion("ritualball-logo", "pack/entities.atlas"));
+        tint.setFillParent(true);
+        fade.add(tint);
+        Table texts = new Table();
+        texts.add(logo);
+        texts.row();
+        whoWon = new Label("Team won!", skin);
+        texts.add(whoWon).pad(20);
+        texts.row();
+        toRestart = new Label("Restart in 0", skin);
+        texts.add(toRestart).pad(20);
+        texts.row();
+        fade.add(texts);
+        logo.setScaling(Scaling.fillX);
         box2DWorld = new Box2DWorld(new Vector2(0, Constants.GRAVITY));
 
         entityManager = new EntityManager();
@@ -98,12 +125,10 @@ public class GameWorld implements ContactListener {
             entityManager.addEntity(player);
         }
 
-        Skin skin = G.assets.get("pack/uiskin.json", Skin.class);
-        Stack root = new Stack();
         root.setFillParent(true);
         stage.addActor(root);
 
-        Table scores = new Table();
+        scores = new Table();
         scores.setFillParent(true);
         root.addActor(scores);
         scores.align(Align.top);
@@ -150,6 +175,8 @@ public class GameWorld implements ContactListener {
             coneLights.add(new ConeLight(rayHandler, 16, Color.WHITE, 14 + midOffset, x, G.VP_HEIGHT + 4, -90 - angleOffset, 20));
             coneLights.add(new ConeLight(rayHandler, 16, Color.WHITE, 14 + midOffset, x, -4, 90 + angleOffset, 20));
         }
+
+        gameState = GameState.IN_GAME;
     }
 
     private Array<ConeLight> coneLights = new Array<ConeLight>();
@@ -165,10 +192,31 @@ public class GameWorld implements ContactListener {
 
         scoreDisplay.updateScore(this);
         waveManager.makeWave();
+        if (team1Score >= SCORE_TO_WIN) {
+            gameState = GameState.FINISH;
+            whoWon.setText("Team 1 WON!");
+            togglePlayerControl(false);
+            fade.getColor().a = 0;
+            stage.addActor(fade);
+            fade.addAction(Actions.fadeIn(0.5f));
+            tint.setColor(0, 0, 1, .5f);
+            stage.addActor(scores);
+            Gdx.app.log("", "Team 1 won!");
+        } else if (team2Score >= SCORE_TO_WIN) {
+            gameState = GameState.FINISH;
+            whoWon.setText("Team 2 WON!");
+            tint.setColor(1, 0, 0, .5f);
+            togglePlayerControl(false);
+            fade.getColor().a = 0;
+            stage.addActor(fade);
+            fade.addAction(Actions.fadeIn(0.5f));
+            stage.addActor(scores);
+            Gdx.app.log("", "Team 2 won!");
+        }
 
-        Gdx.app.log("", "Team "+team+" scored!");
-        Gdx.app.log("", "Team 1 score: " + team1Score);
-        Gdx.app.log("", "Team 2 score: " + team2Score);
+//        Gdx.app.log("", "Team "+team+" scored!");
+//        Gdx.app.log("", "Team 1 score: " + team1Score);
+//        Gdx.app.log("", "Team 2 score: " + team2Score);
     }
 
     public void initializeObjects() {
@@ -195,7 +243,18 @@ public class GameWorld implements ContactListener {
 
 
         generateAudience();
-     }
+    }
+
+    private void togglePlayerControl(boolean enabled) {
+        Array<Entity> players = entityManager.getEntitiesClass(Player.class);
+        for (Entity entity : players) {
+            Player player = (Player)entity;
+            player.acceptInput(enabled);
+            if (!enabled) {
+                player.timeout();
+            }
+        }
+    }
 
     private void generateAudience() {
 
@@ -230,13 +289,14 @@ public class GameWorld implements ContactListener {
                 G.assets.getAtlasRegion(G.A.TRIBUNES_RIGHT, G.A.ATLAS)));
     }
 
+    private float toRestartDuration = 3;
+    private float winTimer = 0;
     public void update(float delta) {
         GdxAI.getTimepiece().update(delta);
 
         // Update physics
         box2DWorld.update(delta);
 
-        // Update entities logic
         entityManager.update(delta);
 
         godManager.update(delta);
@@ -244,6 +304,32 @@ public class GameWorld implements ContactListener {
         tweenManager.update(delta);
 
         waveManager.update(delta);
+
+        if(gameState == GameState.FINISH) {
+            winTimer += delta;
+            int restart = (int)((toRestartDuration - winTimer) * 100);
+            toRestart.setText("Restart in " + (restart/100)+ "!");
+            if (winTimer > toRestartDuration) {
+                winTimer = 0;
+                restartGame();
+                fade.addAction(Actions.fadeOut(0.5f));
+                gameState = GameState.IN_GAME;
+            }
+        }
+    }
+
+    private void restartGame () {
+        togglePlayerControl(true);
+        team1Score = 0;
+        team2Score = 0;
+        scoreDisplay.updateScore(this);
+
+        int size = entityManager.getEntitiesClass(Walker.class).size;
+        for (int i = 0; i < 40 - size; i++) {
+            float x = MathUtils.random(100 + 15, 100 + 1080 - 15) * G.INV_SCALE;
+            float y = MathUtils.random(100 + 15, 100 + 520 - 15) * G.INV_SCALE;
+            entityManager.addEntity(new Walker(x, y, .25f, this, Color.YELLOW));
+        }
     }
 
     public void draw(SpriteBatch batch) {

@@ -156,7 +156,7 @@ public class Player extends Entity implements PhysicsObject, Box2DWorld.JointCal
 
         // Transform direction into velocity
         Vector2 direction = controller.getDirection();
-        if(!direction.isZero()) {
+        if(!direction.isZero() && acceptInput) {
             tempVec2.set(direction).limit2(1).scl(mass).scl(SPEED);
             if (sacrifice != null) tempVec2.scl(SACRIFICE_SLOWDOWN);
             body.applyLinearImpulse(tempVec2, body.getWorldCenter(), true);
@@ -178,7 +178,7 @@ public class Player extends Entity implements PhysicsObject, Box2DWorld.JointCal
             body.applyAngularImpulse(impulse, true);
         }
 
-        if (sacrifice != null && controller.isShootPressed()) {
+        if (sacrifice != null && controller.isShootPressed() && acceptInput) {
             tempVec2.set(1, 0).rotateRad(angle).nor().scl(0.25f);
             shootSacrifice(tempVec2);
         }
@@ -225,6 +225,11 @@ public class Player extends Entity implements PhysicsObject, Box2DWorld.JointCal
     @Override
     public void dispose() {
 
+    }
+
+    private boolean acceptInput = true;
+    public void acceptInput (boolean accept) {
+        acceptInput = accept;
     }
 
 
