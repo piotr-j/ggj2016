@@ -41,6 +41,7 @@ public class GameWorld implements ContactListener {
 
     // Managers
     private EntityManager entityManager;
+    private EntityManager messageEntManager;
     private GodsWillManager godManager;
     private TweenManager tweenManager;
     private WaveManager waveManager;
@@ -72,34 +73,36 @@ public class GameWorld implements ContactListener {
     private Table scores;
     private Stack fade;
     private Image tint;
-    private Label whoWon;
     private Label toRestart;
 
     public GameWorld (Stage stage, RayHandler rayHandler) {
         this.stage = stage;
         this.rayHandler = rayHandler;
+
+        Label.LabelStyle style = new Label.LabelStyle();
+        style.font = G.assets.get(G.A.FONT_UNIVERSIDAD, BitmapFont.class);
+
         Skin skin = G.assets.get("pack/uiskin.json", Skin.class);
         fade = new Stack();
         fade.setFillParent(true);
         tint = new Image(G.assets.getAtlasRegion("pixel", "pack/entities.atlas"));
-        tint.setColor(Color.GRAY);
+        tint.setColor(Color.BLACK);
+        tint.getColor().a = 0.5f;
         Image logo = new Image(G.assets.getAtlasRegion("ritualball-logo", "pack/entities.atlas"));
         tint.setFillParent(true);
         fade.add(tint);
         Table texts = new Table();
         texts.add(logo);
         texts.row();
-        whoWon = new Label("Team won!", skin);
-        texts.add(whoWon).pad(20);
-        texts.row();
-        toRestart = new Label("Restart in 0", skin);
-        texts.add(toRestart).pad(20);
+        toRestart = new Label("Restart in 0", style);
+        texts.add(toRestart).padTop(300);
         texts.row();
         fade.add(texts);
         logo.setScaling(Scaling.fillX);
         box2DWorld = new Box2DWorld(new Vector2(0, Constants.GRAVITY));
 
         entityManager = new EntityManager();
+        messageEntManager = new EntityManager();
         godManager = new GodsWillManager(this);
         waveManager = new WaveManager(this);
         tweenManager = new TweenManager();
@@ -188,31 +191,39 @@ public class GameWorld implements ContactListener {
         if (team == TEAM_1) {
             team1Score++;
 
-            FancyTextSpawner.spawnText("TEAM " + team, G.VP_WIDTH / 2, G.VP_HEIGHT / 2, this, Color.valueOf("60a7fc"));
-            FancyTextSpawner.spawnText("SCORED!", G.VP_WIDTH / 2, G.VP_HEIGHT / 2 - 2.5f, this, Color.valueOf("60a7fc"));
+            if(team1Score == 1) {
+                FancyTextSpawner.spawnText("TEAM " + team, G.VP_WIDTH / 2, G.VP_HEIGHT / 2 - 1.3f, this, Color.valueOf("60a7fc"), 10);
+                FancyTextSpawner.spawnText("WON!", G.VP_WIDTH / 2, G.VP_HEIGHT / 2 - 2.5f - 1.3f, this, Color.valueOf("60a7fc"), 10);
+            } else {
+                FancyTextSpawner.spawnText("TEAM " + team, G.VP_WIDTH / 2, G.VP_HEIGHT / 2, this, Color.valueOf("60a7fc"), 0);
+                FancyTextSpawner.spawnText("SCORED!", G.VP_WIDTH / 2, G.VP_HEIGHT / 2 - 2.5f, this, Color.valueOf("60a7fc"), 0);
+            }
         } else if (team == TEAM_2) {
             team2Score++;
 
-            FancyTextSpawner.spawnText("TEAM " + team, G.VP_WIDTH / 2, G.VP_HEIGHT / 2, this, Color.valueOf("fc3552"));
-            FancyTextSpawner.spawnText("SCORED!", G.VP_WIDTH / 2, G.VP_HEIGHT / 2 - 2.5f, this, Color.valueOf("fc3552"));
+            if(team2Score == 1) {
+                FancyTextSpawner.spawnText("TEAM " + team, G.VP_WIDTH / 2, G.VP_HEIGHT / 2 - 1.3f, this, Color.valueOf("fc3552"), 10);
+                FancyTextSpawner.spawnText("WON!", G.VP_WIDTH / 2, G.VP_HEIGHT / 2 - 2.5f - 1.3f, this, Color.valueOf("fc3552"), 10);
+            } else {
+                FancyTextSpawner.spawnText("TEAM " + team, G.VP_WIDTH / 2, G.VP_HEIGHT / 2, this, Color.valueOf("fc3552"), 0);
+                FancyTextSpawner.spawnText("SCORED!", G.VP_WIDTH / 2, G.VP_HEIGHT / 2 - 2.5f, this, Color.valueOf("fc3552"), 0);
+            }
         }
 
         scoreDisplay.updateScore(this);
         waveManager.makeWave();
         if (team1Score >= SCORE_TO_WIN) {
             gameState = GameState.FINISH;
-            whoWon.setText("Team 1 WON!");
             togglePlayerControl(false);
             fade.getColor().a = 0;
             stage.addActor(fade);
             fade.addAction(Actions.fadeIn(0.5f));
-            tint.setColor(0, 0, 1, .5f);
+//            tint.setColor(0, 0, 1, .5f);
             stage.addActor(scores);
             Gdx.app.log("", "Team 1 won!");
         } else if (team2Score >= SCORE_TO_WIN) {
             gameState = GameState.FINISH;
-            whoWon.setText("Team 2 WON!");
-            tint.setColor(1, 0, 0, .5f);
+//            tint.setColor(1, 0, 0, .5f);
             togglePlayerControl(false);
             fade.getColor().a = 0;
             stage.addActor(fade);
@@ -293,7 +304,7 @@ public class GameWorld implements ContactListener {
                 G.assets.getAtlasRegion(G.A.TRIBUNES_RIGHT, G.A.ATLAS)));
     }
 
-    private float toRestartDuration = 3;
+    private float toRestartDuration = 11;
     private float winTimer = 0;
     public void update(float delta) {
         GdxAI.getTimepiece().update(delta);
@@ -302,6 +313,7 @@ public class GameWorld implements ContactListener {
         box2DWorld.update(delta);
 
         entityManager.update(delta);
+        messageEntManager.update(delta);
 
         godManager.update(delta);
 
@@ -343,6 +355,10 @@ public class GameWorld implements ContactListener {
 
     public void drawAfterLights(SpriteBatch batch) {
         godManager.draw(batch);
+    }
+
+    public void drawAfterStage(SpriteBatch batch) {
+        messageEntManager.draw(batch);
     }
 
     public void drawDebug (ShapeRenderer shapeRenderer) {
@@ -423,5 +439,9 @@ public class GameWorld implements ContactListener {
 
     public int getTeam1Score() {
         return team1Score;
+    }
+
+    public EntityManager getMessageEntManager() {
+        return messageEntManager;
     }
 }
