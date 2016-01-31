@@ -105,7 +105,7 @@ public class GameWorld implements ContactListener {
         texts.add(logo);
         texts.row();
         toRestart = new Label("Restart in 0", style);
-        texts.add(toRestart).padTop(300);
+        texts.add(toRestart).padTop(400);
         texts.row();
         fade.add(texts);
         logo.setScaling(Scaling.fillX);
