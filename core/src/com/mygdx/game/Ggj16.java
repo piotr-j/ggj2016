@@ -5,6 +5,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.loaders.ParticleEffectLoader.ParticleEffectParameter;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.FPSLogger;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -37,6 +38,9 @@ public class Ggj16 extends Game {
 		assets.queueLoad("sfx/childCheer1.ogg", Sound.class);
 		assets.queueLoad("sfx/childCheer2.ogg", Sound.class);
 		assets.queueLoad("sfx/childCheer3.ogg", Sound.class);
+
+		// Font
+		assets.queueLoad("universidad.fnt", BitmapFont.class);
 
 		assets.queueLoad("pack/uiskin.json", Skin.class);
 		G.assets = assets;

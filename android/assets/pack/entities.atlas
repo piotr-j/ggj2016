@@ -34,7 +34,7 @@ CHAR_C2
   index: 2
 CHAR_C2
   rotate: false
-  xy: 15, 6
+  xy: 15, 3
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
@@ -576,6 +576,13 @@ particle
   xy: 421, 437
   size: 32, 32
   orig: 32, 32
+  offset: 0, 0
+  index: -1
+pixel
+  rotate: false
+  xy: 14, 37
+  size: 1, 1
+  orig: 1, 1
   offset: 0, 0
   index: -1
 ray

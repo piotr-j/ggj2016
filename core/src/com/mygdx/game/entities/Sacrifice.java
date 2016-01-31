@@ -258,15 +258,14 @@ public class Sacrifice extends Entity implements PhysicsObject {
         if (psycho2 instanceof Flame) {
             if (owner != null)
                 owner.sacrifice = null;
-            Flame flame = (Flame)psycho2;
-            if (flame.team != team) {
-                world.teamScored(team);
-            } else {
-                world.teamScored(flame.team);
-            }
+
             owner = null;
 
+            // Score point
+            Flame flame = (Flame)psycho2;
+            world.teamScored(flame.team);
 
+            // Screenshake
             WorldRenderer.SHAKE_TIME += 0.3f;
 
             switch (MathUtils.random(2)) {

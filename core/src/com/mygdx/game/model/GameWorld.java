@@ -9,6 +9,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.ai.GdxAI;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
@@ -22,12 +23,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.G;
 import com.mygdx.game.controls.*;
 import com.mygdx.game.entities.Arena;
 import com.mygdx.game.entities.*;
 import com.mygdx.game.utils.Constants;
+import com.mygdx.game.view.ScoreDisplay;
 
 public class GameWorld implements ContactListener {
 
@@ -38,8 +41,8 @@ public class GameWorld implements ContactListener {
     private GodsWillManager godManager;
     private TweenManager tweenManager;
     private WaveManager waveManager;
-    private Label team1ScoreLabel;
-    private Label team2ScoreLabel;
+
+    private ScoreDisplay scoreDisplay;
 
     // Keep game state
     private Array<Player> players;
@@ -99,19 +102,16 @@ public class GameWorld implements ContactListener {
         Stack root = new Stack();
         root.setFillParent(true);
         stage.addActor(root);
+
         Table scores = new Table();
-//        scores.debug();
         scores.setFillParent(true);
         root.addActor(scores);
-        team1ScoreLabel = new Label("Team 1 : 0", skin);
-        team1ScoreLabel.setColor(Color.BLUE);
-        team2ScoreLabel = new Label("Team 2 : 0", skin);
-        team2ScoreLabel.setColor(Color.RED);
-        scores.add(team1ScoreLabel).pad(20);
-        scores.row();
-        scores.add().expand().fill();
-        scores.row();
-        scores.add(team2ScoreLabel).pad(20);
+        scores.align(Align.top);
+
+
+        scoreDisplay = new ScoreDisplay();
+        scores.add(scoreDisplay);
+
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         if (Gdx.app.getType() == Application.ApplicationType.Android) {
@@ -159,12 +159,11 @@ public class GameWorld implements ContactListener {
     public void teamScored (int team) {
         if (team == TEAM_1) {
             team1Score++;
-            team1ScoreLabel.setText("Team 1 : " + team1Score);
         } else if (team == TEAM_2) {
             team2Score++;
-            team1ScoreLabel.setText("Team 2 : " + team2Score);
         }
 
+        scoreDisplay.updateScore(this);
         waveManager.makeWave();
 
         Gdx.app.log("", "Team "+team+" scored!");
@@ -177,8 +176,8 @@ public class GameWorld implements ContactListener {
         createArena(ARENA_X, ARENA_Y, ARENA_WIDTH, ARENA_HEIGHT);
 
         // Flames!
-        Flame flame = new Flame(2.5F, G.VP_HEIGHT / 2, 1, this, Color.ORANGE, TEAM_2);
-        entityManager.addEntity(flame);
+        Flame flame1 = new Flame(2.5F, G.VP_HEIGHT / 2, 1, this, Color.ORANGE, TEAM_2);
+        entityManager.addEntity(flame1);
 
         Flame flame2 = new Flame(G.VP_WIDTH - 2.5f, G.VP_HEIGHT / 2, 1, this, Color.ORANGE, TEAM_1);
         entityManager.addEntity(flame2);
@@ -326,5 +325,13 @@ public class GameWorld implements ContactListener {
 
     public void setRayHandler (RayHandler rayHandler) {
         this.rayHandler = rayHandler;
+    }
+
+    public int getTeam2Score() {
+        return team2Score;
+    }
+
+    public int getTeam1Score() {
+        return team1Score;
     }
 }
