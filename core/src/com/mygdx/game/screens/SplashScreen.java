@@ -49,7 +49,7 @@ public class SplashScreen implements Screen {
         batch.end();
         if (G.assets.update() && timer > SPLASH_TIME) {
             G.assets.getManager().unload("pack/ritualball-logo.png");
-            G.game.setScreen(new GameScreen());
+            G.game.setScreen(new TutorialScreen());
         }
         timer += delta;
     }
