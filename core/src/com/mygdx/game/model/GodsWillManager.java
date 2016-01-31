@@ -1,10 +1,12 @@
 package com.mygdx.game.model;
 
 import aurelienribon.tweenengine.*;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.G;
 import com.mygdx.game.entities.Entity;
@@ -26,6 +28,9 @@ public class GodsWillManager {
     private Sprite ray;
     private Sprite rayCircle;
 
+    private float countdown = 0;
+    private float countdownMax = 2;
+
     public GodsWillManager(GameWorld gameWorld) {
         this.gameWorld = gameWorld;
 
@@ -39,9 +44,11 @@ public class GodsWillManager {
     }
 
     public void update(float delta) {
-
         // Nominate new sacrifice
         if(needSacrifice) {
+            countdown += delta;
+            if(countdown < countdownMax) return;
+
             Array<Entity> walkers = gameWorld.getEntityManager().getEntitiesClass(Walker.class);
 
             // No walkers left!
@@ -58,8 +65,10 @@ public class GodsWillManager {
             // Set target to draw god rays
             target = newSacrifice;
             tweenWill();
+            G.assets.get(G.A.SOUND_BLESSING, Sound.class).play(1, 1 + MathUtils.random(-0.05f, 0.05f), 0);
 
             needSacrifice = false;
+            countdown = 0;
         }
 
         // Check if sacrifice alive

@@ -49,6 +49,7 @@ public class G {
         public static final String SOUND_GRAB= "sfx/GRAB.ogg";
         public static final String SOUND_SHOOT= "sfx/PODANIE.ogg";
         public static final String SOUND_ERUPTION= "sfx/WULKAN_ERUPCJA.ogg";
+        public static final String SOUND_BLESSING= "sfx/och25.mp3";
 
         public static final String MUSIC= "FlashingLights.mp3";
 

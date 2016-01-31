@@ -48,6 +48,7 @@ public class Ggj16 extends Game {
 		assets.queueLoad(G.A.SOUND_GRAB, Sound.class);
 		assets.queueLoad(G.A.SOUND_SHOOT, Sound.class);
 		assets.queueLoad(G.A.SOUND_ERUPTION, Sound.class);
+		assets.queueLoad(G.A.SOUND_BLESSING, Sound.class);
 
 		assets.queueLoad(G.A.MUSIC, Music.class);
 
