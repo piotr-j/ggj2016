@@ -34,154 +34,154 @@ CHAR_C2
   index: 2
 CHAR_C2
   rotate: false
-  xy: 5, 14
+  xy: 15, 3
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 3
 CHAR_C2
   rotate: false
-  xy: 64, 14
+  xy: 74, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 4
 CHAR_C2
   rotate: false
-  xy: 123, 14
+  xy: 133, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 5
 CHAR_C2
   rotate: false
-  xy: 182, 14
+  xy: 192, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 6
 CHAR_C2
   rotate: false
-  xy: 241, 14
+  xy: 251, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 7
 CHAR_C2
   rotate: false
-  xy: 300, 14
+  xy: 310, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 8
 CHAR_C2
   rotate: false
-  xy: 359, 14
+  xy: 369, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 9
 CHAR_C2
   rotate: false
-  xy: 418, 14
+  xy: 428, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 10
 CHAR_C2
   rotate: false
-  xy: 477, 14
+  xy: 487, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 11
 CHAR_C2
   rotate: false
-  xy: 536, 14
+  xy: 546, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 12
 CHAR_C2
   rotate: false
-  xy: 595, 14
+  xy: 605, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 13
 CHAR_C2
   rotate: false
-  xy: 654, 14
+  xy: 664, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 14
 CHAR_C3
   rotate: false
-  xy: 713, 14
+  xy: 723, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 0
 CHAR_C3
   rotate: false
-  xy: 772, 14
+  xy: 782, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 1
 CHAR_C3
   rotate: false
-  xy: 772, 14
+  xy: 782, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 13
 CHAR_C3
   rotate: false
-  xy: 831, 14
+  xy: 841, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 2
 CHAR_C3
   rotate: false
-  xy: 831, 14
+  xy: 841, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 11
 CHAR_C3
   rotate: false
-  xy: 890, 14
+  xy: 900, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 3
 CHAR_C3
   rotate: false
-  xy: 890, 14
+  xy: 900, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 9
 CHAR_C3
   rotate: false
-  xy: 949, 14
+  xy: 959, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 4
 CHAR_C3
   rotate: false
-  xy: 949, 14
+  xy: 959, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 7
 CHAR_C3
   rotate: false
-  xy: 1008, 14
+  xy: 1018, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
@@ -431,6 +431,41 @@ arena
   orig: 1104, 543
   offset: 0, 0
   index: -1
+konfetti-01
+  rotate: false
+  xy: 2, 13
+  size: 11, 7
+  orig: 11, 7
+  offset: 0, 0
+  index: -1
+konfetti-02
+  rotate: false
+  xy: 2, 40
+  size: 10, 6
+  orig: 10, 6
+  offset: 0, 0
+  index: -1
+konfetti-03
+  rotate: false
+  xy: 2, 32
+  size: 10, 6
+  orig: 10, 6
+  offset: 0, 0
+  index: -1
+konfetti-04
+  rotate: false
+  xy: 2, 24
+  size: 10, 6
+  orig: 10, 6
+  offset: 0, 0
+  index: -1
+konfetti-05
+  rotate: false
+  xy: 14, 40
+  size: 10, 6
+  orig: 10, 6
+  offset: 0, 0
+  index: -1
 ofiara
   rotate: false
   xy: 106, 301
@@ -538,14 +573,14 @@ ofiara
   index: 14
 particle
   rotate: false
-  xy: 1067, 14
+  xy: 421, 437
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 pixel
   rotate: false
-  xy: 2, 19
+  xy: 14, 37
   size: 1, 1
   orig: 1, 1
   offset: 0, 0

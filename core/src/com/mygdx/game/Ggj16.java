@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import aurelienribon.tweenengine.Tween;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.assets.loaders.ParticleEffectLoader.ParticleEffectParameter;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -26,10 +27,12 @@ public class Ggj16 extends Game {
 		assets = new Assets();
 		assets.queueLoad("pack/entities.atlas", TextureAtlas.class);
         // TODO make it work with atlas
-		assets.queueLoad("pack/eruption.p", ParticleEffect.class);
-		assets.queueLoad("pack/spawn.p", ParticleEffect.class);
-		assets.queueLoad("pack/trail.p", ParticleEffect.class);
-		assets.queueLoad("pack/konfetti.p", ParticleEffect.class);
+		ParticleEffectParameter parameter = new ParticleEffectParameter();
+		parameter.atlasFile = "pack/entities.atlas";
+		assets.queueLoad("pack/eruption.p", ParticleEffect.class, parameter);
+		assets.queueLoad("pack/spawn.p", ParticleEffect.class, parameter);
+		assets.queueLoad("pack/trail.p", ParticleEffect.class, parameter);
+		assets.queueLoad("pack/konfetti.p", ParticleEffect.class, parameter);
 
 		// Sfx
 		assets.queueLoad("sfx/childCheer1.ogg", Sound.class);
