@@ -8,15 +8,15 @@ import com.mygdx.game.Ggj16;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
-        TexturePacker.Settings settings = new TexturePacker.Settings();
-        settings.maxWidth = 2048;
-        settings.maxHeight = 2048;
-        // strip so we dont have to deal with this in a jam
-        settings.stripWhitespaceX = false;
-        settings.stripWhitespaceY = false;
-        settings.filterMag = Texture.TextureFilter.Linear;
-        settings.filterMin = Texture.TextureFilter.Linear;
-        TexturePacker.processIfModified(settings, "raw", "pack", "entities");
+//        TexturePacker.Settings settings = new TexturePacker.Settings();
+//        settings.maxWidth = 2048;
+//        settings.maxHeight = 2048;
+//        // strip so we dont have to deal with this in a jam
+//        settings.stripWhitespaceX = false;
+//        settings.stripWhitespaceY = false;
+//        settings.filterMag = Texture.TextureFilter.Linear;
+//        settings.filterMin = Texture.TextureFilter.Linear;
+//        TexturePacker.processIfModified(settings, "raw", "pack", "entities");
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
