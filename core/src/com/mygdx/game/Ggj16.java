@@ -38,6 +38,7 @@ public class Ggj16 extends Game {
 		assets.queueLoad("pack/spawn.p", ParticleEffect.class, parameter);
 		assets.queueLoad("pack/trail.p", ParticleEffect.class, parameter);
 		assets.queueLoad("pack/konfetti.p", ParticleEffect.class, parameter);
+		assets.queueLoad("pack/smoke.p", ParticleEffect.class, parameter);
 
 		// Sfx
 		assets.queueLoad("sfx/childCheer1.ogg", Sound.class);

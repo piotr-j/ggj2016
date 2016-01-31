@@ -44,6 +44,7 @@ public class Flame extends Entity implements PhysicsObject {
     private Sprite spriteLava;
     private ParticleEffectPool effectPool;
     private Array<ParticleEffectPool.PooledEffect> effects = new Array<ParticleEffectPool.PooledEffect>();
+    private ParticleEffect smoke;
     private PointLight pointLight;
 
     public Flame (float x, float y, float radius, GameWorld gameWorld, Color color, int team) {
@@ -110,6 +111,9 @@ public class Flame extends Entity implements PhysicsObject {
         ParticleEffect src = G.assets.get("pack/eruption.p", ParticleEffect.class);
         effectPool = new ParticleEffectPool(src, 5, 10);
 
+        smoke = new ParticleEffect(G.assets.get("pack/smoke.p", ParticleEffect.class));
+        smoke.setPosition(x, y);
+
         RayHandler handler = gameWorld.getRayHandler();
         pointLight = new PointLight(handler, 64, Color.ORANGE, 6, x, y);
         pointLight.setColor(1, 0.25f, 0, 1f);
@@ -126,6 +130,7 @@ public class Flame extends Entity implements PhysicsObject {
         sprite.draw(batch);
         spriteLava.draw(batch);
 
+        smoke.draw(batch);
         for (ParticleEffect effect : effects) {
             effect.draw(batch);
         }
@@ -147,6 +152,7 @@ public class Flame extends Entity implements PhysicsObject {
                 effectPool.free(effect);
             }
         }
+        smoke.update(delta);
         spawnRockTimer -= delta;
         if (spawnRockTimer <= 0) {
             spawnRockTimer = MathUtils.random(2, 4);
