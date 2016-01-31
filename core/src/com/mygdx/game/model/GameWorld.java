@@ -35,7 +35,7 @@ import com.mygdx.game.utils.FancyTextSpawner;
 import com.mygdx.game.view.ScoreDisplay;
 
 public class GameWorld implements ContactListener {
-    public final static int SCORE_TO_WIN = 1;
+    public final static int SCORE_TO_WIN = 10;
 
     private Box2DWorld box2DWorld;
 
