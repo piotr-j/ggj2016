@@ -53,7 +53,7 @@ public class TutorialScreen implements Screen {
             batch.draw(tut2, 0, 0, width, height);
         } else if (timer < TUT_TIME * 2+ TRANSITION_TIME * 2 && timer > TUT_TIME * 2+ TRANSITION_TIME) {
             if (tut3 == null)
-                tut3 = new Texture(Gdx.files.internal("tut/2.jpg"));
+                tut3 = new Texture(Gdx.files.internal("tut/3.jpg"));
             // TRANS 2
             float offset = ((timer - (TUT_TIME * 2 + TRANSITION_TIME))/TRANSITION_TIME) * width;
             batch.draw(tut2, - offset, 0, width, height);
@@ -63,7 +63,7 @@ public class TutorialScreen implements Screen {
             batch.draw(tut3, 0, 0, width, height);
         } else if (timer < TUT_TIME * 3 + TRANSITION_TIME * 3 && timer > TUT_TIME * 3 + TRANSITION_TIME * 2) {
             if (tut4 == null)
-                tut4 = new Texture(Gdx.files.internal("tut/2.jpg"));
+                tut4 = new Texture(Gdx.files.internal("tut/4.jpg"));
             // TRANS 3
             float offset = ((timer - (TUT_TIME * 3 + TRANSITION_TIME * 2))/TRANSITION_TIME) * width;
             batch.draw(tut3, - offset, 0, width, height);
