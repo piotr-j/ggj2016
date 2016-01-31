@@ -1,6 +1,7 @@
 package com.mygdx.game.entities;
 
 import box2dLight.PointLight;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
@@ -223,6 +224,8 @@ public class Player extends Entity implements PhysicsObject, Box2DWorld.JointCal
         sacrifice.shootTimer = 1.5f;
         sacrifice = null;
         sacrificeWeld = null;
+
+        G.assets.get(G.A.SOUND_SHOOT, Sound.class).play(1, 1 + MathUtils.random(-0.05f, 0.05f), 0);
     }
 
     @Override
@@ -251,6 +254,9 @@ public class Player extends Entity implements PhysicsObject, Box2DWorld.JointCal
             // do we allow for swapping and other stuff?
             if ((sacrifice.owner == null
                 || (sacrifice.captureCoolDown <= 0 && sacrifice.owner.team != team)) && this.sacrifice == null) {
+
+                G.assets.get(G.A.SOUND_GRAB, Sound.class).play(1, 1 + MathUtils.random(-0.05f, 0.05f), 0);
+
                 if (sacrifice.owner != null) {
                     sacrifice.owner.releaseSacrifice();
                 }

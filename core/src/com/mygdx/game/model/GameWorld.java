@@ -7,6 +7,8 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.ai.GdxAI;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -78,6 +80,11 @@ public class GameWorld implements ContactListener {
     public GameWorld (Stage stage, RayHandler rayHandler) {
         this.stage = stage;
         this.rayHandler = rayHandler;
+
+        Music music = G.assets.get(G.A.MUSIC, Music.class);
+        music.setLooping(true);
+        music.setVolume(0.6f);
+        music.play();
 
         Label.LabelStyle style = new Label.LabelStyle();
         style.font = G.assets.get(G.A.FONT_UNIVERSIDAD, BitmapFont.class);
@@ -232,6 +239,7 @@ public class GameWorld implements ContactListener {
             Gdx.app.log("", "Team 2 won!");
         }
 
+//        G.assets.get(G.A.SOUND_GOL, Sound.class).play();
     }
 
     public void initializeObjects() {

@@ -1,9 +1,12 @@
 package com.mygdx.game.entities;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.mygdx.game.G;
 import com.mygdx.game.model.GameWorld;
 import com.mygdx.game.model.PhysicsObject;
 import com.mygdx.game.utils.FixtureDefBuilder;
@@ -52,7 +55,9 @@ public class Tribunes extends Entity implements PhysicsObject {
 
     @Override
     public void handleBeginContact(PhysicsObject psycho2, GameWorld world) {
-
+//        if(psycho2 instanceof Sacrifice) {
+//            G.assets.get(G.A.SOUND_BOUNCE, Sound.class).play(0.3f, 1 + 1 + MathUtils.random(-0.05f, 0.05f), 0);
+//        }
     }
 
     @Override

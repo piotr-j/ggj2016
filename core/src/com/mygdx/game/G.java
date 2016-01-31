@@ -44,6 +44,14 @@ public class G {
         public static final String SOUND_CHEER2= "sfx/childCheer2.ogg";
         public static final String SOUND_CHEER3= "sfx/childCheer3.ogg";
 
+        public static final String SOUND_GOL= "sfx/GOL.ogg";
+        public static final String SOUND_BOUNCE= "sfx/BANDA.ogg";
+        public static final String SOUND_GRAB= "sfx/GRAB.ogg";
+        public static final String SOUND_SHOOT= "sfx/PODANIE.ogg";
+        public static final String SOUND_ERUPTION= "sfx/WULKAN_ERUPCJA.ogg";
+
+        public static final String MUSIC= "FlashingLights.mp3";
+
         // Fonts
         public static final String FONT_UNIVERSIDAD = "universidad.fnt";
         public static final String FONT_COLLEGIER = "collegier2.fnt";

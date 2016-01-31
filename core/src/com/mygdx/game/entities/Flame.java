@@ -5,6 +5,7 @@ import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquations;
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
@@ -176,6 +177,9 @@ public class Flame extends Entity implements PhysicsObject {
     @Override
     public void handleBeginContact(PhysicsObject psycho2, GameWorld world) {
         if (psycho2 instanceof Walker) return;
+
+        G.assets.get(G.A.SOUND_ERUPTION, Sound.class).play();
+
         if (psycho2 instanceof Player) {
             Player player = (Player)psycho2;
             player.timeout();

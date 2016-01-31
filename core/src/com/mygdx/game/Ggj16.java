@@ -3,6 +3,7 @@ package com.mygdx.game;
 import aurelienribon.tweenengine.Tween;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.loaders.ParticleEffectLoader.ParticleEffectParameter;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.Texture;
@@ -42,6 +43,13 @@ public class Ggj16 extends Game {
 		assets.queueLoad("sfx/childCheer1.ogg", Sound.class);
 		assets.queueLoad("sfx/childCheer2.ogg", Sound.class);
 		assets.queueLoad("sfx/childCheer3.ogg", Sound.class);
+		assets.queueLoad(G.A.SOUND_GOL, Sound.class);
+		assets.queueLoad(G.A.SOUND_BOUNCE, Sound.class);
+		assets.queueLoad(G.A.SOUND_GRAB, Sound.class);
+		assets.queueLoad(G.A.SOUND_SHOOT, Sound.class);
+		assets.queueLoad(G.A.SOUND_ERUPTION, Sound.class);
+
+		assets.queueLoad(G.A.MUSIC, Music.class);
 
 		// Font
 		assets.queueLoad("universidad.fnt", BitmapFont.class);
