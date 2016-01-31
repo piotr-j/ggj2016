@@ -34,154 +34,154 @@ CHAR_C2
   index: 2
 CHAR_C2
   rotate: false
-  xy: 2, 14
+  xy: 15, 6
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 3
 CHAR_C2
   rotate: false
-  xy: 61, 14
+  xy: 74, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 4
 CHAR_C2
   rotate: false
-  xy: 120, 14
+  xy: 133, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 5
 CHAR_C2
   rotate: false
-  xy: 179, 14
+  xy: 192, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 6
 CHAR_C2
   rotate: false
-  xy: 238, 14
+  xy: 251, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 7
 CHAR_C2
   rotate: false
-  xy: 297, 14
+  xy: 310, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 8
 CHAR_C2
   rotate: false
-  xy: 356, 14
+  xy: 369, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 9
 CHAR_C2
   rotate: false
-  xy: 415, 14
+  xy: 428, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 10
 CHAR_C2
   rotate: false
-  xy: 474, 14
+  xy: 487, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 11
 CHAR_C2
   rotate: false
-  xy: 533, 14
+  xy: 546, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 12
 CHAR_C2
   rotate: false
-  xy: 592, 14
+  xy: 605, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 13
 CHAR_C2
   rotate: false
-  xy: 651, 14
+  xy: 664, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 14
 CHAR_C3
   rotate: false
-  xy: 710, 14
+  xy: 723, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 0
 CHAR_C3
   rotate: false
-  xy: 769, 14
+  xy: 782, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 1
 CHAR_C3
   rotate: false
-  xy: 769, 14
+  xy: 782, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 13
 CHAR_C3
   rotate: false
-  xy: 828, 14
+  xy: 841, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 2
 CHAR_C3
   rotate: false
-  xy: 828, 14
+  xy: 841, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 11
 CHAR_C3
   rotate: false
-  xy: 887, 14
+  xy: 900, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 3
 CHAR_C3
   rotate: false
-  xy: 887, 14
+  xy: 900, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 9
 CHAR_C3
   rotate: false
-  xy: 946, 14
+  xy: 959, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 4
 CHAR_C3
   rotate: false
-  xy: 946, 14
+  xy: 959, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
   index: 7
 CHAR_C3
   rotate: false
-  xy: 1005, 14
+  xy: 1018, 14
   size: 57, 32
   orig: 57, 32
   offset: 0, 0
@@ -321,105 +321,105 @@ CHAR_C4
   index: 14
 TeamNeutral
   rotate: false
-  xy: 1064, 14
+  xy: 2, 267
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 0
 TeamNeutral
   rotate: false
-  xy: 2, 267
+  xy: 2, 233
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 1
 TeamNeutral
   rotate: false
-  xy: 2, 233
+  xy: 47, 267
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 2
 TeamNeutral
   rotate: false
-  xy: 47, 267
+  xy: 47, 233
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 3
 TeamNeutral
   rotate: false
-  xy: 47, 233
+  xy: 61, 437
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 4
 TeamNeutral
   rotate: false
-  xy: 61, 437
+  xy: 61, 403
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 5
 TeamNeutral
   rotate: false
-  xy: 61, 403
+  xy: 61, 369
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 6
 TeamNeutral
   rotate: false
-  xy: 61, 369
+  xy: 61, 335
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 7
 TeamNeutral
   rotate: false
-  xy: 61, 335
+  xy: 61, 301
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 8
 TeamNeutral
   rotate: false
-  xy: 61, 301
+  xy: 92, 267
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 9
 TeamNeutral
   rotate: false
-  xy: 92, 267
+  xy: 92, 233
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 10
 TeamNeutral
   rotate: false
-  xy: 92, 233
+  xy: 106, 437
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 11
 TeamNeutral
   rotate: false
-  xy: 106, 437
+  xy: 106, 403
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 12
 TeamNeutral
   rotate: false
-  xy: 106, 403
+  xy: 106, 369
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
   index: 13
 TeamNeutral
   rotate: false
-  xy: 106, 369
+  xy: 106, 335
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
@@ -431,114 +431,149 @@ arena
   orig: 1104, 543
   offset: 0, 0
   index: -1
-ofiara
+konfetti-01
   rotate: false
-  xy: 106, 335
-  size: 43, 32
-  orig: 43, 32
+  xy: 2, 13
+  size: 11, 7
+  orig: 11, 7
   offset: 0, 0
-  index: 0
+  index: -1
+konfetti-02
+  rotate: false
+  xy: 2, 40
+  size: 10, 6
+  orig: 10, 6
+  offset: 0, 0
+  index: -1
+konfetti-03
+  rotate: false
+  xy: 2, 32
+  size: 10, 6
+  orig: 10, 6
+  offset: 0, 0
+  index: -1
+konfetti-04
+  rotate: false
+  xy: 2, 24
+  size: 10, 6
+  orig: 10, 6
+  offset: 0, 0
+  index: -1
+konfetti-05
+  rotate: false
+  xy: 14, 40
+  size: 10, 6
+  orig: 10, 6
+  offset: 0, 0
+  index: -1
 ofiara
   rotate: false
   xy: 106, 301
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 1
+  index: 0
 ofiara
   rotate: false
   xy: 137, 267
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 2
+  index: 1
 ofiara
   rotate: false
   xy: 137, 233
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 3
+  index: 2
 ofiara
   rotate: false
   xy: 151, 437
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 4
+  index: 3
 ofiara
   rotate: false
   xy: 151, 403
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 5
+  index: 4
 ofiara
   rotate: false
   xy: 151, 369
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 6
+  index: 5
 ofiara
   rotate: false
   xy: 151, 335
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 7
+  index: 6
 ofiara
   rotate: false
   xy: 151, 301
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 8
+  index: 7
 ofiara
   rotate: false
   xy: 182, 267
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 9
+  index: 8
 ofiara
   rotate: false
   xy: 182, 233
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 10
+  index: 9
 ofiara
   rotate: false
   xy: 196, 437
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 11
+  index: 10
 ofiara
   rotate: false
   xy: 196, 403
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 12
+  index: 11
 ofiara
   rotate: false
   xy: 196, 369
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 13
+  index: 12
 ofiara
   rotate: false
   xy: 196, 335
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
+  index: 13
+ofiara
+  rotate: false
+  xy: 196, 301
+  size: 43, 32
+  orig: 43, 32
+  offset: 0, 0
   index: 14
 particle
   rotate: false
-  xy: 407, 233
+  xy: 421, 437
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -559,210 +594,210 @@ ray-circle
   index: -1
 teamA
   rotate: false
-  xy: 196, 301
-  size: 43, 32
-  orig: 43, 32
-  offset: 0, 0
-  index: 0
-teamA
-  rotate: false
   xy: 227, 267
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 1
+  index: 0
 teamA
   rotate: false
   xy: 227, 233
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 2
+  index: 1
 teamA
   rotate: false
   xy: 241, 437
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 3
+  index: 2
 teamA
   rotate: false
   xy: 241, 403
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 4
+  index: 3
 teamA
   rotate: false
   xy: 241, 369
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 5
+  index: 4
 teamA
   rotate: false
   xy: 241, 335
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 6
+  index: 5
 teamA
   rotate: false
   xy: 241, 301
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 7
+  index: 6
 teamA
   rotate: false
   xy: 272, 267
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 8
+  index: 7
 teamA
   rotate: false
   xy: 272, 233
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 9
+  index: 8
 teamA
   rotate: false
   xy: 286, 437
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 10
+  index: 9
 teamA
   rotate: false
   xy: 286, 403
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 11
+  index: 10
 teamA
   rotate: false
   xy: 286, 369
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 12
+  index: 11
 teamA
   rotate: false
   xy: 286, 335
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 13
+  index: 12
 teamA
   rotate: false
   xy: 286, 301
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 14
-teamB
+  index: 13
+teamA
   rotate: false
   xy: 317, 267
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 0
+  index: 14
 teamB
   rotate: false
   xy: 317, 233
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 1
+  index: 0
 teamB
   rotate: false
   xy: 331, 437
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 2
+  index: 1
 teamB
   rotate: false
   xy: 331, 403
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 3
+  index: 2
 teamB
   rotate: false
   xy: 331, 369
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 4
+  index: 3
 teamB
   rotate: false
   xy: 331, 335
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 5
+  index: 4
 teamB
   rotate: false
   xy: 331, 301
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 6
+  index: 5
 teamB
   rotate: false
   xy: 362, 267
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 7
+  index: 6
 teamB
   rotate: false
   xy: 362, 233
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 8
+  index: 7
 teamB
   rotate: false
   xy: 376, 437
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 9
+  index: 8
 teamB
   rotate: false
   xy: 376, 403
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 10
+  index: 9
 teamB
   rotate: false
   xy: 376, 369
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 11
+  index: 10
 teamB
   rotate: false
   xy: 376, 335
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 12
+  index: 11
 teamB
   rotate: false
   xy: 376, 301
   size: 43, 32
   orig: 43, 32
   offset: 0, 0
-  index: 13
+  index: 12
 teamB
   rotate: false
   xy: 407, 267
+  size: 43, 32
+  orig: 43, 32
+  offset: 0, 0
+  index: 13
+teamB
+  rotate: false
+  xy: 407, 233
   size: 43, 32
   orig: 43, 32
   offset: 0, 0

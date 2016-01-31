@@ -33,6 +33,16 @@ public class Assets {
         return this;
     }
 
+    public <T> void queueLoad (String fileName, Class<T> type, AssetLoaderParameters<T> parameter) {
+        manager.load(fileName, type, parameter);
+        Array<String> names = typeToName.get(type);
+        if (names == null) {
+            names = new Array<String>();
+            typeToName.put(type, names);
+        }
+        names.add(fileName);
+    }
+
     public <T, P extends AssetLoaderParameters<T>> void setLoader (Class<T> type, AssetLoader<T, P> loader) {
         manager.setLoader(type, loader);
     }
