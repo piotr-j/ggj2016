@@ -102,6 +102,10 @@ public class Assets {
         manager.dispose();
     }
 
+    public AssetManager getManager () {
+        return manager;
+    }
+
     public static class TextureAtlasCache {
         private ObjectMap<String, TextureAtlas.AtlasRegion> nameToRegion = new ObjectMap<String, TextureAtlas.AtlasRegion>();
         private ObjectMap<String, Array<TextureAtlas.AtlasRegion>> nameToRegions = new ObjectMap<String, Array<TextureAtlas.AtlasRegion>>();
