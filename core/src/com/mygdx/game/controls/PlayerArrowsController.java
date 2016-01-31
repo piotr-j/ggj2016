@@ -33,6 +33,9 @@ public class PlayerArrowsController extends InputAdapter {
             case Input.Keys.ALT_RIGHT:
             case Input.Keys.SLASH:
             case Input.Keys.SHIFT_RIGHT:
+            case Input.Keys.ENTER:
+            case Input.Keys.M:
+            case Input.Keys.L:
                 playerController.shootPressed = true;
                 return true;
         }
@@ -57,6 +60,9 @@ public class PlayerArrowsController extends InputAdapter {
             case Input.Keys.ALT_RIGHT:
             case Input.Keys.SHIFT_RIGHT:
             case Input.Keys.SLASH:
+            case Input.Keys.ENTER:
+            case Input.Keys.M:
+            case Input.Keys.L:
                 playerController.shootPressed = false;
                 return true;
         }
