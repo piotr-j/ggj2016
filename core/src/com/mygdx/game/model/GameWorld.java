@@ -35,6 +35,7 @@ public class GameWorld implements ContactListener {
     private EntityManager entityManager;
     private GodsWillManager godManager;
     private TweenManager tweenManager;
+    private WaveManager waveManager;
     private Label team1ScoreLabel;
     private Label team2ScoreLabel;
 
@@ -61,7 +62,7 @@ public class GameWorld implements ContactListener {
 
         entityManager = new EntityManager();
         godManager = new GodsWillManager(this);
-
+        waveManager = new WaveManager(this);
         tweenManager = new TweenManager();
 
         // Pass all collisions through this class
@@ -144,6 +145,9 @@ public class GameWorld implements ContactListener {
             team2Score++;
             team1ScoreLabel.setText("Team 2 : " + team2Score);
         }
+
+        waveManager.makeWave();
+
         Gdx.app.log("", "Team "+team+" scored!");
         Gdx.app.log("", "Team 1 score: " + team1Score);
         Gdx.app.log("", "Team 2 score: " + team2Score);
@@ -178,13 +182,13 @@ public class GameWorld implements ContactListener {
     private void generateAudience() {
 
         // Down side
-        for(int i = 0; i < 30; i++) {
+        for(int i = 0; i < 40; i++) {
             Spectator spect = new Spectator(MathUtils.random(0, G.VP_WIDTH), MathUtils.random(0, ARENA_Y), .3f, this);
             entityManager.addEntity(spect);
         }
 
         // Up side
-        for(int i = 0; i < 30; i++) {
+        for(int i = 0; i < 40; i++) {
             Spectator spect = new Spectator(MathUtils.random(0, G.VP_WIDTH), MathUtils.random(ARENA_X + ARENA_HEIGHT, G.VP_HEIGHT), .3f, this);
             entityManager.addEntity(spect);
         }
@@ -220,6 +224,8 @@ public class GameWorld implements ContactListener {
         godManager.update(delta);
 
         tweenManager.update(delta);
+
+        waveManager.update(delta);
     }
 
     public void draw(SpriteBatch batch) {
