@@ -18,7 +18,6 @@ public class PlayerGamepadController extends ControllerAdapter {
     @Override
     public boolean axisMoved(Controller controller, int axisIndex, float value) {
         if(value > -0.1f && value < 0.1f) value = 0;
-        System.out.printf("mam");
         if(axisIndex == Xbox360.AXIS_LEFT_X) {
             playerController.getDirection().x = value;
             return true;
