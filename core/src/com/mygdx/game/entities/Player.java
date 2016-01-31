@@ -92,19 +92,22 @@ public class Player extends Entity implements PhysicsObject, Box2DWorld.JointCal
         spawnEffect.setPosition(x, y);
         spawnEffect.reset();
         float[] colors = spawnEffect.getEmitters().first().getTint().getColors();
+        Color c = new Color();
         if (team == GameWorld.TEAM_1) {
+            c.r = .33f;
             // R/G/B
             colors[0] = 237/255f;
             colors[1] = 106/255f;
             colors[2] = 88/255f;
         } else if (team == GameWorld.TEAM_2) {
+            c.set(Color.BLUE);
             // R/G/B
             colors[0] = 80/255f;
             colors[1] = 138/255f;
             colors[2] = 167/255f;
         }
 
-        light = new PointLight(gameWorld.getRayHandler(), 32, color, 1, x, y);
+        light = new PointLight(gameWorld.getRayHandler(), 32, c, 1, x, y);
     }
 
     @Override

@@ -35,7 +35,7 @@ import com.mygdx.game.utils.FancyTextSpawner;
 import com.mygdx.game.view.ScoreDisplay;
 
 public class GameWorld implements ContactListener {
-    public final static int SCORE_TO_WIN = 1;
+    public final static int SCORE_TO_WIN = 10;
 
     private Box2DWorld box2DWorld;
 
@@ -349,11 +349,21 @@ public class GameWorld implements ContactListener {
     }
 
     public void draw(SpriteBatch batch) {
-        entityManager.draw(batch);
+//        entityManager.draw(batch);
+        for (Entity entity : entityManager.getEntities()) {
+            if (entity instanceof Player || entity instanceof Sacrifice) continue;
+            entity.draw(batch);
+        }
+
         waveManager.draw(batch);
     }
 
     public void drawAfterLights(SpriteBatch batch) {
+        for (Entity entity : entityManager.getEntities()) {
+            if (entity instanceof Player || entity instanceof Sacrifice) {
+                entity.draw(batch);
+            }
+        }
         godManager.draw(batch);
     }
 
