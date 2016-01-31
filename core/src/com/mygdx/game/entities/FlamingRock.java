@@ -1,6 +1,10 @@
 package com.mygdx.game.entities;
 
+import box2dLight.PointLight;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
@@ -10,6 +14,7 @@ import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.ReflectionPool;
 import com.mygdx.game.G;
 import com.mygdx.game.model.EntityManager;
+import com.mygdx.game.model.GameWorld;
 
 /**
  * Kills entities!
@@ -40,6 +45,12 @@ public class FlamingRock extends Entity implements Pool.Poolable {
         effect.reset();
         duration = target.dst(position) / 6;
         active = true;
+        light.setActive(true);
+        light.setPosition(x, y);
+
+        for (ParticleEmitter emitter : effect.getEmitters()) {
+            emitter.setContinuous(true);
+        }
     }
 
     @Override
@@ -61,12 +72,19 @@ public class FlamingRock extends Entity implements Pool.Poolable {
         if (a <= 1) {
             position.x = Interpolation.linear.apply(start.x, target.x, a);
             position.y = Interpolation.linear.apply(start.y, target.y, a) + ((1+MathUtils.sinDeg(a * 180))*2);
+            light.setDistance(1.5f + MathUtils.random(-.25f, .25f));
         } else {
             effect.allowCompletion();
+            for (ParticleEmitter emitter : effect.getEmitters()) {
+                emitter.setContinuous(false);
+            }
+            light.setDistance(light.getDistance() * 0.95f);
         }
+        light.setPosition(position);
         effect.setPosition(position.x, position.y);
         effect.update(delta);
         if (effect.isComplete()) {
+            Gdx.app.log("", "reset");
             FlamingRock.pool.free(this);
         }
     }
@@ -78,13 +96,17 @@ public class FlamingRock extends Entity implements Pool.Poolable {
     }
 
     @Override public void reset () {
+        light.setPosition(-100, -100);
+        light.setActive(false);
         active = false;
         timer = 0;
     }
 
     private boolean added;
-    public void addToEngine (EntityManager entityManager) {
-        entityManager.addEntity(this);
+    private PointLight light;
+    public void addToEngine (GameWorld world) {
+        world.getEntityManager().addEntity(this);
+        light = new PointLight(world.getRayHandler(), 16, Color.ORANGE, 1.5f, position.x, position.y);
         added = true;
     }
 

@@ -1,5 +1,6 @@
 package com.mygdx.game.entities;
 
+import box2dLight.PointLight;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.ai.steer.SteeringAcceleration;
@@ -16,14 +17,12 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.MassData;
 import com.mygdx.game.G;
 import com.mygdx.game.model.GameWorld;
 import com.mygdx.game.model.PhysicsObject;
 import com.mygdx.game.utils.BodySteerable;
 import com.mygdx.game.utils.Box2dRaycastCollisionDetector;
 import com.mygdx.game.view.WorldRenderer;
-import com.sun.org.apache.regexp.internal.RE;
 
 /**
  * Should run from player
@@ -58,6 +57,7 @@ public class Sacrifice extends Entity implements PhysicsObject {
     private float animTime;
     private Animation animation;
     private TextureRegion animFrame;
+    private PointLight light;
 
     public Sacrifice (float x, float y, float radius, GameWorld gameWorld, Color color) {
         super(x, y, radius * 2, radius * 2);
@@ -114,6 +114,9 @@ public class Sacrifice extends Entity implements PhysicsObject {
         steering.add(wander, .5f);
         steering.add(avoidance, 1.5f);
 
+        light = new PointLight(gameWorld.getRayHandler(), 16, Color.MAGENTA, 1.5f, x, y);
+        light.getColor().a  = .5f;
+
         resetBox2d();
     }
 
@@ -164,6 +167,7 @@ public class Sacrifice extends Entity implements PhysicsObject {
     public void update(float delta) {
         position.set(body.getPosition());
         velocity.set(body.getLinearVelocity());
+        light.setPosition(position);
         rotation = body.getAngle() * MathUtils.radDeg + 90;
 
         float animSpeed = MathUtils.clamp(velocity.len(), 0, 1);
@@ -246,7 +250,7 @@ public class Sacrifice extends Entity implements PhysicsObject {
 
     @Override
     public void dispose() {
-
+        light.dispose();
     }
 
     @Override

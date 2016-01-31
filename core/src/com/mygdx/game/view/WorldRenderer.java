@@ -1,5 +1,6 @@
 package com.mygdx.game.view;
 
+import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -30,6 +31,7 @@ public class WorldRenderer {
     private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
     private Stage stage;
+    private RayHandler rayHandler;
 
     // Used to scale cam for box2d things without memory allocation
 //    private Matrix4 camCombinedBox2D = new Matrix4();
@@ -82,6 +84,9 @@ public class WorldRenderer {
         gameWorld.draw(batch);
 
         batch.end();
+        rayHandler.setCombinedMatrix(cam);
+        rayHandler.updateAndRender();
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
         // Debug render
         if (G.DEBUG) {
@@ -102,6 +107,7 @@ public class WorldRenderer {
     public void resize(int width, int height) {
         viewport.update(width, height, true);
         guiViewport.update(width, height, true);
+        rayHandler.resizeFBO(width, height);
     }
 
     public OrthographicCamera getCam() {
@@ -118,5 +124,9 @@ public class WorldRenderer {
 
     public Stage getStage () {
         return stage;
+    }
+
+    public void setRayHandler (RayHandler rayHandler) {
+        this.rayHandler = rayHandler;
     }
 }

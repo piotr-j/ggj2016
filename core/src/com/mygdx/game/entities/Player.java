@@ -1,5 +1,6 @@
 package com.mygdx.game.entities;
 
+import box2dLight.PointLight;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
@@ -49,6 +50,7 @@ public class Player extends Entity implements PhysicsObject, Box2DWorld.JointCal
     private Animation animation;
     private TextureRegion animFrame;
     private ParticleEffect spawnEffect;
+    private PointLight light;
 
     public Player(float x, float y, float radius, PlayerController controller, GameWorld gameWorld, Color color, int team) {
         super(x, y, radius * 2, radius * 2);
@@ -101,6 +103,8 @@ public class Player extends Entity implements PhysicsObject, Box2DWorld.JointCal
             colors[1] = 138/255f;
             colors[2] = 167/255f;
         }
+
+        light = new PointLight(gameWorld.getRayHandler(), 32, color, 1, x, y);
     }
 
     @Override
@@ -127,14 +131,17 @@ public class Player extends Entity implements PhysicsObject, Box2DWorld.JointCal
 
     @Override
     public void update(float delta) {
+        light.setPosition(position);
         if (timeout > 0) {
             body.setTransform(-10, -10, 0);
             body.setLinearVelocity(0, 0);
             body.setAngularVelocity(0);
             timeout -= delta;
             spawnEffect.update(delta);
+            light.setDistance(.25f);
             if (timeout <= 0) {
                 body.setTransform(position.x, position.y, rotation);
+                light.setDistance(1f);
             } else {
                 return;
             }
