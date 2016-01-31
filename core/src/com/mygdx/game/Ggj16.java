@@ -10,8 +10,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.mygdx.game.entities.Entity;
 import com.mygdx.game.screens.SplashScreen;
 import com.mygdx.game.utils.Assets;
+import com.mygdx.game.utils.EntityTween;
 import com.mygdx.game.utils.SpriteTween;
 
 public class Ggj16 extends Game {
@@ -41,11 +43,13 @@ public class Ggj16 extends Game {
 
 		// Font
 		assets.queueLoad("universidad.fnt", BitmapFont.class);
+		assets.queueLoad("collegier2.fnt", BitmapFont.class);
 
 		assets.queueLoad("pack/uiskin.json", Skin.class);
 		G.assets = assets;
 
 		Tween.registerAccessor(Sprite.class, new SpriteTween());
+		Tween.registerAccessor(Entity.class, new EntityTween());
 
 		// No assets to load so go straight to the game
 		G.game.setScreen(new SplashScreen());

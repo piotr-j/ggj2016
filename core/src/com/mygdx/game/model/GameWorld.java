@@ -30,6 +30,7 @@ import com.mygdx.game.controls.*;
 import com.mygdx.game.entities.Arena;
 import com.mygdx.game.entities.*;
 import com.mygdx.game.utils.Constants;
+import com.mygdx.game.utils.FancyTextSpawner;
 import com.mygdx.game.view.ScoreDisplay;
 
 public class GameWorld implements ContactListener {
@@ -159,12 +160,20 @@ public class GameWorld implements ContactListener {
     public void teamScored (int team) {
         if (team == TEAM_1) {
             team1Score++;
+
+            FancyTextSpawner.spawnText("TEAM " + team, G.VP_WIDTH / 2, G.VP_HEIGHT / 2, this, Color.valueOf("60a7fc"));
+            FancyTextSpawner.spawnText("SCORED!", G.VP_WIDTH / 2, G.VP_HEIGHT / 2 - 2.5f, this, Color.valueOf("60a7fc"));
         } else if (team == TEAM_2) {
             team2Score++;
+
+            FancyTextSpawner.spawnText("TEAM " + team, G.VP_WIDTH / 2, G.VP_HEIGHT / 2, this, Color.valueOf("fc3552"));
+            FancyTextSpawner.spawnText("SCORED!", G.VP_WIDTH / 2, G.VP_HEIGHT / 2 - 2.5f, this, Color.valueOf("fc3552"));
         }
 
         scoreDisplay.updateScore(this);
         waveManager.makeWave();
+
+
 
         Gdx.app.log("", "Team "+team+" scored!");
         Gdx.app.log("", "Team 1 score: " + team1Score);

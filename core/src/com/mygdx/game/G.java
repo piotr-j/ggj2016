@@ -46,5 +46,6 @@ public class G {
 
         // Fonts
         public static final String FONT_UNIVERSIDAD = "universidad.fnt";
+        public static final String FONT_COLLEGIER = "collegier2.fnt";
     }
 }
