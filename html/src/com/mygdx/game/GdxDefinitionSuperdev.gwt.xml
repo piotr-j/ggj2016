@@ -6,7 +6,8 @@
 	<inherits name='aurelienribon.tweenengine'/>
 
     <inherits name='com.mygdx.game.GdxDefinition' />
-    
+    <inherits name='com.mygdx.game.GdxDefinition' />
+
     <collapse-all-properties />
     
 	<add-linker name="xsiframe"/>	

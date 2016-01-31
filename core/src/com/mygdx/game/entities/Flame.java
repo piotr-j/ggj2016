@@ -47,6 +47,11 @@ public class Flame extends Entity implements PhysicsObject {
 
     public Flame (float x, float y, float radius, GameWorld gameWorld, Color color, int team) {
         super(x, y, radius * 2, radius * 2);
+//        FlamingRock rock = FlamingRock.pool.obtain();
+//        if (!rock.addedToEngine()) {
+//            rock.addToEngine(gameWorld);
+//        }
+//        FlamingRock.pool.free(rock);
         this.gameWorld = gameWorld;
         this.color = color;
         this.team = team;

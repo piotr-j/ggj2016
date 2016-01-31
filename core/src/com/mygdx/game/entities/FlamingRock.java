@@ -11,9 +11,7 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
-import com.badlogic.gdx.utils.ReflectionPool;
 import com.mygdx.game.G;
-import com.mygdx.game.model.EntityManager;
 import com.mygdx.game.model.GameWorld;
 
 /**
@@ -21,7 +19,11 @@ import com.mygdx.game.model.GameWorld;
  * @author Lukasz Zmudziak, @lukz_dev on 2016-01-29.
  */
 public class FlamingRock extends Entity implements Pool.Poolable {
-    public final static Pool<FlamingRock> pool = new ReflectionPool<FlamingRock>(FlamingRock.class);
+    public final static Pool<FlamingRock> pool = new Pool<FlamingRock>() {
+        @Override protected FlamingRock newObject () {
+            return new FlamingRock();
+        }
+    };
     private ParticleEffect effect;
     private Vector2 start = new Vector2();
     private Vector2 target = new Vector2();
