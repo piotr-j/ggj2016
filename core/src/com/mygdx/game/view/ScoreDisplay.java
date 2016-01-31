@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.StringBuilder;
 import com.mygdx.game.G;
 import com.mygdx.game.model.GameWorld;
 
@@ -46,8 +47,18 @@ public class ScoreDisplay extends Table {
         add(stack);
     }
 
+    private StringBuilder sb = new StringBuilder();
     public void updateScore(GameWorld gameWorld) {
-        String score = String.format("%02d", gameWorld.getTeam1Score()) + ":" + String.format("%02d", gameWorld.getTeam2Score());
-        scoreLabel.setText(score);
+        sb.setLength(0);
+        if (gameWorld.getTeam1Score() < 10) {
+            sb.append(0);
+        }
+        sb.append(gameWorld.getTeam1Score());
+        sb.append(":");
+        if (gameWorld.getTeam2Score() < 10) {
+            sb.append(0);
+        }
+        sb.append(gameWorld.getTeam2Score());
+        scoreLabel.setText(sb);
     }
 }

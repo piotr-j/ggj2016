@@ -88,6 +88,13 @@ public class WorldRenderer {
         rayHandler.updateAndRender();
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
+        batch.begin();
+
+        // Render world
+        gameWorld.drawAfterLights(batch);
+
+        batch.end();
+
         // Debug render
         if (G.DEBUG) {
             shapeRenderer.setProjectionMatrix(cam.combined);

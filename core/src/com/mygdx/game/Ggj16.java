@@ -5,6 +5,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.loaders.ParticleEffectLoader.ParticleEffectParameter;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.FPSLogger;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
@@ -27,6 +28,7 @@ public class Ggj16 extends Game {
 
 		log = new FPSLogger();
 		assets = new Assets();
+		assets.queueLoad("pack/ritualball-logo.png", Texture.class);
 		assets.queueLoad("pack/entities.atlas", TextureAtlas.class);
         // TODO make it work with atlas
 		ParticleEffectParameter parameter = new ParticleEffectParameter();
