@@ -105,6 +105,7 @@ public class GameWorld implements ContactListener {
         box2DWorld = new Box2DWorld(new Vector2(0, Constants.GRAVITY));
 
         entityManager = new EntityManager();
+        messageEntManager = new EntityManager();
         godManager = new GodsWillManager(this);
         waveManager = new WaveManager(this);
         tweenManager = new TweenManager();
@@ -459,10 +460,6 @@ public class GameWorld implements ContactListener {
         return team1Score;
     }
 
-
-    public RayHandler getRayHandler () {
-        return rayHandler;
-    }
     private Array<Light> lightsToDispose = new Array<Light>();
     public void queueLightDispose (Light light) {
         if (!lightsToDispose.contains(light, true)) {
