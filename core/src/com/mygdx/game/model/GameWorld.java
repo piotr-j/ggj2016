@@ -191,7 +191,7 @@ public class GameWorld implements ContactListener {
         if (team == TEAM_1) {
             team1Score++;
 
-            if(team1Score == 1) {
+            if(team1Score == SCORE_TO_WIN) {
                 FancyTextSpawner.spawnText("TEAM " + team, G.VP_WIDTH / 2, G.VP_HEIGHT / 2 - 1.3f, this, Color.valueOf("60a7fc"), 10);
                 FancyTextSpawner.spawnText("WON!", G.VP_WIDTH / 2, G.VP_HEIGHT / 2 - 2.5f - 1.3f, this, Color.valueOf("60a7fc"), 10);
             } else {
@@ -201,7 +201,7 @@ public class GameWorld implements ContactListener {
         } else if (team == TEAM_2) {
             team2Score++;
 
-            if(team2Score == 1) {
+            if(team2Score == SCORE_TO_WIN) {
                 FancyTextSpawner.spawnText("TEAM " + team, G.VP_WIDTH / 2, G.VP_HEIGHT / 2 - 1.3f, this, Color.valueOf("fc3552"), 10);
                 FancyTextSpawner.spawnText("WON!", G.VP_WIDTH / 2, G.VP_HEIGHT / 2 - 2.5f - 1.3f, this, Color.valueOf("fc3552"), 10);
             } else {
