@@ -77,17 +77,17 @@ public class GameWorld implements ContactListener {
     private Table scores;
     private Stack fade;
     private Image tint;
-    private Label whoWon;
+//    private Label whoWon;
     private Label toRestart;
 
     public GameWorld (Stage stage, RayHandler rayHandler) {
         this.stage = stage;
         this.rayHandler = rayHandler;
 
-        Music music = G.assets.get(G.A.MUSIC, Music.class);
-        music.setLooping(true);
-        music.setVolume(0.6f);
-        music.play();
+//        Music music = G.assets.get(G.A.MUSIC, Music.class);
+//        music.setLooping(true);
+//        music.setVolume(0.6f);
+//        music.play();
 
         Label.LabelStyle style = new Label.LabelStyle();
         style.font = G.assets.get(G.A.FONT_UNIVERSIDAD, BitmapFont.class);
@@ -224,14 +224,14 @@ public class GameWorld implements ContactListener {
         waveManager.makeWave();
         if (team1Score >= SCORE_TO_WIN) {
             gameState = GameState.FINISH;
-            whoWon.setText("Team 1 WON!");
+//            whoWon.setText("Team 1 WON!");
             togglePlayerControl(false);
             fade.getColor().a = 0;
             stage.addActor(fade);
             fade.addAction(Actions.fadeIn(0.5f));
 //            tint.setColor(0, 0, 1, .5f);
             stage.addActor(scores);
-            Gdx.app.log("", "Team 1 won!");
+//            Gdx.app.log("", "Team 1 won!");
         } else if (team2Score >= SCORE_TO_WIN) {
             gameState = GameState.FINISH;
 //            tint.setColor(1, 0, 0, .5f);
@@ -240,7 +240,7 @@ public class GameWorld implements ContactListener {
             stage.addActor(fade);
             fade.addAction(Actions.fadeIn(0.5f));
             stage.addActor(scores);
-            Gdx.app.log("", "Team 2 won!");
+//            Gdx.app.log("", "Team 2 won!");
         }
 
 //        G.assets.get(G.A.SOUND_GOL, Sound.class).play();
@@ -257,17 +257,12 @@ public class GameWorld implements ContactListener {
         Flame flame2 = new Flame(G.VP_WIDTH - 2.5f, G.VP_HEIGHT / 2, 1, this, Color.ORANGE, TEAM_1);
         entityManager.addEntity(flame2);
 
-        // Test sacrifice
-//        Sacrifice sacrifice = new Sacrifice(G.VP_WIDTH / 2, G.VP_HEIGHT / 2, 15 * G.INV_SCALE, this, Color.GREEN);
-//        entityManager.addEntity(sacrifice);
-
         // Some walkers
         for (int i = 0; i < 40; i++) {
             float x = MathUtils.random(100 + 15, 100 + 1080 - 15) * G.INV_SCALE;
             float y = MathUtils.random(100 + 15, 100 + 520 - 15) * G.INV_SCALE;
             entityManager.addEntity(new Walker(x, y, .25f, this, Color.YELLOW));
         }
-
 
         generateAudience();
     }
