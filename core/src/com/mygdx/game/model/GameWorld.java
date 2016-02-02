@@ -214,8 +214,8 @@ public class GameWorld implements ContactListener {
             team1Score++;
 
             if(team1Score == SCORE_TO_WIN) {
-                FancyTextSpawner.spawnText("TEAM " + team, G.VP_WIDTH / 2, G.VP_HEIGHT / 2 - 1.3f, this, Color.valueOf("60a7fc"), 10);
-                FancyTextSpawner.spawnText("WON!", G.VP_WIDTH / 2, G.VP_HEIGHT / 2 - 2.5f - 1.3f, this, Color.valueOf("60a7fc"), 10);
+                FancyTextSpawner.spawnText("TEAM " + team, G.VP_WIDTH / 2, G.VP_HEIGHT / 2 - 1.3f, this, Color.valueOf("60a7fc"), toRestartDuration - 1);
+                FancyTextSpawner.spawnText("WON!", G.VP_WIDTH / 2, G.VP_HEIGHT / 2 - 2.5f - 1.3f, this, Color.valueOf("60a7fc"), toRestartDuration - 1);
             } else {
                 FancyTextSpawner.spawnText("TEAM " + team, G.VP_WIDTH / 2, G.VP_HEIGHT / 2, this, Color.valueOf("60a7fc"), 0);
                 FancyTextSpawner.spawnText("SCORED!", G.VP_WIDTH / 2, G.VP_HEIGHT / 2 - 2.5f, this, Color.valueOf("60a7fc"), 0);
@@ -224,8 +224,8 @@ public class GameWorld implements ContactListener {
             team2Score++;
 
             if(team2Score == SCORE_TO_WIN) {
-                FancyTextSpawner.spawnText("TEAM " + team, G.VP_WIDTH / 2, G.VP_HEIGHT / 2 - 1.3f, this, Color.valueOf("fc3552"), 10);
-                FancyTextSpawner.spawnText("WON!", G.VP_WIDTH / 2, G.VP_HEIGHT / 2 - 2.5f - 1.3f, this, Color.valueOf("fc3552"), 10);
+                FancyTextSpawner.spawnText("TEAM " + team, G.VP_WIDTH / 2, G.VP_HEIGHT / 2 - 1.3f, this, Color.valueOf("fc3552"), toRestartDuration - 1);
+                FancyTextSpawner.spawnText("WON!", G.VP_WIDTH / 2, G.VP_HEIGHT / 2 - 2.5f - 1.3f, this, Color.valueOf("fc3552"), toRestartDuration - 1);
             } else {
                 FancyTextSpawner.spawnText("TEAM " + team, G.VP_WIDTH / 2, G.VP_HEIGHT / 2, this, Color.valueOf("fc3552"), 0);
                 FancyTextSpawner.spawnText("SCORED!", G.VP_WIDTH / 2, G.VP_HEIGHT / 2 - 2.5f, this, Color.valueOf("fc3552"), 0);

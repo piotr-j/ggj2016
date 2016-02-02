@@ -1,5 +1,6 @@
 package com.mygdx.game.model;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.controls.PlayerController;
@@ -43,6 +44,8 @@ public class DumbAIController {
             return;
         }
 
+        lagTime = MathUtils.random(0.3f, 1f);
+
         Entity sacrifice = null;
 
         // Check if sacrifice is alive
@@ -65,14 +68,12 @@ public class DumbAIController {
 
             direction.set(sacrifice.getPosition()).sub(nearestEntity.getPosition()).nor();
             playerController.getDirection().set(direction);
-            lagTime = 0.1f;
         }
 
         // Go to the volcano
         if(sacrificeOwner != null) {
             direction.set(targetVolcano.getPosition()).sub(sacrificeOwner.getPosition()).nor();
             playerController.getDirection().set(direction);
-            lagTime = 0.1f;
         }
     }
 
