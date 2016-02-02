@@ -30,7 +30,7 @@ public class Player extends Entity implements PhysicsObject, Box2DWorld.JointCal
     // Config
     private final float SPEED = 0.7f;
     private final float TIMEOUT_DURATION = 2.0f;
-    private final float SACRIFICE_SLOWDOWN = 0.8f;
+    private final float SACRIFICE_SLOWDOWN = 0.7f;
     private GameWorld gameWorld;
     private final Color color;
 
@@ -208,7 +208,7 @@ public class Player extends Entity implements PhysicsObject, Box2DWorld.JointCal
         return timeout <= 0;
     }
 
-    private void releaseSacrifice () {
+    public void releaseSacrifice () {
         gameWorld.getBox2DWorld().destroyJoint(sacrificeWeld);
         sacrificeWeld = null;
         sacrifice.owner = null;
@@ -294,5 +294,9 @@ public class Player extends Entity implements PhysicsObject, Box2DWorld.JointCal
     @Override
     public void setFlagForDelete(boolean flag) {
         flagForDelete = flag;
+    }
+
+    public int getTeam() {
+        return team;
     }
 }

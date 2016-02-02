@@ -28,15 +28,18 @@ public class GameScreen implements Screen {
     private final float MAX_ACCUMULATED_TIME = 1.0f;
     public static final float TIMESTEP = 1/60f;
 
+    private int mode;
 
-    public GameScreen() {
+    public GameScreen(int mode) {
+        this.mode = mode;
+
         RayHandler.setGammaCorrection(true);
         RayHandler.useDiffuseLight(true);
         RayHandler rayHandler = new RayHandler(null, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         rayHandler.setAmbientLight(.7f,.6f,.5f,1);
 //        rayHandler.setAmbientLight(Color.WHITE);
         renderer = new WorldRenderer();
-        gameWorld = new GameWorld(renderer.getStage(), rayHandler);
+        gameWorld = new GameWorld(renderer.getStage(), rayHandler, mode);
 //        rayHandler.diffuseBlendFunc.set(
 //
 //        );

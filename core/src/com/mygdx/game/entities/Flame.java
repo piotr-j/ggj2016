@@ -188,6 +188,9 @@ public class Flame extends Entity implements PhysicsObject {
 
         if (psycho2 instanceof Player) {
             Player player = (Player)psycho2;
+            if(player.sacrifice != null) {
+                player.releaseSacrifice();
+            }
             player.timeout();
 
         } else {

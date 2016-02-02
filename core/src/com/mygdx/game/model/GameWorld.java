@@ -80,14 +80,17 @@ public class GameWorld implements ContactListener {
 //    private Label whoWon;
     private Label toRestart;
 
-    public GameWorld (Stage stage, RayHandler rayHandler) {
+    // Ai
+    private DumbAIController aiController;
+
+    public GameWorld (Stage stage, RayHandler rayHandler, int mode) {
         this.stage = stage;
         this.rayHandler = rayHandler;
 
-//        Music music = G.assets.get(G.A.MUSIC, Music.class);
-//        music.setLooping(true);
-//        music.setVolume(0.6f);
-//        music.play();
+        Music music = G.assets.get(G.A.MUSIC, Music.class);
+        music.setLooping(true);
+        music.setVolume(0.6f);
+        music.play();
 
         Label.LabelStyle style = new Label.LabelStyle();
         style.font = G.assets.get(G.A.FONT_UNIVERSIDAD, BitmapFont.class);
@@ -164,7 +167,10 @@ public class GameWorld implements ContactListener {
 //            stage.setDebugAll(true);
             // refs are in the stage crap
             new PlayerStageController(controller2, container1, skin, false);
-            new PlayerStageController(controller1, container2, skin, true);
+
+            if(mode == 2) {
+                new PlayerStageController(controller1, container2, skin, true);
+            }
             inputMultiplexer.addProcessor(stage);
         } else {
             // Set input processors
@@ -174,12 +180,16 @@ public class GameWorld implements ContactListener {
             for (int i = 0; i < Controllers.getControllers().size; i++) {
                 if (i == 0) {
                     Controllers.getControllers().get(i).addListener(new PlayerGamepadController(controller1));
-                } else if (i == 1) {
+                } else if (i == 1 && mode == 2) {
                     Controllers.getControllers().get(i).addListener(new PlayerGamepadController(controller2));
                 }
             }
         }
         Gdx.input.setInputProcessor(inputMultiplexer);
+
+        if(mode == 1) {
+            aiController = new DumbAIController(2, controller2, this);
+        }
 
         for (int i = 0; i < 5; i++) {
             float x = G.VP_WIDTH / 10 + G.VP_WIDTH / 5 * i;
@@ -191,6 +201,8 @@ public class GameWorld implements ContactListener {
         }
 
         gameState = GameState.IN_GAME;
+
+        FancyTextSpawner.spawnText("IMPRESS ME!", G.VP_WIDTH / 2, G.VP_HEIGHT / 2, this, Color.valueOf("ffffff"), 0);
     }
 
     private Array<ConeLight> coneLights = new Array<ConeLight>();
@@ -311,7 +323,7 @@ public class GameWorld implements ContactListener {
                 G.assets.getAtlasRegion(G.A.TRIBUNES_RIGHT, G.A.ATLAS)));
     }
 
-    private float toRestartDuration = 11;
+    private float toRestartDuration = 5;
     private float winTimer = 0;
     public void update(float delta) {
         GdxAI.getTimepiece().update(delta);
@@ -344,6 +356,11 @@ public class GameWorld implements ContactListener {
             light.remove();
         }
         lightsToDispose.clear();
+
+        // Ai
+        if(aiController != null) {
+            aiController.update(delta);
+        }
     }
 
     private void restartGame () {
