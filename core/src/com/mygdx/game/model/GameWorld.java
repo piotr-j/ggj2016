@@ -166,10 +166,10 @@ public class GameWorld implements ContactListener {
             rootContainer.add(container2).fill().expand();
 //            stage.setDebugAll(true);
             // refs are in the stage crap
-            new PlayerStageController(controller2, container1, skin, false);
+            new PlayerStageController(controller1, container2, skin, true);
 
             if(mode == 2) {
-                new PlayerStageController(controller1, container2, skin, true);
+                new PlayerStageController(controller2, container1, skin, false);
             }
             inputMultiplexer.addProcessor(stage);
         } else {
